@@ -4,6 +4,9 @@
 | :---: | :----: | :--: | :---: |
 | 31/01/2022 | 0.1 | Criação do documento | [Iuri Severo](https://github.com/iurisevero)|
 | 31/01/2022 | 0.2 | Adição DER 0.3 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium)|
+| 31/01/2022 | 0.3 | Adição DER 0.4 | [Iuri Severo](https://github.com/iurisevero)|
+
+
 <!-- Explicar o que é o MER -->
 
 ## Diagrama Entidade-Relacionamento
@@ -13,6 +16,17 @@
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 0.4 do DER</summary>
+
+### DER v0.4
+
+![DER v0.4](../Assets/Images/MER/DERv0.4.png)
+
+**Autor(es):** [Iuri Severo](https://github.com/iurisevero)<br><br>
+
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.3 do DER</summary>
