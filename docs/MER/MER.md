@@ -6,6 +6,7 @@
 | 31/01/2022 | 0.2 | Adição DER 0.3 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium)|
 | 31/01/2022 | 0.3 | Adição DER 0.4 | [Iuri Severo](https://github.com/iurisevero)|
 | 31/01/2022 | 0.4 | Adição DER 0.5 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium)|
+| 04/02/2022 | 0.5 | Adição DER 0.6 | [Victor Buendia](https://github.com/Victor-Buendia)|
 
 
 <!-- Explicar o que é o MER -->
@@ -17,6 +18,23 @@
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 0.6 do DER</summary>
+
+### DER v0.6
+As modificações realizadas nesta versão foram:
+- Eliminação do CE "NPC" e a herança incorreta que ela possuía;
+- Inserção do ternário entre os CEs Vendedor, Item e Treinador através do CR Vende;
+- Alteração das notas textuais incorretas de movimento para incluir movimentos "Para cima" e "Para baixo";
+- Transformação do atributo "Nível" para derivado na "Instância de Pokémon";
+- Alteração da herança incorreta de (P,E) para (T,E) nos itens.
+
+![DER v0.6](../Assets/Images/MER/DERv0.6.png)
+
+**Autor(es):** [Victor Buendia](https://github.com/Victor-Buendia)<br><br>
+
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.5 do DER</summary>
