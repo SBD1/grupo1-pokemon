@@ -39,5 +39,13 @@ Repositório para o desenvolvimento do projeto de Pokémon do Grupo 1, Gotta Cat
                 </div>
             </div>
         </div>
+        <div class="col-sm container-img">
+            <img src="https://github.com/medeiroslucas.png" alt="Lucas Medeiros" class="img-thumbnail image">
+            <div class="middle">
+                <div class="text">
+                    Victor Buendia
+                </div>
+            </div>
+        </div>
     </div>
 </div>
