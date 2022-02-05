@@ -20,14 +20,22 @@ Repositório para o desenvolvimento do projeto de Pokémon do Grupo 1, Gotta Cat
                 </div>
             </div>
         </div>
-    </div>
-    <br/>
-    <div class="row">
         <div class="col-sm container-img">
             <img src="https://github.com/sudjoao.png" alt="João Pedro Guedes" class="img-thumbnail image">
             <div class="middle">
                 <div class="text">
                     João Pedro Guedes <br/> 17/0013910
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-sm container-img">
+            <img src="https://github.com/medeiroslucas.png" alt="Lucas Medeiros" class="img-thumbnail image">
+            <div class="middle">
+                <div class="text">
+                    Lucas Medeiros <br/>  17/0039803 
                 </div>
             </div>
         </div>
@@ -38,6 +46,8 @@ Repositório para o desenvolvimento do projeto de Pokémon do Grupo 1, Gotta Cat
                     Victor Buendia <br/> 19/0020601
                 </div>
             </div>
+        </div>
+        <div class="col-sm container-img">
         </div>
     </div>
 </div>
