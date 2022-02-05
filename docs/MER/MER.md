@@ -7,6 +7,7 @@
 | 31/01/2022 | 0.3 | Adição DER 0.4 | [Iuri Severo](https://github.com/iurisevero)|
 | 31/01/2022 | 0.4 | Adição DER 0.5 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium)|
 | 04/02/2022 | 0.5 | Adição DER 0.6 | [Victor Buendia](https://github.com/Victor-Buendia)|
+| 04/02/2022 | 0.6 | Adição DER 0.7 | [João Guedes](https://github.com/sudjoao) e [Lucas Medeiros](https://github.com/medeiroslucas)|
 
 
 <!-- Explicar o que é o MER -->
@@ -18,6 +19,24 @@
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 0.7 do DER</summary>
+
+### DER v0.7
+
+As modificações realizadas nesta versão foram:
+- Criação das entidades de instancia dos itens;
+- Alteração do relacionamento para Participação Total em todas as instâncias;
+- Criação da generalização NPC;
+- Criação da entidade Professor;
+- Criação do relacionamento Professor-Treinador;
+- Alteração na cardinalidade da EvoStone - Tipo.
+
+![DER v0.7](../Assets/Images/MER/DERv0.7.png)
+
+**Autor(es):** [João Guedes](https://github.com/sudjoao) e [Lucas Medeiros](https://github.com/medeiroslucas)
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.6 do DER</summary>
