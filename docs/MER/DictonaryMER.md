@@ -1,8 +1,8 @@
 # Dicionário Entidades MER
 
 |    Data    | Versão | Descrição | Autor |
-| :---: | :----: | :--: | :---: |
-| 05/02/2022 | 0.1 | Criação do documento | [João Guedes](https://github.com/sudjoao)|
+| :---: | :---: | :---: | :---: |
+| 05/02/2022 | 0.1 | Criação do documento | [João Guedes](https://github.com/sudjoao), [Lucas Medeiros](https://github.com/medeiroslucas) |
 
 
 <!-- Explicar o que é o MER -->
@@ -16,3 +16,12 @@ Durante uma das lives, o professor Maurício comentou que seria interessante a e
 ## Entidades
 | Nome | Descrição  | Observação    |
 | ---- | -------    | ---------     |
+| Candy | **Item** que concede aumento no valor de experiência de um **Pokemon** | |
+| Berry | **Item** que concede aumento na taxa de sucesso no momento da captura de um **Pokemon** | |
+| Pokebola | **Item** utilizado para capturar um **Pokemon** | Podem existir vários tipos de **Pokebola** |
+| Vendedor | **NPC** responsável pela venda de **Itens** | |
+| Posição | Unidade mínima de localização no jogo | Pode ser uma posição vazia ou conter instâncias como **Jogador**, **Pokemon**, **Item**, etc. |
+| Região | Unidade de localização formada pela junção de **Posições** | Pertence a um tipo específico |
+| Mapa | Unidade máxima de localização, formada pela junção de **Regiões** | |
+| Tipo | Entidade que possui as características comuns à um **Tipo** de **Pokemon** | **Regiões** também possuem tipos e, geralmente, **Pokemons** de um determinado **Tipo** são encontrados em **Regiões** equivalentes
+
