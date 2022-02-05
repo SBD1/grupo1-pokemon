@@ -7,7 +7,7 @@
 | 31/01/2022 | 0.3 | Adição DER 0.4 | [Iuri Severo](https://github.com/iurisevero)|
 | 31/01/2022 | 0.4 | Adição DER 0.5 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium)|
 | 04/02/2022 | 0.5 | Adição DER 0.6 | [Victor Buendia](https://github.com/Victor-Buendia)|
-| 04/02/2022 | 0.6 | Adição DER 0.7 | [João Guedes](https://github.com/sudjoao) e [Lucas Medeiros](https://github.com/medeiroslucas)|
+| 05/02/2022 | 0.6 | Adição DER 0.7 | [João Guedes](https://github.com/sudjoao) e [Lucas Medeiros](https://github.com/medeiroslucas)|
 
 
 <!-- Explicar o que é o MER -->
