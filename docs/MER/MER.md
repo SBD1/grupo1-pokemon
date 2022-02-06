@@ -7,18 +7,37 @@
 | 31/01/2022 | 0.3 | Adição DER 0.4 | [Iuri Severo](https://github.com/iurisevero) |
 | 31/01/2022 | 0.4 | Adição DER 0.5 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium) |
 | 04/02/2022 | 0.5 | Adição DER 0.6 | [Victor Buendia](https://github.com/Victor-Buendia) |
-| 05/02/2022 | 0.5 | Adição do versionamento entre os DER's | [Lucas Medeiros](https://github.com/medeiroslucas) |
+| 05/02/2022 | 0.6 | Adição do versionamento entre os DER's | [Lucas Medeiros](https://github.com/medeiroslucas) |
+| 06/02/2022 | 0.7 | Adição da versão 1.0 do DER e "O que é" | [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) |
 
 
-<!-- Explicar o que é o MER -->
+## O que é?
+
+O MER (Modelo Entidade Relacionamento) é utilizado para descrever os objetos do mundo real através de **entidades**, que possuem **atributos** e **relacionamentos** para descrever suas propriedades e, desssa forma, representar os aspectos estáticos do Domínio da Aplicação. 
+
+O DER (Diagrama Entidade-Relacionamento) é utilizado para representar em forma gráfica o que foi descrito no MER (Modelo Entidade Relacionamento).
 
 ## Diagrama Entidade-Relacionamento
 
-> O diagrama será adicionado quando estiver concluído
+![DER v1.0](../Assets/Images/MER/DERv1.0.png)
 
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 1.0 do DER</summary>
+
+### DER v1.0
+
+As modificações realizadas nesta versão foram:
+- Correção da especificação de NPCs
+- Adição da cardinalidade entre os itens e suas respectivas instâncias
+
+![DER v0.7](../Assets/Images/MER/DERv0.7.png)
+
+**Autor(es):** [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia)
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.7 do DER</summary>

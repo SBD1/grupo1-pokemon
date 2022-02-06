@@ -1,4 +1,5 @@
 <!-- docs/_sidebar.md -->
 - [Home](/)
 - [Políticas](/Policies.md)
-- [Modelo Entidade Relacionamento](/MER/MER.md)
+- [Documentação do MER](/MER/MER.md)
+    - [Dicionário Entidades e Relacionamentos](/MER/DictionaryMER.md)

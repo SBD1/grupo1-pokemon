@@ -7,8 +7,6 @@
 | 05/02/2022 | 0.3 | Adição das entidades Pokémon, Pokédex, Treinador, Mochila, Item, EvoStone, NPC e Professor | [João Guedes](https://github.com/sudjoao) |
 
 
-<!-- Explicar o que é o MER -->
-
 ## O que é?
 O dicionário de Entidades do MER é um documento que explica o que é cada uma das entidades para que pessoas que não conheçam o contexto *Pokémon* consigam entender um pouco sobre o que é cada uma daquelas entidades e, consequentimente, entender a necessidade de cada um dos atributos levantados na modelagem.
 
