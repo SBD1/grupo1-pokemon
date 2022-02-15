@@ -8,7 +8,8 @@
 | 31/01/2022 | 0.4 | Adição DER 0.5 | [Iuri Severo](https://github.com/iurisevero), [Arthur Matos](https://github.com/Arthur-Gaudium) |
 | 04/02/2022 | 0.5 | Adição DER 0.6 | [Victor Buendia](https://github.com/Victor-Buendia) |
 | 05/02/2022 | 0.6 | Adição do versionamento entre os DER's | [Lucas Medeiros](https://github.com/medeiroslucas) |
-| 06/02/2022 | 0.7 | Adição da versão 1.0 do DER e "O que é" | [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) |
+| 06/02/2022 | 1.0 | Adição da versão 1.0 do DER e "O que é" | [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) |
+| 15/02/2022 | 1.1 | Adição da versão 1.1 do DER | [Arthur Matos](https://github.com/Arthur-Gaudium) |
 
 
 ## O que é?
@@ -19,11 +20,26 @@ O DER (Diagrama Entidade-Relacionamento) é utilizado para representar em forma 
 
 ## Diagrama Entidade-Relacionamento
 
-![DER v1.0](../Assets/Images/MER/DERv1.0.png)
+![DER v1.1](../Assets/Images/MER/DERv1.1.png)
 
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 1.1 do DER</summary>
+
+### DER v1.1
+
+As modificações realizadas nesta versão foram:
+- Alteração nas entidades que deveriam ser entidades fracas;
+- Alteração do relacionamento de captura com pokebola para com instância de pokebola;
+- Adição da chave primária do mapa;
+
+![DER v1.1](../Assets/Images/MER/DERv1.1.png)
+
+**Autor(es):** [Arthur Matos](https://github.com/Arthur-Gaudium)
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 1.0 do DER</summary>
