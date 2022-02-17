@@ -29,6 +29,21 @@ Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas dive
 <details>
 <summary>Clique para apresentar a versão 1.1 do DER</summary>
 
+### DER v1.2
+
+As modificações realizadas nesta versão foram:
+- Alteração nas especializações de items
+- Exclusão das entidades fracas de se relacionavam com as especializações de item
+- Criação da entidade fraca Instância de Item
+- Redistribuição dos relacionamentos de Item para Instância de Item
+
+![DER v1.2](../Assets/Images/MER/DERv1.2.png)
+
+**Autor(es):** [Arthur Matos](https://github.com/Arthur-Gaudium), [Iuri Severo](https://github.com/iurisevero), [João Pedro José](https://github.com/sudjoao), [Victor Buendia](https://github.com/Victor-Buendia)<br><br>
+
+<details>
+<summary>Clique para apresentar a versão 1.2 do DER</summary>
+
 ### DER v1.1
 
 As modificações realizadas nesta versão foram:
@@ -42,7 +57,7 @@ As modificações realizadas nesta versão foram:
 </details>
 
 <details>
-<summary>Clique para apresentar a versão 1.0 do DER</summary>
+<summary>Clique para apresentar a versão 1.1 do DER</summary>
 
 ### DER v1.0
 
@@ -50,13 +65,13 @@ As modificações realizadas nesta versão foram:
 - Correção da especificação de NPCs
 - Adição da cardinalidade entre os itens e suas respectivas instâncias
 
-![DER v0.7](../Assets/Images/MER/DERv0.7.png)
+![DER v1.0](../Assets/Images/MER/DERv1.0.png)
 
 **Autor(es):** [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia)
 </details>
 
 <details>
-<summary>Clique para apresentar a versão 0.7 do DER</summary>
+<summary>Clique para apresentar a versão 1.0 do DER</summary>
 
 ### DER v0.7
 
