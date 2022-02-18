@@ -6,8 +6,8 @@
 | 16/02/2022 | 0.2 | Adição MREL 0.2 | [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) |
 | 17/02/2022 | 0.3 | Adição MREL 0.3 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero) |
 | 17/02/2022 | 0.4 | Adição MREL 0.4 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
-| 17/02/2022 | 0.5 | Adição MREL 0.5 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
-
+| 18/02/2022 | 0.5 | Adição MREL 0.5 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
+| 18/02/2022 | 0.6 | Adição MREL 0.6 | [Iuri Severo](https://github.com/iurisevero), [Lucas Medeiros](https://github.com/medeiroslucas), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
 
 ## O que é?
 
@@ -22,6 +22,18 @@ O MREL (Modelo Relacional) é utilizado para apoiar a implementação das aplica
 Durante a criação do Modelo Relacional (MREL) foram geradas diversas versões do modelo antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
 
 <details>
+<summary>Clique para apresentar a versão 0.6 do MREL</summary>
+
+As modificações realizadas nesta versão foram:
+- Adição da generalização NPC
+- Mapeamento das alguns relacionamentos N:M :
+    - Vendedor \<guarda> Instancia de Item;
+    - Professor \<instrui> Treinador;
+
+![MREL v0.6](../Assets/Images/MREL/MRELv0.6.png)
+
+**Autor(es):** [Iuri Severo](https://github.com/iurisevero), [João Pedro José](https://github.com/sudjoao) <br><br>
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.5 do MREL</summary>
