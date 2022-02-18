@@ -4,8 +4,9 @@
 | :---: | :----: | :---: | :---: |
 | 14/02/2022 | 0.1 | Adição MREL 0.1 | [Victor Buendia](https://github.com/Victor-Buendia) |
 | 16/02/2022 | 0.2 | Adição MREL 0.2 | [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) |
-| 17/02/2022 | 0.2 | Adição MREL 0.3 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero) |
-| 17/02/2022 | 0.3 | Adição MREL 0.4 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
+| 17/02/2022 | 0.3 | Adição MREL 0.3 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero) |
+| 17/02/2022 | 0.4 | Adição MREL 0.4 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
+| 17/02/2022 | 0.5 | Adição MREL 0.5 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
 
 
 ## O que é?
@@ -19,6 +20,28 @@ O MREL (Modelo Relacional) é utilizado para apoiar a implementação das aplica
 ### Desenvolvimento do Modelo Relacional
 
 Durante a criação do Modelo Relacional (MREL) foram geradas diversas versões do modelo antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+
+<details>
+<summary>Clique para apresentar a versão 0.5 do MREL</summary>
+
+As modificações realizadas nesta versão foram:
+- Mapeamento das alguns relacionamentos 1:N :
+    - Pokémon \<referencia> Instancia Pokémon;
+    - Treinador \<captura> Instancia Pokémon;
+    - Pokedex \<registra> Pokémon;
+    - Mochila \<guarda> Instancia Item;
+    - Posição \<forma> Região.
+    - Mapa \<contem> Região.
+    - Região \<possui> Tipo.
+    
+Nesta etapa iniciamos o passo 4 de mapear relacionamentos 1:N.
+
+![MREL v0.5](../Assets/Images/MREL/MRELv0.5.png)
+
+**Autor(es):** Todos os membros <br><br>
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.4 do MREL</summary>
@@ -39,8 +62,6 @@ Nesta etapa iniciamos o passo 3 de mapear relacionamentos 1:1.
 **Autor(es):** Todos os membros <br><br>
 
 </details>
-
-<details>
 
 <details>
 <summary>Clique para apresentar a versão 0.3 do MREL</summary>
