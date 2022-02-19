@@ -10,6 +10,8 @@
 | 05/02/2022 | 0.6 | Adição do versionamento entre os DER's | [Lucas Medeiros](https://github.com/medeiroslucas) |
 | 06/02/2022 | 1.0 | Adição da versão 1.0 do DER e "O que é" | [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) |
 | 15/02/2022 | 1.1 | Adição da versão 1.1 do DER | [Arthur Matos](https://github.com/Arthur-Gaudium) |
+| 17/02/2022 | 1.2 | Adição da versão 1.2 do DER | [João Pedro José](https://github.com/sudjoao) |
+| 18/02/2022 | 1.3 | Adição da versão 1.3 do DER | [Victor Buendia](https://github.com/Victor-Buendia) |
 
 
 ## O que é?
@@ -20,14 +22,35 @@ O DER (Diagrama Entidade-Relacionamento) é utilizado para representar em forma 
 
 ## Diagrama Entidade-Relacionamento
 
-![DER v1.1](../Assets/Images/MER/DERv1.1.png)
+![DER v1.3](../Assets/Images/MER/DERv1.3.png)
+
 
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
 
 <details>
-<summary>Clique para apresentar a versão 1.1 do DER</summary>
+<summary>Clique para apresentar a versão 1.3 do DER</summary>
+
+### DER v1.3
+
+As modificações realizadas nesta versão foram:
+- Criação da Instância de Item
+- Remoção das instâncias de Pokebola, Evo Stone, Berry e Candy
+- Eliminação do atributo "Quantidade" do CR "Guarda"
+- Remoção do atributo "Nro de pokemons capturados" do CR "Pokedex"
+- Remoção do atributo "Tipo" do CR "Item"
+- Adição de papéis para remover ambiguidades
+- Correção gráfica em entidades fracas
+
+![DER v1.3](../Assets/Images/MER/DERv1.3.png)
+
+**Autor(es):** [Arthur Matos](https://github.com/Arthur-Gaudium), [Iuri Severo](https://github.com/iurisevero), [João Pedro José](https://github.com/sudjoao), [Victor Buendia](https://github.com/Victor-Buendia), [Lucas Medeiros](https://github.com/medeiroslucas)<br><br>
+
+</details>
+
+<details>
+<summary>Clique para apresentar a versão 1.2 do DER</summary>
 
 ### DER v1.2
 
@@ -40,9 +63,12 @@ As modificações realizadas nesta versão foram:
 ![DER v1.2](../Assets/Images/MER/DERv1.2.png)
 
 **Autor(es):** [Arthur Matos](https://github.com/Arthur-Gaudium), [Iuri Severo](https://github.com/iurisevero), [João Pedro José](https://github.com/sudjoao), [Victor Buendia](https://github.com/Victor-Buendia)<br><br>
+</details>
+
 
 <details>
-<summary>Clique para apresentar a versão 1.2 do DER</summary>
+<summary>Clique para apresentar a versão 1.1 do DER</summary>
+
 
 ### DER v1.1
 
@@ -56,8 +82,9 @@ As modificações realizadas nesta versão foram:
 **Autor(es):** [Arthur Matos](https://github.com/Arthur-Gaudium)
 </details>
 
+
 <details>
-<summary>Clique para apresentar a versão 1.1 do DER</summary>
+<summary>Clique para apresentar a versão 1.0 do DER</summary>
 
 ### DER v1.0
 
@@ -71,7 +98,7 @@ As modificações realizadas nesta versão foram:
 </details>
 
 <details>
-<summary>Clique para apresentar a versão 1.0 do DER</summary>
+<summary>Clique para apresentar a versão 0.7 do DER</summary>
 
 ### DER v0.7
 
