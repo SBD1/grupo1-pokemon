@@ -8,6 +8,7 @@
 | 17/02/2022 | 0.4 | Adição MREL 0.4 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
 | 18/02/2022 | 0.5 | Adição MREL 0.5 | [Lucas Medeiros](https://github.com/medeiroslucas), [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
 | 18/02/2022 | 0.6 | Adição MREL 0.6 | [Iuri Severo](https://github.com/iurisevero), [Lucas Medeiros](https://github.com/medeiroslucas), [Victor Buendia](https://github.com/Victor-Buendia), [João Pedro José](https://github.com/sudjoao) e [Arthur Matos](https://github.com/Arthur-Gaudium)  |
+| 20/02/2022 | 0.7 | Adição MREL 0.7 | [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia)|
 
 ## O que é?
 
@@ -20,6 +21,20 @@ O MREL (Modelo Relacional) é utilizado para apoiar a implementação das aplica
 ### Desenvolvimento do Modelo Relacional
 
 Durante a criação do Modelo Relacional (MREL) foram geradas diversas versões do modelo antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 0.7 do MREL</summary>
+
+As modificações realizadas nesta versão foram:
+- Criação da tabela da agregação "Captura"
+- Criação da tabela "Vende" para conectar o ternário Treinador, Instância e Vendedor
+- Criação do mapeamento de chaves estrangeiras em vermelho
+- Na instância de pokemón, retiramos id_pokemon como chave primária
+
+![MREL v0.7](../Assets/Images/MREL/MRELv0.7.png)
+
+**Autor(es):** [Victor Buendia](https://github.com/Victor-Buendia), [Iuri Severo](https://github.com/iurisevero)<br><br>
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 0.6 do MREL</summary>
