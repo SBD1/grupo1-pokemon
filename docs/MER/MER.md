@@ -13,6 +13,7 @@
 | 17/02/2022 | 1.2 | Adição da versão 1.2 do DER | [João Pedro José](https://github.com/sudjoao) |
 | 18/02/2022 | 1.3 | Adição da versão 1.3 do DER | [Victor Buendia](https://github.com/Victor-Buendia) |
 | 18/02/2022 | 1.4 | Adição da versão 1.4 do DER | [Arthur Matos](https://github.com/Arthur-Gaudium) |
+| 28/02/2022 | 1.5 | Adição da versão 1.5 do DER | [Lucas Medeiros](https://github.com/medeiroslucas) |
 
 
 ## O que é?
@@ -23,25 +24,38 @@ O DER (Diagrama Entidade-Relacionamento) é utilizado para representar em forma 
 
 ## Diagrama Entidade-Relacionamento
 
-![DER v1.4](../Assets/Images/MER/DERv1.4.png)
+![DER v1.5](../Assets/Images/MER/DERv1.5.png)
 
 
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
 
+<details>
+<summary>Clique para apresentar a versão 1.5 do DER</summary>
+
+### DER v1.5
+
+As modificações realizadas nesta versão foram:
+- Adição do relacionamento contém entre NPC e posição
+- Adição do atributo derivado Descrição Visível na entidade Registra
+
+![DER v1.5](../Assets/Images/MER/DERv1.5.png)
+
+**Autor(es):** [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) <br><br>
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 1.4 do DER</summary>
 
-### DER v1.2
+### DER v1.4
 
 As modificações realizadas nesta versão foram:
 - Remoção das entidades fracas
 
 ![DER v1.4](../Assets/Images/MER/DERv1.4.png)
 
-**Autor(es):** [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia)<br><br>
+**Autor(es):** [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) <br><br>
 </details>
 
 <details>
