@@ -4,3 +4,4 @@
 - [Documentação do MER](/MER/MER.md)
     - [Dicionário Entidades e Relacionamentos](/MER/DictionaryMER.md)
 - [Documentação do MREL](/MREL/MREL.md)
+- [Documentação do MREL Normalizado](/MRELNormalizado/MRELNormalizado.md)
