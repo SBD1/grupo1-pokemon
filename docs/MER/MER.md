@@ -24,12 +24,26 @@ O DER (Diagrama Entidade-Relacionamento) é utilizado para representar em forma 
 
 ## Diagrama Entidade-Relacionamento
 
-![DER v1.5](../Assets/Images/MER/DERv1.5.png)
+![DER v1.6](../Assets/Images/MER/DERv1.6.png)
 
 
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 1.6 do DER</summary>
+
+### DER v1.6
+
+As modificações realizadas nesta versão foram:
+- Correção da cardinalidade do ternário Vender
+- Reorganização para diminuir quebras de linha
+
+![DER v1.6](../Assets/Images/MER/DERv1.6.png)
+
+**Autor(es):** [Arthur Matos](https://github.com/Arthur-Gaudium), [Iuri Severo](https://github.com/iurisevero), [João Pedro José](https://github.com/sudjoao), [Victor Buendia](https://github.com/Victor-Buendia), [Lucas Medeiros](https://github.com/medeiroslucas) <br><br>
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 1.5 do DER</summary>
