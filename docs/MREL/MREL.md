@@ -11,6 +11,7 @@
 | 20/02/2022 | 0.7 | Adição MREL 0.7 | [Victor Buendia](https://github.com/Victor-Buendia), [Iuri Severo](https://github.com/iurisevero) |
 | 20/02/2022 | 0.8 | Adição MREL 0.8 | [Iuri Severo](https://github.com/iurisevero), [Victor Buendia](https://github.com/Victor-Buendia) |
 | 20/02/2022 | 1.0 | Adição MREL 1.0 | [Arthur Matos](https://github.com/Arthur-Gaudium) |
+| 22/03/2022 | 1.1 | Indicação das versões normalizadas | [Iuri Severo](https://github.com/iurisevero) |
 
 ## O que é?
 
@@ -19,6 +20,8 @@ O MREL (Modelo Relacional) é utilizado para apoiar a implementação das aplica
 ## Mapeamento MER ➔ MREL
 
 ![MREL v1.0](../Assets/Images/MREL/MRELv1.0.png)
+
+> Versões mais atuais do MREL podem ser vistos na [página de Normalização](/MRELNormalizado/MRELNormalizado.md)
 
 ### Desenvolvimento do Modelo Relacional
 

@@ -14,6 +14,8 @@
 | 18/02/2022 | 1.3 | Adição da versão 1.3 do DER | [Victor Buendia](https://github.com/Victor-Buendia) |
 | 18/02/2022 | 1.4 | Adição da versão 1.4 do DER | [Arthur Matos](https://github.com/Arthur-Gaudium) |
 | 28/02/2022 | 1.5 | Adição da versão 1.5 do DER | [Lucas Medeiros](https://github.com/medeiroslucas) |
+| 04/03/2022 | 1.6 | Adição da versão 1.6 do DER | [Iuri Severo](https://github.com/iurisevero) |
+| 22/03/2022 | 1.7 | Adição da versão 1.7 do DER | [Iuri Severo](https://github.com/iurisevero) |
 
 
 ## O que é?
@@ -24,12 +26,34 @@ O DER (Diagrama Entidade-Relacionamento) é utilizado para representar em forma 
 
 ## Diagrama Entidade-Relacionamento
 
-![DER v1.6](../Assets/Images/MER/DERv1.6.png)
+![DER v1.7](../Assets/Images/MER/DERv1.7.png)
 
 
 ### Desenvolvimento do Diagrama Entidade-Relacionamento
 
 Durante a criação do Diagrama Entidade-Relacionamento (DER) foram geradas diversas versões do diagrama antes que ele alcançasse sua versão atual. Todas versões geradas podem ser vistas abaixo, assim como quem contribuiu nas alterações feitas naquela versão.
+
+<details>
+<summary>Clique para apresentar a versão 1.7 do DER</summary>
+
+### DER v1.7
+
+As modificações realizadas nesta versão foram:
+- Alteração do nome da entidade **Tipo** para **Elemento**
+- **Mochila** se tornou uma entidade fraca de treinador
+  - Foram adicionados os atributos **Capacidade** e **dinheiroMaximo**
+- **Pokedex** se tornou uma entidade fraca de treinador
+  - O atributo **Nro de pokemons capturados** foi adicionado e **Nro de pokemons vistos** foi atualizado, ambos são atributos derivados da relação **Registra**
+- Atualização na posição da cardinalidade da relação **Posição-Conecta-Posição**
+- Atributo **Taxa de captura** adicionado à entidade **Pokemón** e removido de **Instância de Pokemón**
+
+**Observação:**
+Foi discutido com o grupo a cardinalidade das relações **Posição-Contém-Instância de Item**, **Posição-Contém-NPC**, **Posição-Contém-Instancia de Pokemón** e **Posição-Contém-Treinador** e foi definido que elas se adequam a maneira como o jogo foi pensado, com o limite de uma unidade de entidade por posição. Ou seja, um treinador por posição, uma instância de pokemón por posição, uma instância de item por posição e um NPC por posição.
+
+![DER v1.7](../Assets/Images/MER/DERv1.7.png)
+
+**Autor(es):** [Iuri Severo](https://github.com/iurisevero) <br><br>
+</details>
 
 <details>
 <summary>Clique para apresentar a versão 1.6 do DER</summary>

@@ -5,6 +5,7 @@
 | 05/02/2022 | 0.1 | Criação do documento | [João Guedes](https://github.com/sudjoao), [Lucas Medeiros](https://github.com/medeiroslucas) |
 | 05/02/2022 | 0.2 | Adição das entidades Berry, Candy, Pokebola, Vendedor, Mapa, Região, Posição e  Tipo | [Lucas Medeiros](https://github.com/medeiroslucas) |
 | 05/02/2022 | 0.3 | Adição das entidades Pokémon, Pokédex, Treinador, Mochila, Item, EvoStone, NPC e Professor | [João Guedes](https://github.com/sudjoao) |
+| 22/03/2022 | 0.4 | Atualização da entidade Tipo para Elemento | [Iuri Severo](https://github.com/iurisevero) |
 
 
 ## O que é?
@@ -31,5 +32,5 @@ Durante uma das lives, o professor Maurício comentou que seria interessante a e
 | Posição | Unidade mínima de localização no jogo | Pode ser uma posição vazia ou conter instâncias como **Jogador**, **Pokemon**, **Item**, etc. |
 | Região | Unidade de localização formada pela junção de **Posições** | Pertence a um tipo específico |
 | Mapa | Unidade máxima de localização, formada pela junção de **Regiões** | |
-| Tipo | Entidade que possui as características comuns à um **Tipo** de **Pokemon** | **Regiões** também possuem tipos e, geralmente, **Pokemons** de um determinado **Tipo** são encontrados em **Regiões** equivalentes
+| Elemento | Entidade que possui as características comuns à um **Elemento** de **Pokemon** | **Regiões** também possuem elementos e, geralmente, **Pokemons** de um determinado **Elemento** são encontrados em **Regiões** equivalentes
 
