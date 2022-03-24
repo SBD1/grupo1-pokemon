@@ -38,7 +38,7 @@ As modificações realizadas nesta versão foram:
 - Os atributos **ID** das entidades **Pokebola**, **EvoStone**, **Candy** e **Berry** passaram a referenciar o atributo **IdItem** da tabela **EspecializaçãoDoItem**, ao invés de serem referência para o mesmo
 - Atributo **Taxa de captura** adicionado à entidade **Pokemón** e removido de **Instância de Pokemón**
 
-![MREL v1.1](../Assets/Images/MREL/MRELv1.1.png)
+![MREL v1.1](../Assets/Images/MREL/MRELNormalizado_v1.1.png)
 
 **Autor(es):** Todos <br><br>
 </details>
@@ -50,7 +50,7 @@ As modificações realizadas nesta versão foram:
 - Reorganização dos atributos de EvoStone
 - Adição da explicação da tabela MochilaGuardaInstanciaItem
 
-![MREL v1.0](../Assets/Images/MREL/MRELv1.0.png)
+![MREL v1.0](../Assets/Images/MREL/MRELNormalizado_v1.0.png)
 
 **Autor(es):** Todos <br><br>
 </details>
