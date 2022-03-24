@@ -1,12 +1,11 @@
 create database pokemon;
 CREATE SEQUENCE serie START 1;
 
-CREATE DOMAIN moeda AS DECIMAL(7,2) CHECK(
-    VALUE >= 0
-);
+CREATE DOMAIN moeda AS DECIMAL(7,2) NOT NULL CHECK(VALUE >= 0);
 
 CREATE DOMAIN taxa_captura AS DECIMAL(3,2) NOT NULL CHECK(VALUE > 0 AND VALUE <= 1);
 
+CREATE DOMAIN nome AS VARCHAR(50) NOT NULL;
 
 CREATE TABLE mapa(
     id serie,
@@ -40,69 +39,6 @@ CREATE TABLE posicao(
     CONSTRAINT baixo_posicao_fk FOREIGN KEY(baixo) REFERENCES posicao(id)
 );
 
-CREATE TABLE elemento(
-    id serie,
-    nome varchar(20) NOT NULL CHECK (nome IN ('fogo', 'água', 'grama', 'voador', 'lutador', 'veneno', 'elétrico', 'terra', 'pedra', 'psiquico', 'gelo', 'inseto', 'fantasma', 'ferro', 'dragão', 'sombrio', 'fada')),
-    CONSTRAINT elemento_pk PRIMARY KEY(id),
-    CONSTRAINT nome_elemento_sk UNIQUE(nome)
-);
-
-CREATE TABLE mochila(
-    id serie,
-    capacidade_da_mochila INT NOT NULL,
-    CONSTRAINT mochila_pk PRIMARY KEY(id)
-);
-
-CREATE TABLE pokedex(
-    id serie,
-    num_pokemons_capturados INT DEFAULT 0,
-    num_pokemons_vistos INT DEFAULT 0,
-    CONSTRAINT pokedex_pk PRIMARY KEY(id)
-);
-
-CREATE TABLE candy(
-    id serie,
-    nome varchar(20) NOT NULL,
-    preco moeda NOT NULL,
-    aumento_experiencia INT NOT NULL,
-    CONSTRAINT candy_pk PRIMARY KEY(id),
-    CONSTRAINT nome_candy_sk UNIQUE(nome)
-);
-
-CREATE TABLE berry(
-    id serie,
-    nome varchar(20) NOT NULL,
-    preco moeda NOT NULL,
-    aumento_taxa_captura taxa_captura,
-    CONSTRAINT berry_pk PRIMARY KEY(id),
-    CONSTRAINT nome_berry_sk UNIQUE(nome)
-);
-
-CREATE TABLE evostone(
-    id serie,
-    nome varchar(50),
-    preco moeda NOT NULL,
-    id_elemento serie NOT NULL,
-    CONSTRAINT evostone_pk PRIMARY KEY(id),
-    CONSTRAINT nome_evostone_sk UNIQUE(nome),
-    CONSTRAINT id_elemento_evostone_fk FOREIGN KEY (id_elemento) REFERENCES elemento (id)
-);
-
---- ToDo lembrar de testar as tabelas npc,  antes de commitar
-
-CREATE TABLE especializacao_do_item(
-    id_item serie,
-    papel verchar(10) NOT NULL CHECK (papel IN ('evostone', 'berry', 'candy', 'pokebola')),
-    CONSTRAINT especializacao_do_item_pk PRIMARY KEY(id_item)
-);
-
-CREATE TABLE instancia_item(
-    id serie,
-    id_item serie NOT NULL;
-    CONSTRAINT instancia_item_pk PRIMARY KEY(id_item),
-    CONSTRAINT id_item_instancia_item_fk FOREIGN KEY (id_item) REFERENCES especializacao_do_item (id_item)
-);
-
 CREATE TABLE npc(
     id serie,
     fala varchar(200) NOT NULL, --- NPC terá apenas uma fala?
@@ -112,17 +48,92 @@ CREATE TABLE npc(
     CONSTRAINT id_posicao_npc_fk FOREIGN KEY(id_posicao) REFERENCES posicao (id)
 );
 
+CREATE TABLE treinador(
+    nome nome,
+    nivel INT NOT NULL CHECK(nivel >= 0),
+    dinheiro moeda DEFAULT 0,
+    insignia varchar(20) CHECK (insignia IN ('iniciante', 'aprendiz', 'profissional', 'mestre')),
+    id_posicao serie NOT NULL,
+    id_professor serie NOT NULL,
+    CONSTRAINT treinador_pk PRIMARY KEY(nome),
+    CONSTRAINT id_posicao_treinador_fk FOREIGN KEY(id_posicao) REFERENCES posicao (id),
+    CONSTRAINT id_professor_treinador_fk FOREIGN KEY(id_professor) REFERENCES npc (id)
+    --- É possível criar uma restrição para que o professor seja uma NPC com profissão == professor?
+);
+
+CREATE TABLE elemento(
+    id serie,
+    nome nome CHECK (nome IN ('fogo', 'água', 'grama', 'voador', 'lutador', 'veneno', 'elétrico', 'terra', 'pedra', 'psiquico', 'gelo', 'inseto', 'fantasma', 'ferro', 'dragão', 'sombrio', 'fada')),
+    CONSTRAINT elemento_pk PRIMARY KEY(id),
+    CONSTRAINT nome_elemento_sk UNIQUE(nome)
+);
+
+CREATE TABLE mochila(
+    id nome,
+    capacidade_da_mochila INT NOT NULL,
+    dinheiro_maximo INT NOT NULL,
+    CONSTRAINT mochila_pk PRIMARY KEY(id),
+    CONSTRAINT id_treinador_fk FOREIGN KEY(id) REFERENCES treinador(nome)
+);
+
+CREATE TABLE pokedex(
+    id nome,
+    CONSTRAINT pokedex_pk PRIMARY KEY(id),
+    CONSTRAINT id_treinador_fk FOREIGN KEY(id) REFERENCES treinador(nome)
+);
+
+CREATE TABLE candy(
+    id serie,
+    nome nome,
+    preco moeda,
+    aumento_experiencia INT NOT NULL,
+    CONSTRAINT candy_pk PRIMARY KEY(id),
+    CONSTRAINT nome_candy_sk UNIQUE(nome)
+);
+
+CREATE TABLE berry(
+    id serie,
+    nome nome,
+    preco moeda,
+    aumento_taxa_captura taxa_captura,
+    CONSTRAINT berry_pk PRIMARY KEY(id),
+    CONSTRAINT nome_berry_sk UNIQUE(nome)
+);
+
+CREATE TABLE evostone(
+    id serie,
+    nome nome,
+    preco moeda,
+    id_elemento serie NOT NULL,
+    CONSTRAINT evostone_pk PRIMARY KEY(id),
+    CONSTRAINT nome_evostone_sk UNIQUE(nome),
+    CONSTRAINT id_elemento_evostone_fk FOREIGN KEY (id_elemento) REFERENCES elemento (id)
+);
+
+CREATE TABLE especializacao_do_item(
+    id_item serie,
+    papel varchar(10) NOT NULL CHECK (papel IN ('evostone', 'berry', 'candy', 'pokebola')),
+    CONSTRAINT especializacao_do_item_pk PRIMARY KEY(id_item)
+);
+
+CREATE TABLE instancia_item(
+    id serie,
+    id_item serie NOT NULL,
+    CONSTRAINT instancia_item_pk PRIMARY KEY(id),
+    CONSTRAINT id_item_instancia_item_fk FOREIGN KEY (id_item) REFERENCES especializacao_do_item (id_item)
+);
+
 CREATE TABLE npc_guarda_instancia_de_item(
     id_npc serie NOT NULL,
-    id_instancia_item serie NOT NULL,
+    id_instancia_item serie,
     CONSTRAINT npc_guarda_instancia_de_item_pk PRIMARY KEY(id_npc, id_instancia_item),
     CONSTRAINT id_npc_npc_guarda_instancia_de_item_fk FOREIGN KEY(id_npc) REFERENCES npc (id),
     CONSTRAINT id_instancia_item_npc_guarda_instancia_de_item_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item (id)
 );
 
 CREATE TABLE mochila_guarda_instancia_de_item(
-    id_mochila serie NOT NULL,
-    id_instancia_item serie NOT NULL,
+    id_mochila nome NOT NULL,
+    id_instancia_item serie,
     CONSTRAINT mochila_guarda_instancia_de_item_pk PRIMARY KEY(id_instancia_item),
     CONSTRAINT id_mochila_mochila_guarda_instancia_de_item_fk FOREIGN KEY(id_mochila) REFERENCES mochila (id),
     CONSTRAINT id_instancia_item_mochila_guarda_instancia_de_item_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item (id)
@@ -130,27 +141,11 @@ CREATE TABLE mochila_guarda_instancia_de_item(
 
 CREATE TABLE instancia_item_posicao(
     id_posicao serie NOT NULL,
-    id_instancia_item serie NOT NULL,
+    id_instancia_item serie,
     CONSTRAINT instancia_item_posicao_pk PRIMARY KEY(id_posicao),
     CONSTRAINT instancia_item_posicao_sk UNIQUE(id_instancia_item),
     CONSTRAINT id_posicao_instancia_item_posicao_fk FOREIGN KEY(id_posicao) REFERENCES posicao (id),
     CONSTRAINT id_instancia_instancia_item_posicao_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item (id)
-);
-
-CREATE TABLE treinador(
-    nome varchar(20),
-    nivel INT NOT NULL CHECK(nivel >= 0),
-    dinheiro moeda NOT NULL DEFAULT 0,
-    insignia varchar(20) CHECK (insignia IN ('iniciante', 'aprendiz', 'profissional', 'mestre')),
-    --- id_pokedex,
-    id_posicao serie NOT NULL,
-    id_professor serie NOT NULL,
-    id_mochila serie NOT NULL,
-    CONSTRAINT treinador_pk PRIMARY KEY(id_posicao),
-    CONSTRAINT id_posicao_treinador_fk FOREIGN KEY(id_posicao) REFERENCES posicao (id),
-    CONSTRAINT id_professor_treinador_fk FOREIGN KEY(id_professor) REFERENCES npc (id),
-    --- É possível criar uma restrição para que o professor seja uma NPC com profissão == professor?
-    CONSTRAINT id_mochila_treinador_fk FOREIGN KEY(id_mochila) REFERENCES mochila (id)
 );
 
 CREATE TABLE pokemon(
@@ -184,7 +179,7 @@ CREATE TABLE instancia_pokemon(
 
 CREATE TABLE registra(
     id_pokemon serie,
-    id_pokedex serie,
+    id_pokedex nome,
     qtd_vista INT DEFAULT 0 NOT NULL,
     qtd_capturada INT DEFAULT 0 NOT NULL,
 
@@ -195,8 +190,8 @@ CREATE TABLE registra(
 
 CREATE TABLE pokebola(
     id serie,
-    preco moeda NOT NULL,
-    nome varchar(15) NOT NULL CHECK(nome IN ('Pokeball', 'Great Ball', 'Ultra Ball', 'Master Ball')),
+    preco moeda,
+    nome nome CHECK(nome IN ('Pokeball', 'Great Ball', 'Ultra Ball', 'Master Ball')),
     id_captura serie,
 
     CONSTRAINT pokebola_pk PRIMARY KEY(id)
@@ -205,7 +200,7 @@ CREATE TABLE pokebola(
 
 CREATE TABLE vende(
     id_instancia_item serie,
-    treinador varchar(20) NOT NULL,
+    treinador nome,
     id_npc serie NOT NULL,
     CONSTRAINT vende_pk PRIMARY KEY(id_instancia_item),
     CONSTRAINT treinador_vende_fk FOREIGN KEY(treinador) REFERENCES treinador (nome),
