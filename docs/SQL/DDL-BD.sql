@@ -14,20 +14,20 @@ CREATE TABLE mapa(
 CREATE TABLE regiao(
     id SERIAL,
     entrada INT NOT NULL,
-    id_mapa SERIAL NOT NULL,
+    id_mapa INT NOT NULL,
     CONSTRAINT regiao_pk PRIMARY KEY(id),
     CONSTRAINT id_mapa_regiao_fk FOREIGN KEY(id_mapa) REFERENCES mapa(id)
 );
 
 CREATE TABLE posicao(
     id SERIAL,
-    id_regiao SERIAL NOT NULL,
-    norte SERIAL,
-    sul SERIAL,
-    leste SERIAL,
-    oeste SERIAL,
-    cima SERIAL,
-    baixo SERIAL,
+    id_regiao INT NOT NULL,
+    norte INT,
+    sul INT,
+    leste INT,
+    oeste INT,
+    cima INT,
+    baixo INT,
     CONSTRAINT posicao_pk PRIMARY KEY(id),
     CONSTRAINT id_regiao_posicao_fk FOREIGN KEY(id_regiao) REFERENCES regiao(id),
     CONSTRAINT norte_posicao_fk FOREIGN KEY(norte) REFERENCES posicao(id),
@@ -46,8 +46,8 @@ CREATE TABLE elemento(
 );
 
 CREATE TABLE regiao_possui_elemento(
-    id_regiao SERIAL,
-    id_elemento SERIAL,
+    id_regiao INT,
+    id_elemento INT,
     CONSTRAINT regiao_possui_elemento_pk PRIMARY KEY(id_regiao, id_elemento),
     CONSTRAINT id_regiao_regiao_possui_elemento_fk FOREIGN KEY(id_regiao) REFERENCES regiao(id),
     CONSTRAINT id_elemento_regiao_possui_elemento_fk FOREIGN KEY(id_elemento) REFERENCES elemento(id)
@@ -58,7 +58,7 @@ CREATE TABLE npc(
     nome nome,
     fala varchar(200) NOT NULL, --- NPC terá apenas uma fala? Sim
     profissao varchar(10), --- CHECK(profissao IN('professor', 'vendedor')), a relação é Parcial, então podem existir outras profissões
-    id_posicao SERIAL NOT NULL,
+    id_posicao INT NOT NULL,
     CONSTRAINT npc_pk PRIMARY KEY(id),
     CONSTRAINT id_posicao_npc_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id)
 );
@@ -68,8 +68,8 @@ CREATE TABLE treinador(
     nivel INT NOT NULL CHECK(nivel >= 0),
     dinheiro moeda DEFAULT 0,
     insignia varchar(20) CHECK(insignia IN('iniciante', 'aprendiz', 'profissional', 'mestre')),
-    id_posicao SERIAL NOT NULL,
-    id_professor SERIAL NOT NULL,
+    id_posicao INT NOT NULL,
+    id_professor INT NOT NULL,
     CONSTRAINT treinador_pk PRIMARY KEY(nome),
     CONSTRAINT id_posicao_treinador_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id),
     CONSTRAINT id_professor_treinador_fk FOREIGN KEY(id_professor) REFERENCES npc(id)
@@ -97,7 +97,7 @@ CREATE TABLE especializacao_do_item(
 );
 
 CREATE TABLE candy(
-    id SERIAL,
+    id INT,
     nome nome,
     preco moeda,
     aumento_experiencia INT NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE candy(
 );
 
 CREATE TABLE berry(
-    id SERIAL,
+    id INT,
     nome nome,
     preco moeda,
     aumento_taxa_captura taxa_captura,
@@ -117,10 +117,10 @@ CREATE TABLE berry(
 );
 
 CREATE TABLE evostone(
-    id SERIAL,
+    id INT,
     nome nome,
     preco moeda,
-    id_elemento SERIAL NOT NULL,
+    id_elemento INT NOT NULL,
     CONSTRAINT evostone_pk PRIMARY KEY(id),
     CONSTRAINT nome_evostone_sk UNIQUE(nome),
     CONSTRAINT id_elemento_evostone_fk FOREIGN KEY(id_elemento) REFERENCES elemento(id),
@@ -128,7 +128,7 @@ CREATE TABLE evostone(
 );
 
 CREATE TABLE pokebola(
-    id SERIAL,
+    id INT,
     nome nome CHECK(nome IN('Pokeball', 'Great Ball', 'Ultra Ball', 'Master Ball')),
     preco moeda,
 
@@ -139,14 +139,14 @@ CREATE TABLE pokebola(
 
 CREATE TABLE instancia_item(
     id SERIAL,
-    id_item SERIAL NOT NULL,
+    id_item INT NOT NULL,
     CONSTRAINT instancia_item_pk PRIMARY KEY(id),
     CONSTRAINT id_item_instancia_item_fk FOREIGN KEY(id_item) REFERENCES especializacao_do_item(id_item)
 );
 
 CREATE TABLE instancia_item_posicao(
-    id_posicao SERIAL NOT NULL,
-    id_instancia_item SERIAL,
+    id_posicao INT NOT NULL,
+    id_instancia_item INT,
     CONSTRAINT instancia_item_posicao_pk PRIMARY KEY(id_posicao),
     CONSTRAINT instancia_item_posicao_sk UNIQUE(id_instancia_item),
     CONSTRAINT id_posicao_instancia_item_posicao_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id),
@@ -154,8 +154,8 @@ CREATE TABLE instancia_item_posicao(
 );
 
 CREATE TABLE npc_guarda_instancia_de_item(
-    id_npc SERIAL NOT NULL,
-    id_instancia_item SERIAL,
+    id_npc INT NOT NULL,
+    id_instancia_item INT,
     CONSTRAINT npc_guarda_instancia_de_item_pk PRIMARY KEY(id_npc, id_instancia_item),
     CONSTRAINT id_npc_npc_guarda_instancia_de_item_fk FOREIGN KEY(id_npc) REFERENCES npc(id),
     CONSTRAINT id_instancia_item_npc_guarda_instancia_de_item_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item(id)
@@ -163,7 +163,7 @@ CREATE TABLE npc_guarda_instancia_de_item(
 
 CREATE TABLE mochila_guarda_instancia_de_item(
     id_mochila nome NOT NULL,
-    id_instancia_item SERIAL,
+    id_instancia_item INT,
     CONSTRAINT mochila_guarda_instancia_de_item_pk PRIMARY KEY(id_instancia_item),
     CONSTRAINT id_mochila_mochila_guarda_instancia_de_item_fk FOREIGN KEY(id_mochila) REFERENCES mochila(id),
     CONSTRAINT id_instancia_item_mochila_guarda_instancia_de_item_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item(id)
@@ -176,10 +176,10 @@ CREATE TABLE pokemon(
     tamanho DECIMAL(6,2) NOT NULL,
     peso DECIMAL(6,2) NOT NULL,
     descricao varchar(999) NOT NULL,
-    id_evolucao SERIAL,
-    elemento1 SERIAL NOT NULL,
+    id_evolucao INT ,
+    elemento1 INT NOT NULL,
     taxa_captura taxa_captura,
-    elemento2 SERIAL,
+    elemento2 INT,
     CONSTRAINT pokemon_pk PRIMARY KEY(id),
     CONSTRAINT especie_pokemon_sk UNIQUE(especie),
     CONSTRAINT id_evolucao_pokemon_fk FOREIGN KEY(id_evolucao) REFERENCES pokemon(id),
@@ -190,7 +190,7 @@ CREATE TABLE pokemon(
 
 CREATE TABLE instancia_pokemon(
     id SERIAL,
-    id_pokemon SERIAL NOT NULL,
+    id_pokemon INT NOT NULL,
     experiencia INT NOT NULL,
     genero CHAR(1) CHECK(genero IN('M', 'F')),
 
@@ -199,8 +199,8 @@ CREATE TABLE instancia_pokemon(
 );
 
 CREATE TABLE instancia_pokemon_posicao(
-    id_posicao SERIAL,
-    id_instancia_pokemon SERIAL,
+    id_posicao INT,
+    id_instancia_pokemon INT,
     CONSTRAINT instancia_pokemon_posicao_pk PRIMARY KEY(id_posicao),
     CONSTRAINT instancia_pokemon_posicao_sk UNIQUE(id_instancia_pokemon),
     CONSTRAINT id_posicao_instancia_pokemon_posicao_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id),
@@ -208,7 +208,7 @@ CREATE TABLE instancia_pokemon_posicao(
 );
 
 CREATE TABLE registra(
-    id_pokemon SERIAL,
+    id_pokemon INT,
     id_pokedex nome,
     qtd_vista INT DEFAULT 0 NOT NULL,
     qtd_capturada INT DEFAULT 0 NOT NULL,
@@ -219,9 +219,9 @@ CREATE TABLE registra(
 );
 
 CREATE TABLE vende(
-    id_instancia_item SERIAL,
+    id_instancia_item INT,
     treinador nome,
-    id_npc SERIAL NOT NULL,
+    id_npc INT NOT NULL,
     CONSTRAINT vende_pk PRIMARY KEY(id_instancia_item),
     CONSTRAINT treinador_vende_fk FOREIGN KEY(treinador) REFERENCES treinador(nome),
     CONSTRAINT id_npc_vende_fk FOREIGN KEY(id_npc) REFERENCES npc(id)
@@ -229,7 +229,7 @@ CREATE TABLE vende(
 
 CREATE TABLE captura(
     id SERIAL,
-    id_instancia_pokemon SERIAL,
+    id_instancia_pokemon INT,
     id_treinador nome,
     CONSTRAINT captura_pk PRIMARY KEY(id),
     CONSTRAINT captura_sk UNIQUE(id_instancia_pokemon, id_treinador),
@@ -238,8 +238,8 @@ CREATE TABLE captura(
 );
 
 CREATE TABLE evento_captura(
-    id_instancia_pokemon SERIAL,
-    id_pokebola SERIAL,
+    id_instancia_pokemon INT,
+    id_pokebola INT,
     CONSTRAINT evento_captura_pk PRIMARY KEY(id_instancia_pokemon),
     CONSTRAINT id_instancia_pokemon_evento_captura_fk FOREIGN KEY(id_instancia_pokemon) REFERENCES instancia_pokemon(id),
     CONSTRAINT id_pokebola_evento_captura_fk FOREIGN KEY(id_pokebola) REFERENCES pokebola(id)
