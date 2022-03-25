@@ -55,6 +55,7 @@ CREATE TABLE regiao_possui_elemento(
 
 CREATE TABLE npc(
     id SERIAL,
+    nome nome,
     fala varchar(200) NOT NULL, --- NPC terá apenas uma fala? Sim
     profissao varchar(10), --- CHECK(profissao IN('professor', 'vendedor')), a relação é Parcial, então podem existir outras profissões
     id_posicao SERIAL NOT NULL,
@@ -77,8 +78,8 @@ CREATE TABLE treinador(
 
 CREATE TABLE mochila(
     id nome,
-    capacidade_da_mochila INT NOT NULL,
-    dinheiro_maximo INT NOT NULL,
+    capacidade INT NOT NULL,
+    dinheiro_maximo moeda,
     CONSTRAINT mochila_pk PRIMARY KEY(id),
     CONSTRAINT id_treinador_fk FOREIGN KEY(id) REFERENCES treinador(nome)
 );
