@@ -40,7 +40,7 @@ CREATE TABLE posicao(
 
 CREATE TABLE elemento(
     id SERIAL,
-    nome nome CHECK(nome IN('fogo', 'água', 'grama', 'voador', 'lutador', 'veneno', 'elétrico', 'terra', 'pedra', 'psiquico', 'gelo', 'inseto', 'fantasma', 'ferro', 'dragão', 'sombrio', 'fada')),
+    nome nome CHECK(nome IN('fogo', 'água', 'grama', 'voador', 'lutador', 'veneno', 'elétrico', 'terra', 'pedra', 'psiquico', 'gelo', 'inseto', 'fantasma', 'ferro', 'dragão', 'sombrio', 'fada', 'normal')),
     CONSTRAINT elemento_pk PRIMARY KEY(id),
     CONSTRAINT nome_elemento_sk UNIQUE(nome)
 );
