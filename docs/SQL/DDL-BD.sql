@@ -51,7 +51,7 @@ CREATE TABLE regiao_possui_elemento(
     id_elemento serie,
     CONSTRAINT regiao_possui_elemento_pk PRIMARY KEY(id_regiao, id_elemento),
     CONSTRAINT id_regiao_regiao_possui_elemento_fk FOREIGN KEY(id_regiao) REFERENCES regiao(id),
-    CONSTRAINT id_elemento_regiao_possui_elemento_fk FOREIGN KEY(id_elemento) REFERENCES elemento(id),
+    CONSTRAINT id_elemento_regiao_possui_elemento_fk FOREIGN KEY(id_elemento) REFERENCES elemento(id)
 );
 
 CREATE TABLE npc(
@@ -102,7 +102,7 @@ CREATE TABLE candy(
     preco moeda,
     aumento_experiencia INT NOT NULL,
     CONSTRAINT candy_pk PRIMARY KEY(id),
-    CONSTRAINT nome_candy_sk UNIQUE(nome)
+    CONSTRAINT nome_candy_sk UNIQUE(nome),
     CONSTRAINT id_item_fk FOREIGN KEY(id) REFERENCES especializacao_do_item(id_item)
 );
 
@@ -112,7 +112,7 @@ CREATE TABLE berry(
     preco moeda,
     aumento_taxa_captura taxa_captura,
     CONSTRAINT berry_pk PRIMARY KEY(id),
-    CONSTRAINT nome_berry_sk UNIQUE(nome)
+    CONSTRAINT nome_berry_sk UNIQUE(nome),
     CONSTRAINT id_item_fk FOREIGN KEY(id) REFERENCES especializacao_do_item(id_item)
 );
 
@@ -123,7 +123,7 @@ CREATE TABLE evostone(
     id_elemento serie NOT NULL,
     CONSTRAINT evostone_pk PRIMARY KEY(id),
     CONSTRAINT nome_evostone_sk UNIQUE(nome),
-    CONSTRAINT id_elemento_evostone_fk FOREIGN KEY(id_elemento) REFERENCES elemento(id)
+    CONSTRAINT id_elemento_evostone_fk FOREIGN KEY(id_elemento) REFERENCES elemento(id),
     CONSTRAINT id_item_fk FOREIGN KEY(id) REFERENCES especializacao_do_item(id_item)
 );
 
@@ -132,7 +132,7 @@ CREATE TABLE pokebola(
     nome nome CHECK(nome IN('Pokeball', 'Great Ball', 'Ultra Ball', 'Master Ball')),
     preco moeda,
 
-    CONSTRAINT pokebola_pk PRIMARY KEY(id)
+    CONSTRAINT pokebola_pk PRIMARY KEY(id),
     CONSTRAINT nome_pokebola_sk UNIQUE(nome),
     CONSTRAINT id_item_fk FOREIGN KEY(id) REFERENCES especializacao_do_item(id_item)
 );
@@ -204,7 +204,7 @@ CREATE TABLE instancia_pokemon_posicao(
     CONSTRAINT instancia_pokemon_posicao_pk PRIMARY KEY(id_posicao),
     CONSTRAINT instancia_pokemon_posicao_sk UNIQUE(id_instancia_pokemon),
     CONSTRAINT id_posicao_instancia_pokemon_posicao_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id),
-    CONSTRAINT id_instancia_pokemon_instancia_pokemon_posicao_fk FOREIGN KEY(id_instancia_pokemon) REFERENCES instancia_pokemon(id),
+    CONSTRAINT id_instancia_pokemon_instancia_pokemon_posicao_fk FOREIGN KEY(id_instancia_pokemon) REFERENCES instancia_pokemon(id)
 );
 
 CREATE TABLE registra(
@@ -230,7 +230,7 @@ CREATE TABLE vende(
 CREATE TABLE captura(
     id serie,
     id_instancia_pokemon serie,
-    id_treinador,
+    id_treinador nome,
     CONSTRAINT captura_pk PRIMARY KEY(id),
     CONSTRAINT captura_sk UNIQUE(id_instancia_pokemon, id_treinador),
     CONSTRAINT id_instancia_pokemon_captura_fk FOREIGN KEY(id_instancia_pokemon) REFERENCES instancia_pokemon(id),
@@ -242,5 +242,5 @@ CREATE TABLE evento_captura(
     id_pokebola serie,
     CONSTRAINT evento_captura_pk PRIMARY KEY(id_instancia_pokemon),
     CONSTRAINT id_instancia_pokemon_evento_captura_fk FOREIGN KEY(id_instancia_pokemon) REFERENCES instancia_pokemon(id),
-    CONSTRAINT id_pokebola_evento_captura_fk FOREIGN KEY(id_pokebola) REFERENCES pokebola(id),
+    CONSTRAINT id_pokebola_evento_captura_fk FOREIGN KEY(id_pokebola) REFERENCES pokebola(id)
 );
