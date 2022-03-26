@@ -2,6 +2,42 @@
 -- INSERT group 0: ELEMENTO
 INSERT INTO elemento (nome) VALUES ('fogo'), ('água'), ('grama'), ('voador'), ('lutador'), ('veneno'), ('elétrico'), ('terra'), ('pedra'), ('psiquico'), ('gelo'), ('inseto'), ('fantasma'), ('ferro'), ('dragão'), ('sombrio'), ('fada'), ('normal');
 
+-- INSERT group 1: MAPA, REGIÃO, POSIÇÃO, REGIAO POSSUI ELEMENTO
+
+-- MAPA
+INSERT INTO mapa (id) VALUES (DEFAULT);
+
+-- REGIÃO
+INSERT INTO regiao (entrada, id_mapa) VALUES (0, 1), (2, 1), (4, 1);
+
+-- REGIÃO POSSUI ELEMENTO
+INSERT INTO regiao_possui_elemento (id_regiao, id_elemento) VALUES 
+(1, 3), (1, 4), (1, 5), (1, 8), (1, 12), (1, 18), -- REGIÃO 1
+(2, 1), (2, 2), (2, 7), (2, 9), (2, 11), (2, 14), -- REGIÃO 2
+(3, 6), (3, 10), (3, 13), (3, 15), (3, 16), (3, 17); -- REGIÃO 3
+
+-- POSIÇÃO
+INSERT INTO posicao (id_regiao, norte, sul , leste , oeste , cima , baixo) VALUES
+-- POSIÇÕES REGIÃO 1
+(1, 2, NULL, 4, NULL, NULL, NULL), (1, NULL, 1, 3, NULL, NULL, NULL), (1, NULL, 4, NULL, 2, NULL, NULL),
+(1, 3, 5, 7, 1, NULL, NULL), (1, 4, NULL, 6, NULL, NULL, NULL), (1, 7, NULL, NULL, 5, NULL, NULL),
+(1, NULL, 6, 8, 4, NULL, NULL), (1, 9, 11, NULL, 7, NULL, NULL), (1, NULL, 8, 13, 10, NULL, NULL),
+(1, NULL, NULL, 9, NULL, NULL, NULL), (1, 8, NULL, 12, NULL, NULL, NULL), (1, 14, NULL, 15, 11, NULL, NULL),
+(1, NULL, 14, 15, 9, NULL, NULL), (1, 13, 12, 15, NULL, NULL, NULL), (1, 13, 12, 16, 14, NULL, NULL),
+-- POSIÇÕES REGIÃO 2
+(2, 19, 17, 20, 15, NULL, NULL), (2, 16, NULL, 18, NULL, NULL, NULL), (2, NULL, NULL, 25, NULL, NULL, NULL),
+(2, NULL, 20, NULL, 16, NULL, NULL), (2, 19, NULL, 21, 16, NULL, NULL), (2, NULL, NULL, 22, 20, NULL, NULL),
+(2, NULL, 25, 23, 21, NULL, NULL), (2, 24, 26, NULL, 22, NULL, NULL), (2, NULL, 23, NULL, NULL, NULL, NULL),
+(2, 22, 27, 26, 28, NULL, NULL), (2, 23, 27, NULL, 25, NULL, NULL), (2, 25, 30, 26, 28, NULL, NULL),
+(2, 25, 29, 27, NULL, NULL, NULL), (2, 28, 32, 30, NULL, NULL, NULL), (2, 27, 32, 31, 29, NULL, NULL),
+(2, NULL, 32, NULL, 30, NULL, NULL), (2, 30, 33, 31, 29, NULL, NULL),
+-- POSIÇÕES REGIÃO 3
+(3, 32, 44, NULL, NULL, NULL, 34), (3, NULL, 41, 35, 36, NULL, NULL), (3, NULL, 37, NULL, 34, NULL, NULL),
+(3, NULL, 38, 34, NULL, NULL, NULL), (3, 35, 39, NULL, 41, NULL, NULL), (3, 36, 40, 41, NULL, NULL, NULL),
+(3, 37, NULL, NULL, 42, NULL, NULL), (3, 38, NULL, 42, NULL, NULL, NULL), (3, 34, 42, 37, 38, NULL, NULL),
+(3, 41, NULL, 39, 40, 43, NULL), (3, 46, NULL, NULL, NULL, NULL, NULL), (3, 33, 45, NULL, NULL, NULL, NULL),
+(3, 44, 46, NULL, NULL, NULL, NULL), (3, 45, 43, NULL, NULL, NULL, NULL);
+
 -- INSERT group 2: NPC, TREINADOR, MOCHILA, POKEDEX
 -- TODO: Quando o mapa for criado, corrigir NPCs e Professor - DONE, mas testar com mapa ainda sim
 
