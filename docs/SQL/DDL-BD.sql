@@ -57,7 +57,7 @@ CREATE TABLE npc(
     id SERIAL,
     nome nome,
     fala varchar(200) NOT NULL, --- NPC terá apenas uma fala? Sim
-    profissao varchar(10), --- CHECK(profissao IN('professor', 'vendedor')), a relação é Parcial, então podem existir outras profissões
+    profissao nome, --- CHECK(profissao IN('professor', 'vendedor')), a relação é Parcial, então podem existir outras profissões
     id_posicao INT NOT NULL,
     CONSTRAINT npc_pk PRIMARY KEY(id),
     CONSTRAINT id_posicao_npc_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id)

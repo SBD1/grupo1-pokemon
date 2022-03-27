@@ -41,10 +41,7 @@ INSERT INTO posicao (id_regiao, norte, sul , leste , oeste , cima , baixo) VALUE
 -- INSERT group 2: NPC, TREINADOR, MOCHILA, POKEDEX
 -- TODO: Quando o mapa for criado, corrigir NPCs e Professor - DONE, mas testar com mapa ainda sim
 
--- Treinador
-INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 0.00, 'iniciante', 1, 1);
-
--- Professor
+-- NPC
 INSERT INTO npc (nome, fala, profissao, id_posicao) VALUES 
 ('Mãe', 'Oh, meu filho, cresceu tanto! Já vai sair na sua primeira jornada Pokémon... Não esqueça de me ligar S2', 'matriarca', 2),
 ('Professor Oak', 'Olá treinador, sou o Professor Oak!! Você sabia que existem vários tipos de pokébola? Cada uma delas possui uma taxa de captura maior. Use elas com sabedoria', 'professor', 4),
@@ -53,6 +50,9 @@ INSERT INTO npc (nome, fala, profissao, id_posicao) VALUES
 ('Professor Algo', 'Tudo bem treinador? Me chamo Professor Algo. Você sabia que certos pokemons podem evoluir sem adquirir experiência? Basta dar a ele a Evostone correta!!', 'professor', 22),
 ('Vendedora May', 'Ei muleque, não toque em nada que não vá pagar!!', 'vendedor', 26),
 ('Aventureiro Jonas', 'Fazem alguns meses desde que sai da minha cidade natal para minha jornada, é um pouco solitário mas é uma experiência incrível', 'aventureiro', 43);
+
+-- Treinador
+INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 0.00, 'iniciante', 1, 1);
 
 -- Mochila
 INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES ('Ash Ketchum', 50, 500.00);
