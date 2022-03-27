@@ -172,20 +172,26 @@ CREATE TABLE mochila_guarda_instancia_de_item(
 CREATE TABLE pokemon(
     id SERIAL,
     especie varchar(50) NOT NULL,
-    experiencia_evoluir INT,
     tamanho DECIMAL(6,2) NOT NULL,
     peso DECIMAL(6,2) NOT NULL,
     descricao varchar(999) NOT NULL,
-    id_evolucao INT ,
     elemento1 INT NOT NULL,
     taxa_captura taxa_captura,
     elemento2 INT,
     CONSTRAINT pokemon_pk PRIMARY KEY(id),
     CONSTRAINT especie_pokemon_sk UNIQUE(especie),
-    CONSTRAINT id_evolucao_pokemon_fk FOREIGN KEY(id_evolucao) REFERENCES pokemon(id),
     CONSTRAINT elemento1_pokemon_fk FOREIGN KEY(elemento1) REFERENCES elemento(id),
     CONSTRAINT elemento2_pokemon_fk FOREIGN KEY(elemento2) REFERENCES elemento(id)
     --Adicionar imagem posteriormente--
+);
+
+CREATE TABLE pokemon_evolucao(
+    pokemon_id INT,
+    evolucao_id INT,
+    experiencia_evoluir INT,
+    CONSTRAINT pokemon_evolucao_pk PRIMARY KEY(pokemon_id, evolucao_id),
+    CONSTRAINT pokemon_id_pokemon_evolucao_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon(id),
+    CONSTRAINT evolucao_id_pokemon_evolucao_fk FOREIGN KEY(evolucao_id) REFERENCES pokemon(id)
 );
 
 CREATE TABLE instancia_pokemon(
