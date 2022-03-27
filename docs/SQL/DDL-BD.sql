@@ -40,7 +40,7 @@ CREATE TABLE posicao(
 
 CREATE TABLE elemento(
     id SERIAL,
-    nome nome CHECK(nome IN('fogo', 'água', 'grama', 'voador', 'lutador', 'veneno', 'elétrico', 'terra', 'pedra', 'psiquico', 'gelo', 'inseto', 'fantasma', 'ferro', 'dragão', 'sombrio', 'fada', 'normal')),
+    nome nome CHECK(nome IN('fogo', 'água', 'grama', 'voador', 'lutador', 'veneno', 'elétrico', 'terra', 'pedra', 'psíquico', 'gelo', 'inseto', 'fantasma', 'ferro', 'dragão', 'sombrio', 'fada', 'normal')),
     CONSTRAINT elemento_pk PRIMARY KEY(id),
     CONSTRAINT nome_elemento_sk UNIQUE(nome)
 );
@@ -74,6 +74,7 @@ CREATE TABLE treinador(
     CONSTRAINT id_posicao_treinador_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id),
     CONSTRAINT id_professor_treinador_fk FOREIGN KEY(id_professor) REFERENCES npc(id)
     --- É possível criar uma restrição para que o professor seja uma NPC com profissão == professor?
+    -- https://stackoverflow.com/questions/53769118/check-atribute-value-from-another-table-using-a-foreign-key-in-table-creation
 );
 
 CREATE TABLE mochila(
@@ -92,7 +93,7 @@ CREATE TABLE pokedex(
 
 CREATE TABLE especializacao_do_item(
     id_item SERIAL,
-    papel varchar(10) NOT NULL CHECK(papel IN('evostone', 'berry', 'candy', 'pokebola')),
+    papel varchar(10) NOT NULL CHECK(papel IN('evostone', 'berry', 'candy', 'pokebola')), -- A gente podia substituir esses textos por iniciais, não? Só pra ocupar menos caractere no banco (menos memória).
     CONSTRAINT especializacao_do_item_pk PRIMARY KEY(id_item)
 );
 
@@ -146,7 +147,7 @@ CREATE TABLE instancia_item(
 
 CREATE TABLE instancia_item_posicao(
     id_posicao INT NOT NULL,
-    id_instancia_item INT,
+    id_instancia_item INT, -- Isso aqui pode ser nulo? Um item sem posição não precisa de uma linha nesta tabela, não?
     CONSTRAINT instancia_item_posicao_pk PRIMARY KEY(id_posicao),
     CONSTRAINT instancia_item_posicao_sk UNIQUE(id_instancia_item),
     CONSTRAINT id_posicao_instancia_item_posicao_fk FOREIGN KEY(id_posicao) REFERENCES posicao(id),
@@ -155,15 +156,15 @@ CREATE TABLE instancia_item_posicao(
 
 CREATE TABLE npc_guarda_instancia_de_item(
     id_npc INT NOT NULL,
-    id_instancia_item INT,
-    CONSTRAINT npc_guarda_instancia_de_item_pk PRIMARY KEY(id_npc, id_instancia_item),
+    id_instancia_item INT, -- Um item sem NPC não precisa de linha aqui, não?
+    CONSTRAINT npc_guarda_instancia_de_item_pk PRIMARY KEY(id_npc, id_instancia_item), -- Se id_instancia_item faz parte de PK, ele nunca vai ser nulo, não?
     CONSTRAINT id_npc_npc_guarda_instancia_de_item_fk FOREIGN KEY(id_npc) REFERENCES npc(id),
     CONSTRAINT id_instancia_item_npc_guarda_instancia_de_item_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item(id)
 );
 
 CREATE TABLE mochila_guarda_instancia_de_item(
     id_mochila nome NOT NULL,
-    id_instancia_item INT,
+    id_instancia_item INT, -- Um item sem mochila não precisaria estar aqui, não?
     CONSTRAINT mochila_guarda_instancia_de_item_pk PRIMARY KEY(id_instancia_item),
     CONSTRAINT id_mochila_mochila_guarda_instancia_de_item_fk FOREIGN KEY(id_mochila) REFERENCES mochila(id),
     CONSTRAINT id_instancia_item_mochila_guarda_instancia_de_item_fk FOREIGN KEY(id_instancia_item) REFERENCES instancia_item(id)
@@ -182,13 +183,13 @@ CREATE TABLE pokemon(
     CONSTRAINT especie_pokemon_sk UNIQUE(especie),
     CONSTRAINT elemento1_pokemon_fk FOREIGN KEY(elemento1) REFERENCES elemento(id),
     CONSTRAINT elemento2_pokemon_fk FOREIGN KEY(elemento2) REFERENCES elemento(id)
-    --Adicionar imagem posteriormente--
+    --Adicionar imagem posteriormente em uma tabela intermediária--
 );
 
-CREATE TABLE pokemon_evolucao(
+CREATE TABLE pokemon_evolucao( -- Não achei isso no MREL Normalizado
     pokemon_id INT,
     evolucao_id INT,
-    experiencia_evoluir INT,
+    experiencia_evoluir INT, -- Não tem um valor default? Ou puxaria isso de outra tabela
     CONSTRAINT pokemon_evolucao_pk PRIMARY KEY(pokemon_id, evolucao_id),
     CONSTRAINT pokemon_id_pokemon_evolucao_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon(id),
     CONSTRAINT evolucao_id_pokemon_evolucao_fk FOREIGN KEY(evolucao_id) REFERENCES pokemon(id)
@@ -226,7 +227,7 @@ CREATE TABLE registra(
 
 CREATE TABLE vende(
     id_instancia_item INT,
-    treinador nome,
+    treinador nome, --Pode ser NULL? Sem venda não deveria estar aqui, não?
     id_npc INT NOT NULL,
     CONSTRAINT vende_pk PRIMARY KEY(id_instancia_item),
     CONSTRAINT treinador_vende_fk FOREIGN KEY(treinador) REFERENCES treinador(nome),
