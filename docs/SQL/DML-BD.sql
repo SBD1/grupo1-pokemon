@@ -219,3 +219,83 @@ INSERT INTO pokemon_evolucao (pokemon_id, evolucao_id, experiencia_evoluir) VALU
 
 -- Instancias
 INSERT INTO instancia_pokemon (id_pokemon, experiencia, genero) VALUES  (1, 50, 'M'), (43, 50, 'F'), (4, 50, 'M'), (7, 50, 'F'), (74, 50, 'F'), (29, 50, 'F'), (32, 50, 'M'), (147, 50, 'F'), (150, 500, null), (151, 500, null);
+
+-- INSERT group 3: ESPECIALIZAÇÃO DO ITEM, CANDY, BERRY, POKEBOLA, EVOSTONE E INSTÂNCIA ITEM
+
+INSERT INTO especializacao_do_item (papel) VALUES
+  ('candy')
+, ('candy')
+, ('candy')
+, ('candy')
+, ('berry')
+, ('berry')
+, ('berry')
+, ('berry')
+, ('berry')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone')
+, ('evostone');
+
+INSERT INTO candy (id, nome, preco, aumento_experiencia) VALUES
+  (1, 'Morango', 1, 3)
+, (2, 'Amora', 2, 5)
+, (3, 'Blueberry', 5, 10)
+, (4, 'Banana', 3, 6);
+
+INSERT INTO berry (id, nome, preco, aumento_taxa_captura) VALUES
+  (5, 'Picante', 4, 1)
+, (6, 'Seco', 2, 0.5)
+, (7, 'Doce', 5, 0.33)
+, (8, 'Amargo', 2, 0.52)
+, (9, 'Azedo', 1, 0.80);
+
+INSERT INTO evostone (id, nome, preco, id_elemento) VALUES
+  (10, 'Down', 5, 16)
+, (11, 'Water', 5, 2)
+, (12, 'Dusk', 5, 15)
+, (13, 'Fire', 5, 1)
+, (14, 'Ice', 5, 1)
+, (15, 'Leaf', 5, 3)
+, (16, 'Moon', 5, 13)
+, (17, 'Shiny', 5, 17)
+, (18, 'Sun', 5, 7)
+, (19, 'Storm', 5, 12);
+
+INSERT INTO instancia_item (id_item) VALUES
+  (1)
+, (5)
+, (5)
+, (10);
+
+INSERT INTO pokebola (id, nome, preco) VALUES
+  (1, 'Pokeball', 2)
+, (2, 'Great Ball', 5)
+, (3, 'Ultra Ball', 10)
+, (4, 'Master Ball', 20);
+
+-- INSERT INTO elemento (nome) VALUES -------- referência
+-- 1('fogo'), 
+-- 2('água'), 
+-- 3('grama'), 
+-- 4('voador'), 
+-- 5('lutador'), 
+-- 6('veneno'), 
+-- 7('elétrico'), 
+-- 8('terra'), 
+-- 9('pedra'), 
+-- 10('psíquico'), 
+-- 11('gelo'), 
+-- 12('inseto'), 
+-- 13('fantasma'), 
+-- 14('ferro'), 
+-- 15('dragão'), 
+-- 16('sombrio'), 
+-- 17('fada'), 
+-- 18('normal');
