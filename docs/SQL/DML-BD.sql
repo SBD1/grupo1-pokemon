@@ -218,7 +218,17 @@ INSERT INTO pokemon_evolucao (pokemon_id, evolucao_id, experiencia_evoluir) VALU
 
 
 -- Instancias
-INSERT INTO instancia_pokemon (id_pokemon, experiencia, genero) VALUES  (1, 50, 'M'), (43, 50, 'F'), (4, 50, 'M'), (7, 50, 'F'), (74, 50, 'F'), (29, 50, 'F'), (32, 50, 'M'), (147, 50, 'F'), (150, 500, null), (151, 500, null);
+INSERT INTO instancia_pokemon (id_pokemon, experiencia, genero) VALUES  
+  (1, 50, 'M')
+, (43, 50, 'F')
+, (4, 50, 'M')
+, (7, 50, 'F')
+, (74, 50, 'F')
+, (29, 50, 'F')
+, (32, 50, 'M')
+, (147, 50, 'F')
+, (150, 500, null)
+, (151, 500, null);
 
 -- INSERT group 3: ESPECIALIZAÇÃO DO ITEM, CANDY, BERRY, POKEBOLA, EVOSTONE E INSTÂNCIA ITEM
 
@@ -248,17 +258,16 @@ INSERT INTO especializacao_do_item (papel) VALUES
 , ('pokebola');
 
 INSERT INTO candy (id, nome, preco, aumento_experiencia) VALUES
-  (1, 'Morango', 1, 3)
-, (2, 'Amora', 2, 5)
-, (3, 'Blueberry', 5, 10)
-, (4, 'Banana', 3, 6);
+  (1, 'Picante', 1, 3)
+, (2, 'Seco', 2, 5)
+, (3, 'Doce', 5, 10)
+, (4, 'Amargo', 3, 6);
 
 INSERT INTO berry (id, nome, preco, aumento_taxa_captura) VALUES
-  (5, 'Picante', 4, 1)
-, (6, 'Seco', 2, 0.5)
-, (7, 'Doce', 5, 0.33)
-, (8, 'Amargo', 2, 0.52)
-, (9, 'Azedo', 1, 0.80);
+  (5, 'Morango', 4, 1)
+, (6, 'Amora', 2, 0.5)
+, (7, 'Blueberry', 5, 0.33)
+, (8, 'Banana', 2, 0.52);
 
 INSERT INTO evostone (id, nome, preco, id_elemento) VALUES
   (10, 'Down', 5, 16)
@@ -288,7 +297,14 @@ INSERT INTO instancia_item (id_item) VALUES
 , (20), (20), (20), (20), (20), (20), (20), (20), (20), (20), (21), (21), (21), (21), (22) -- Vendedor June pokebolas
 , (16), (18) -- Evos
 , (20), (21), (21), (21), (21), (21), (21), (21), (21), (21), (22), (22), (22), (22), (23) --Vendedor May pokebolas
-, (11), (13), (14), (15); -- Evos
+, (11), (13), (14), (15) -- Evos
+-- Itens no chão
+, (20) -- Pokebola
+, (14) -- EvoStone Ice
+, (5) -- Berry Morango
+, (1) -- Candy Picante
+, (3) -- Candy Doce
+, (23); -- Master Ball
 
 
 -- Guardar items NPC e Mochila
@@ -298,6 +314,28 @@ INSERT INTO mochila_guarda_instancia_de_item VALUES ('Ash Ketchum', 5), ('Ash Ke
 -- NPCs
 INSERT INTO npc_guarda_instancia_de_item VALUES (3, 8), (3, 9), (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (3, 16), (3, 17), (3, 18), (3, 19), (3, 20), (3, 21), (3, 22), (3, 23), (3, 24), 
 (6, 25), (6, 26), (6, 27), (6, 28), (6, 29), (6, 30), (6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36), (6, 37), (6, 38), (6, 39), (6, 40), (6, 41), (6, 42), (6, 43);
+
+-- INSERT group 6: INSTANCIA ITEM POSICAO e INSTANCIA POKEMON POSICAO
+INSERT INTO instancia_item_posicao (id_posicao, id_instancia_item) VALUES
+  (10, 44)
+, (18, 45)
+, (24, 46)
+, (36, 47)
+, (39, 48)
+, (45, 49);
+
+INSERT INTO instancia_pokemon_posicao (id_posicao, id_instancia_pokemon) VALUES
+  (11, 1)
+, (13, 2)
+, (19, 3)
+, (29, 4)
+, (31, 5)
+, (35, 6)
+, (37, 7)
+, (38, 8)
+, (40, 9)
+, (41, 10)
+;
 
 -- INSERT INTO elemento (nome) VALUES -------- referência
 -- 1('fogo'), 
