@@ -241,7 +241,11 @@ INSERT INTO especializacao_do_item (papel) VALUES
 , ('evostone')
 , ('evostone')
 , ('evostone')
-, ('evostone');
+, ('evostone')
+, ('pokebola')
+, ('pokebola')
+, ('pokebola')
+, ('pokebola');
 
 INSERT INTO candy (id, nome, preco, aumento_experiencia) VALUES
   (1, 'Morango', 1, 3)
@@ -268,17 +272,32 @@ INSERT INTO evostone (id, nome, preco, id_elemento) VALUES
 , (18, 'Sun', 5, 7)
 , (19, 'Storm', 5, 12);
 
+INSERT INTO pokebola (id, nome, preco) VALUES
+  (20, 'Pokeball', 2)
+, (21, 'Great Ball', 5)
+, (22, 'Ultra Ball', 10)
+, (23, 'Master Ball', 20);
+
 INSERT INTO instancia_item (id_item) VALUES
   (1)
 , (5)
 , (5)
-, (10);
+, (10)
+-- Items para Vendedores e treinador
+, (20), (20), (20) -- Treinador
+, (20), (20), (20), (20), (20), (20), (20), (20), (20), (20), (21), (21), (21), (21), (22) -- Vendedor June pokebolas
+, (16), (18) -- Evos
+, (20), (21), (21), (21), (21), (21), (21), (21), (21), (21), (22), (22), (22), (22), (23) --Vendedor May pokebolas
+, (11), (13), (14), (15); -- Evos
 
-INSERT INTO pokebola (id, nome, preco) VALUES
-  (1, 'Pokeball', 2)
-, (2, 'Great Ball', 5)
-, (3, 'Ultra Ball', 10)
-, (4, 'Master Ball', 20);
+
+-- Guardar items NPC e Mochila
+-- Mochila
+INSERT INTO mochila_guarda_instancia_de_item VALUES ('Ash Ketchum', 5), ('Ash Ketchum', 6), ('Ash Ketchum', 7);
+
+-- NPCs
+INSERT INTO npc_guarda_instancia_de_item VALUES (3, 8), (3, 9), (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (3, 16), (3, 17), (3, 18), (3, 19), (3, 20), (3, 21), (3, 22), (3, 23), (3, 24), 
+(6, 25), (6, 26), (6, 27), (6, 28), (6, 29), (6, 30), (6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36), (6, 37), (6, 38), (6, 39), (6, 40), (6, 41), (6, 42), (6, 43);
 
 -- INSERT INTO elemento (nome) VALUES -------- referência
 -- 1('fogo'), 
