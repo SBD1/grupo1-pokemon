@@ -10,10 +10,3 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  
-  game:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    depends_on:
-      - db

@@ -1,20 +1,44 @@
 #!/usr/bin/env python
 import yaml
-from sqlalchemy import create_engine
+import psycopg2
 import logging
 
 log = logging.getLogger(__name__)
 
 
-def get_database():
+def get_database_params():
+    conn = None
     try:
-        engine = get_connection_from_profile()
-        log.info("Connected to PostgreSQL database!")
-    except IOError:
-        log.exception("Failed to get database connection!")
-        return None, 'fail'
+        # read connection parameters
+        params = get_connection_from_profile()
 
-    return engine
+        # connect to the PostgreSQL server
+        log.info('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+		
+        # create a cursor
+        cur = conn.cursor()
+        
+        # execute a statement
+        log.info('PostgreSQL database version:')
+        cur.execute('SELECT version()')
+
+        # display the PostgreSQL database server version
+        db_version = cur.fetchone()
+        log.info(db_version)
+    
+        # close the communication with the PostgreSQL
+        cur.close()
+        log.info("Connected to PostgreSQL database!")
+    except (Exception, psycopg2.DatabaseError) as error:
+        log.exception("Failed to get database connection!\n", error)
+        return None, 'fail'
+    finally:
+        if conn is not None:
+            conn.close()
+            log.info('Database connection closed.')
+
+    return params
 
 
 def get_connection_from_profile(config_file_name="default_profile.yaml"):
@@ -36,23 +60,25 @@ def get_connection_from_profile(config_file_name="default_profile.yaml"):
             'PGPORT' in vals.keys()):
         raise Exception('Bad config file: ' + config_file_name)
 
-    return get_engine(vals['PGDATABASE'], vals['PGUSER'],
+    return set_params(vals['PGDATABASE'], vals['PGUSER'],
                       vals['PGHOST'], vals['PGPORT'],
                       vals['PGPASSWORD'])
 
 
-def get_engine(db, user, host, port, passwd):
+def set_params(db, user, host, port, password):
     """
-    Get SQLalchemy engine using credentials.
+    Set params in psycopg2 connection format.
     Input:
     db: database name
     user: Username
     host: Hostname of the database server
     port: Port number
-    passwd: Password for the database
+    password: Password for the database
     """
-
-    url = 'postgresql://{user}:{passwd}@{host}:{port}/{db}'.format(
-        user=user, passwd=passwd, host=host, port=port, db=db)
-    engine = create_engine(url, pool_size = 50)
-    return engine
+    params = {}
+    params['db'] = db
+    params['user'] = user
+    params['host'] = host
+    params['port'] = port
+    params['password'] = password
+    return params

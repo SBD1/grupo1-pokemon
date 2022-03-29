@@ -1,10 +1,17 @@
 from setup import setup_environment
-import warnings
+import logging
 
-# Make PostgreSQL Connection
-engine = setup_environment.get_database()
-try:
-    con = engine.raw_connection()
-    warnings.warn(con)
-except:
-    pass
+log = logging.getLogger(__name__)
+
+def start():
+    # Make PostgreSQL Connection
+    try:
+        params = setup_environment.get_database_params()
+        while True:
+            print("Running params: ", params)
+    except:
+        pass
+
+
+if __name__ == '__main__':
+    start()
