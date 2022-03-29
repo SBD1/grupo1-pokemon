@@ -54,5 +54,11 @@ Para o desenvolvimento do mapa, foi criado um rascunho para que fosse possível 
 
 ![Mapa v1.0](../Assets/Images/SQL/Mapa_v1.0.png)
 
+## Outros
+
+Para essa entrega também foi criado um _Dockerfile_ e um _docker-compose_ para integração do banco de dados com o jogo, que será desenvolvido em _python_. A integração das duas partes não foi concluída, porém o ambiente para o banco de dados foi criado com sucesso.
+
+Para testá-lo basta acessar a pasta _game_, encontrada no repositório do grupo, e executar o comando `docker-compose up`. Após o _container_ estar levantado, é possível acessá-lo com o comando `docker-compose exec -it db /bin/bash`. Dentro do _container_ é possível acessar o banco de dados com comando `psql -U postgres`. O banco está sendo criado e populado com os arquivos citados nos tópicos _DDL_ e _DML_.
+
 ## Referências
 - SQL, Wikipedia, https://pt.wikipedia.org/wiki/SQL, acessado em Março de 2022
