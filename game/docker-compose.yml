@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  db:
+    build:
+      context: ./setup/db/
+      dockerfile: Dockerfile-Postgres
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
