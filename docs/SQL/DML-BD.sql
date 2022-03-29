@@ -316,6 +316,7 @@ INSERT INTO npc_guarda_instancia_de_item VALUES (3, 8), (3, 9), (3, 10), (3, 11)
 (6, 25), (6, 26), (6, 27), (6, 28), (6, 29), (6, 30), (6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36), (6, 37), (6, 38), (6, 39), (6, 40), (6, 41), (6, 42), (6, 43);
 
 -- INSERT group 6: INSTANCIA ITEM POSICAO e INSTANCIA POKEMON POSICAO
+
 INSERT INTO instancia_item_posicao (id_posicao, id_instancia_item) VALUES
   (10, 44)
 , (18, 45)
@@ -336,6 +337,28 @@ INSERT INTO instancia_pokemon_posicao (id_posicao, id_instancia_pokemon) VALUES
 , (40, 9)
 , (41, 10)
 ;
+
+-- INSERT group 7: REGISTRA, VENDE, CAPTURA, EVENT0_CAPTURA
+
+INSERT INTO registra (id_pokemon, id_pokedex, qtd_vista, qtd_capturada) VALUES
+(1, 'Ash Ketchum', 1, 0),
+(2, 'Ash Ketchum', 1, 1),
+(3, 'Ash Ketchum', 1, 1),
+(4, 'Ash Ketchum', 1, 0),
+(5, 'Ash Ketchum', 1, 1),
+(6, 'Ash Ketchum', 1, 0),
+(7, 'Ash Ketchum', 1, 0),
+(8, 'Ash Ketchum', 1, 0),
+(9, 'Ash Ketchum', 1, 0),
+(10, 'Ash Ketchum', 1, 0);
+
+INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
+-- Comprou duas pokebolas e uma great ball do vendedor June
+('Ash Ketchum', 8, 3), ('Ash Ketchum', 9, 3), ('Ash Ketchum', 18, 3);
+
+INSERT INTO captura (id_instancia_pokemon, id_treinador) VALUES (3, 'Ash Ketchum'), (2, 'Ash Ketchum'), (5, 'Ash Ketchum');
+
+INSERT INTO evento_captura (id_instancia_pokemon, id_pokebola) VALUES (3, 20), (2, 20), (5, 20);
 
 -- INSERT INTO elemento (nome) VALUES -------- referência
 -- 1('fogo'), 
