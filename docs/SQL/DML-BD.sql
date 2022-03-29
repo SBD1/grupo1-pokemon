@@ -359,23 +359,3 @@ INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
 INSERT INTO captura (id_instancia_pokemon, id_treinador) VALUES (3, 'Ash Ketchum'), (2, 'Ash Ketchum'), (5, 'Ash Ketchum');
 
 INSERT INTO evento_captura (id_instancia_pokemon, id_pokebola) VALUES (3, 20), (2, 20), (5, 20);
-
--- INSERT INTO elemento (nome) VALUES -------- referência
--- 1('fogo'), 
--- 2('água'), 
--- 3('grama'), 
--- 4('voador'), 
--- 5('lutador'), 
--- 6('veneno'), 
--- 7('elétrico'), 
--- 8('terra'), 
--- 9('pedra'), 
--- 10('psíquico'), 
--- 11('gelo'), 
--- 12('inseto'), 
--- 13('fantasma'), 
--- 14('ferro'), 
--- 15('dragão'), 
--- 16('sombrio'), 
--- 17('fada'), 
--- 18('normal');
