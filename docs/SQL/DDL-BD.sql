@@ -1,5 +1,3 @@
-create database pokemon;
-
 CREATE DOMAIN moeda AS DECIMAL(7,2) NOT NULL CHECK(VALUE >= 0);
 
 CREATE DOMAIN taxa_captura AS DECIMAL(3,2) NOT NULL CHECK(VALUE > 0 AND VALUE <= 1);
