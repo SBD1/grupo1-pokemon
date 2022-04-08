@@ -1,24 +1,10 @@
-import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from initial_game import welcome_screen
+from database import create_database, create_and_populate_tables, drop_dabase
 
-def create_database():
-    conn = psycopg2.connect("user='postgres' host='localhost' password='123'")
-    cur = conn.cursor()
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur.execute("create database pokemon;")
-    cur.close()
-    conn.close()
 
-def create_and_populate_tables():
-    conn = psycopg2.connect("dbname='pokemon' user='postgres' host='localhost' password='123'")
-    cur = conn.cursor()
-    cur.execute(open("docs/SQL/DDL-BD.sql", "r").read())
-    cur.execute(open("docs/SQL/DML-BD.sql", "r").read())
-    cur.execute("SELECT * FROM pokemon")
-    records = cur.fetchall()
-    conn.commit()
-    cur.close()
-    conn.close()
-
+## Dropping database because there's an error that ocurrs when try to create a existing db
+drop_dabase()
+## TODO try catch to check if db was created
 create_database()
 create_and_populate_tables()
+welcome_screen()
