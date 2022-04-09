@@ -11,9 +11,9 @@ def create_database():
 
 def get_database_and_cursor(dbname='pokemon'):
     if(dbname == None):
-        conn = psycopg2.connect("user='postgres' host='localhost' password='123'")
+        conn = psycopg2.connect("user='postgres' host='localhost' password='postgres'")
     else:
-        conn = psycopg2.connect("dbname='pokemon' user='postgres' host='localhost' password='123'")
+        conn = psycopg2.connect("dbname='pokemon' user='postgres' host='localhost' password='postgres'")
     return [conn, conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)]
 
 def drop_dabase():
@@ -33,7 +33,7 @@ def create_and_populate_tables():
     cur.close()
     conn.close()
 
-def run_query(query):
+def run_query_fetchall(query):
     conn, cur = get_database_and_cursor()
     cur.execute(query)
     response = cur.fetchall()
@@ -42,8 +42,25 @@ def run_query(query):
     conn.close()
     return response
 
+def run_query_fetchone(query):
+    conn, cur = get_database_and_cursor()
+    cur.execute(query)
+    response = cur.fetchone()
+    conn.commit()
+    cur.close()
+    conn.close()
+    return response
+
+def run_update(query):
+    conn, cur = get_database_and_cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur.execute(query)
+    cur.close()
+    conn.close()
+
+
 def get_user_info():
-    query_response = run_query("SELECT * FROM treinador;")
+    query_response = run_query_fetchall("SELECT * FROM treinador;")
     trainer_info = []
     for info in query_response:
         trainer_info.append(dict(info))
