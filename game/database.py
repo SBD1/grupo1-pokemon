@@ -13,7 +13,7 @@ def create_database():
 
 def get_database_and_cursor(dbname='pokemon'):
 
-    #Lembrar de mudar o DB_USER, DB_HOST e DB_PASSWORD no .env
+    #Lembrar de criar o arquivo .env com as infos que estão no .env-examples e mudar para os valores para o que façam sentido na sua máquina
 
     if(dbname == None):
         conn = psycopg2.connect(f"user='{os.environ.get('DB_USER')}' host='{os.environ.get('DB_HOST')}' password='{os.environ.get('DB_PASSWORD')}'")
