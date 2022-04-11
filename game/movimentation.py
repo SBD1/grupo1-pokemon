@@ -13,7 +13,7 @@ def get_movement_directions(pos):
     positions_available = []
     for pos in result:
         positions_available.append(dict(pos))
-    return positions_available[0];
+    return positions_available[0]
 
 
 def get_display_available_pos(positions_available):
@@ -23,7 +23,7 @@ def get_display_available_pos(positions_available):
         if positions_available[pos] != None:
             to_append = {pos: positions_available[pos]}
             positions_not_none.append(to_append)
-    return positions_not_none[:];
+    return positions_not_none[:]
 
 
 def change_player_pos(pos, player_name):
