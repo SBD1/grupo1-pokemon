@@ -1,5 +1,5 @@
 PGHOST: db
 PGUSER: postgres
-PGPASSWORD: posgres
+PGPASSWORD: postgres
 PGDATABASE: pokemon
 PGPORT: 5432

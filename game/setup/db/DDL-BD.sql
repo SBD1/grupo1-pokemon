@@ -1,4 +1,4 @@
-create database pokemon;
+\c pokemon;
 
 CREATE DOMAIN moeda AS DECIMAL(7,2) NOT NULL CHECK(VALUE >= 0);
 

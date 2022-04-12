@@ -7,11 +7,31 @@ services:
       dockerfile: Dockerfile-Postgres
     ports:
       - 5435:5432
+    networks:
+      - game-network
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
 
   game:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: python:3
+    working_dir: /usr/src/game
+    volumes:
+      - type: bind
+        source: /home/iuri/Desktop/semestre_9/Bancos/grupo1-pokemon/game/
+        target: /usr/src/game
+    networks:
+      - game-network
+    restart:
+      always
+    command: >
+      bash -c "
+      pip install --no-cache-dir -r requirements.txt &&
+      echo 'Requirements installed' &&
+      tail -f /dev/null"
+    depends_on:
+      - db
+
+networks:
+  game-network:
+    driver: bridge
