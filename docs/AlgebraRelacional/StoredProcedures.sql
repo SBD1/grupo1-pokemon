@@ -6,6 +6,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNTION get_id_item (id_instancia INTEGER)
+  RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT id_item FROM instancia_item WHERE id=id_instancia)
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNTION get_papel_item (_id_item INTEGER)
+  RETURNS VARCHAR(10) AS $$
+BEGIN
+  RETURN (SELECT papel FROM especializacao_do_item WHERE id_item=_id_item)
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNTION get_preco_item (_id_item INTEGER, tabela TABLE)
+  RETURNS moeda AS $$
+BEGIN
+  RETURN (SELECT preco FROM tabela WHERE id=_id_item)
+END;
+$$ LANGUAGE plpgsql;
 
 --- Atributo derivado Descrição Visível da Entidade Registra
 CREATE OR REPLACE FUNCTION get_registra_descricao_visivel(_id_pokemon INTEGER)
