@@ -6,26 +6,57 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNTION get_id_item (id_instancia INTEGER)
+-- Função que retorna o id do item a partir do id da intância
+CREATE OR REPLACE FUNCTION get_id_item (id_instancia INTEGER)
   RETURNS INTEGER AS $$
 BEGIN
   RETURN (SELECT id_item FROM instancia_item WHERE id=id_instancia)
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNTION get_papel_item (_id_item INTEGER)
+-- Função que retorna o papel do item a partir do id dele
+CREATE OR REPLACE FUNCTION get_papel_item (_id_item INTEGER)
   RETURNS VARCHAR(10) AS $$
 BEGIN
   RETURN (SELECT papel FROM especializacao_do_item WHERE id_item=_id_item)
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNTION get_preco_item (_id_item INTEGER, tabela TABLE)
+-- Função que retorna o preço do item a partir do id dele
+CREATE OR REPLACE FUNCTION get_preco_item (_id_item INTEGER, tabela TABLE)
   RETURNS moeda AS $$
 BEGIN
   RETURN (SELECT preco FROM tabela WHERE id=_id_item)
 END;
 $$ LANGUAGE plpgsql;
+
+-- Procedure para vender um item
+CREATE OR REPLACE PROCEDURE vende_item(id_instancia INTEGER, _nome_treinador nome, id_npc INTEGER, _id_mochila INTEGER)
+  AS $$
+
+  BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE
+
+	  DECLARE
+		_id_item = get_id_item(id_instancia);
+		_papel_item = get_papel_item(_id_item);
+		_preco_item = get_preco_item(_id_item, _papel_item);
+
+    INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
+	  (_nome_treinador, id_instancia, id_npc);
+
+    INSERT INTO mochila_guarda_instancia_de_item (id_mochila, id_instancia_item) VALUES
+	  (_id_mochila, id_instancia);
+
+    UPDATE treinador
+      SET dinheiro = dinheiro - _preco_item
+      WHERE nome = _nome_treinador;
+
+    DELETE FROM npc_guarda_instancia_de_item
+      WHERE id_instancia_item = id_instancia;
+
+    COMMIT;
+
+$$ LANGUAGE plpgsql
 
 --- Atributo derivado Descrição Visível da Entidade Registra
 CREATE OR REPLACE FUNCTION get_registra_descricao_visivel(_id_pokemon INTEGER)

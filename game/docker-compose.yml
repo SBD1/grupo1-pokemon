@@ -22,13 +22,9 @@ services:
         target: /usr/src/game
     networks:
       - game-network
-    restart:
-      always
+    restart: always
     command: >
-      bash -c "
-      pip install --no-cache-dir -r requirements.txt &&
-      echo 'Requirements installed' &&
-      tail -f /dev/null"
+      bash -c " pip install --no-cache-dir -r requirements.txt && echo 'Requirements installed' && tail -f /dev/null"
     depends_on:
       - db
 
