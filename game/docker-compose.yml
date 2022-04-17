@@ -18,7 +18,7 @@ services:
     working_dir: /usr/src/game
     volumes:
       - type: bind
-        source: /home/iuri/Desktop/semestre_9/Bancos/grupo1-pokemon/game/
+        source: ./
         target: /usr/src/game
     networks:
       - game-network

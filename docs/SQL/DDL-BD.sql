@@ -184,13 +184,24 @@ CREATE TABLE pokemon(
     --Adicionar imagem posteriormente em uma tabela intermediária--
 );
 
-CREATE TABLE pokemon_evolucao( -- Não achei isso no MREL Normalizado
+CREATE TABLE pokemon_evolucao(
     pokemon_id INT,
     evolucao_id INT,
-    experiencia_evoluir INT, -- Não tem um valor default? Ou puxaria isso de outra tabela
+    experiencia_evoluir INT,
+    necessita_de_item BOOLEAN DEFAULT false,
     CONSTRAINT pokemon_evolucao_pk PRIMARY KEY(pokemon_id, evolucao_id),
     CONSTRAINT pokemon_id_pokemon_evolucao_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon(id),
     CONSTRAINT evolucao_id_pokemon_evolucao_fk FOREIGN KEY(evolucao_id) REFERENCES pokemon(id)
+);
+
+CREATE TABLE pokemon_evolucao_item(
+    pokemon_id INT,
+    evolucao_id INT,
+    item_id INT,
+    CONSTRAINT pokemon_evolucao_item_pk PRIMARY KEY(pokemon_id, evolucao_id),
+    CONSTRAINT pokemon_id_pokemon_evolucao_item_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon(id),
+    CONSTRAINT evolucao_id_pokemon_evolucao_item_fk FOREIGN KEY(evolucao_id) REFERENCES pokemon(id),
+    CONSTRAINT item_id_pokemon_evolucao_item_fk FOREIGN KEY(item_id) REFERENCES instancia_item(id)
 );
 
 CREATE TABLE instancia_pokemon(
