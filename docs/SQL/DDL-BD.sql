@@ -188,7 +188,7 @@ CREATE TABLE pokemon_evolucao(
     pokemon_id INT,
     evolucao_id INT,
     experiencia_evoluir INT,
-    necessita_de_item BOOLEAN DEFAULT false,
+    necessita_de_item BOOLEAN DEFAULT false NOT NULL,
     CONSTRAINT pokemon_evolucao_pk PRIMARY KEY(pokemon_id, evolucao_id),
     CONSTRAINT pokemon_id_pokemon_evolucao_fk FOREIGN KEY(pokemon_id) REFERENCES pokemon(id),
     CONSTRAINT evolucao_id_pokemon_evolucao_fk FOREIGN KEY(evolucao_id) REFERENCES pokemon(id)
