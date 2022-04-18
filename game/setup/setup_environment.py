@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 import yaml
 import psycopg2
+import psycopg2.extras
 import logging
 
 log = logging.getLogger(__name__)
 
 
-def get_database_params():
+def get_database_and_cursor():
     conn = None
     try:
         # read connection parameters
@@ -33,12 +34,8 @@ def get_database_params():
     except (Exception, psycopg2.DatabaseError) as error:
         log.exception("Failed to get database connection!\n", error)
         return None, 'fail'
-    finally:
-        if conn is not None:
-            conn.close()
-            log.info('Database connection closed.')
 
-    return params
+    return [conn, conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)]
 
 
 def get_connection_from_profile(config_file_name="default_profile.yaml"):
@@ -76,7 +73,7 @@ def set_params(db, user, host, port, password):
     password: Password for the database
     """
     params = {}
-    params['db'] = db
+    params['database'] = db
     params['user'] = user
     params['host'] = host
     params['port'] = port

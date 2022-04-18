@@ -1,3 +1,5 @@
+\c pokemon;
+
 -- Arquivo para popular pokémons --
 -- INSERT group 0: ELEMENTO
 INSERT INTO elemento (nome) VALUES ('fogo'), ('água'), ('grama'), ('voador'), ('lutador'), ('veneno'), ('elétrico'), ('terra'), ('pedra'), ('psíquico'), ('gelo'), ('inseto'), ('fantasma'), ('ferro'), ('dragão'), ('sombrio'), ('fada'), ('normal');
@@ -52,7 +54,7 @@ INSERT INTO npc (nome, fala, profissao, id_posicao) VALUES
 ('Aventureiro Jonas', 'Fazem alguns meses desde que sai da minha cidade natal para minha jornada, é um pouco solitário mas é uma experiência incrível', 'aventureiro', 43);
 
 -- Treinador
-INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 0.00, 'iniciante', 1, 1);
+INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 500.00, 'iniciante', 1, 1);
 
 -- Mochila
 INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES ('Ash Ketchum', 50, 500.00);
@@ -214,7 +216,7 @@ INSERT INTO pokemon (especie, tamanho, peso, descricao, elemento1,  taxa_captura
 ('mew', 4, 40, 'When viewed through a microscope, this Pokémon’s short, fine, delicate hair can be seen.', 10, 0.05, null);
 
 -- Evoluções
-INSERT INTO pokemon_evolucao (pokemon_id, evolucao_id, experiencia_evoluir) VALUES  (1, 2, 100), (2, 3, 100), (4, 5, 100), (5, 6, 100), (7, 8, 100), (8, 9, 100), (10, 11, 100), (11, 12, 100), (13, 14, 100), (14, 15, 100), (16, 17, 100), (17, 18, 100), (19, 20, 100), (21, 22, 100), (23, 24, 100), (25, 26, 100), (27, 28, 100), (29, 30, 100), (30, 31, 100), (32, 33, 100), (33, 34, 100), (35, 36, 100), (37, 38, 100), (39, 40, 100), (41, 42, 100), (43, 44, 100), (44, 45, 100), (46, 47, 100), (48, 49, 100), (50, 51, 100), (52, 53, 100), (54, 55, 100), (57, 58, 100), (58, 59, 100), (60, 61, 100), (61, 62, 100), (63, 64, 100), (64, 65, 100), (66, 67, 100), (67, 68, 100), (69, 70, 100), (70, 71, 100), (72, 73, 100), (74, 75, 100), (75, 76, 100), (77, 78, 100), (79, 80, 100), (81, 82, 100), (84, 85, 100), (86, 87, 100), (88, 89, 100), (90, 91, 100), (92, 93, 100), (93, 94, 100), (95, 96, 100), (98, 99, 100), (100, 101, 100), (102, 103, 100), (104, 105, 100), (109, 110, 100), (111, 112, 100), (116, 117, 100), (118, 119, 100), (120, 121, 100), (129, 130, 100), (138, 139, 100), (140, 141, 100), (147, 148, 100), (148, 149, 100);
+INSERT INTO pokemon_evolucao (pokemon_id, evolucao_id, experiencia_evoluir) VALUES  (1, 2, 100), (2, 3, 100), (4, 5, 100), (5, 6, 100), (7, 8, 100), (8, 9, 100), (10, 11, 100), (11, 12, 100), (13, 14, 100), (14, 15, 100), (16, 17, 100), (17, 18, 100), (19, 20, 100), (21, 22, 100), (23, 24, 100), (25, 26, 100), (27, 28, 100), (29, 30, 100), (30, 31, 100), (32, 33, 100), (33, 34, 100), (35, 36, 100), (37, 38, 100), (39, 40, 100), (41, 42, 100), (43, 44, 100), (44, 45, 100), (46, 47, 100), (48, 49, 100), (50, 51, 100), (52, 53, 100), (54, 55, 100), (57, 58, 100), (58, 59, 100), (60, 61, 100), (61, 62, 100), (63, 64, 100), (64, 65, 100), (66, 67, 100), (67, 68, 100), (69, 70, 100), (70, 71, 100), (72, 73, 100), (74, 75, 100), (75, 76, 100), (77, 78, 100), (79, 80, 100), (81, 82, 100), (84, 85, 100), (86, 87, 100), (88, 89, 100), (90, 91, 100), (92, 93, 100), (93, 94, 100), (95, 96, 100), (98, 99, 100), (100, 101, 100), (102, 103, 100), (104, 105, 100), (109, 110, 100), (111, 112, 100), (116, 117, 100), (118, 119, 100), (120, 121, 100), (129, 130, 100), (133, 134, 100), (133, 135, 100), (133, 136, 100), (138, 139, 100), (140, 141, 100), (147, 148, 100), (148, 149, 100);
 
 
 -- Instancias
