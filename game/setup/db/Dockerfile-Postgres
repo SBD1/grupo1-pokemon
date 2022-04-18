@@ -11,4 +11,4 @@ COPY . /db
 ADD CREATE-BD.sql /docker-entrypoint-initdb.d
 ADD DDL-BD.sql /docker-entrypoint-initdb.d
 ADD DML-BD.sql /docker-entrypoint-initdb.d
-ADD StoredProcedures.sql /docker-entrypoint-initdb.d
+ADD Procedures.sql /docker-entrypoint-initdb.d

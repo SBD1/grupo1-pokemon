@@ -18,5 +18,16 @@ Os _Stored Procedures_ e _Triggers_ desenvolvidos pelo grupo podem ser vistos no
 - [StoredProcedures.sql](https://raw.githubusercontent.com/SBD1/grupo1-pokemon/main/docs/AlgebraRelacional/StoredProcedures.sql)
 - [Triggers.sql](https://raw.githubusercontent.com/SBD1/grupo1-pokemon/main/docs/AlgebraRelacional/Triggers.sql)
 
+## Transactions
+
+Uma _Transaction_ simboliza uma unidade de trabalho executada dentro de um sistema de gerenciamento de banco de dados (ou sistema similar), sobre um banco de dados, e tratada de maneira coerente e confiável, independente de outras transações.
+
+As _Transactions_ que serão executadas no jogo podem ser vistas no arquivo [Transactions.sql](https://raw.githubusercontent.com/SBD1/grupo1-pokemon/main/docs/AlgebraRelacional/Transactions.sql).
+
+## Outros
+
+Por fim, foram levantadas algumas funções que serão utilizadas para realizar as mecânicas do jogo. Essas podem ser encontradas no arquivo [SQL-Mecanicas.sql](https://raw.githubusercontent.com/SBD1/grupo1-pokemon/main/docs/AlgebraRelacional/SQL-Mecanicas.sql).
+
 # Referências
 - [Difference between stored procedure and triggers in SQL](https://www.tutorialspoint.com/difference-between-stored-procedure-and-triggers-in-sql#:~:text=Stored%20procedures%20can%20be%20invoked,update%2C%20insert%2C%20delete).)
+- [Transação (banco de dados)](https://pt.wikipedia.org/wiki/Transa%C3%A7%C3%A3o_(banco_de_dados))

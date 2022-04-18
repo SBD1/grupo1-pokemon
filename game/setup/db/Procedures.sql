@@ -1,3 +1,5 @@
+\c pokemon
+
 --- Atributo derivado Nível da Entidade Instância Pokemon
 CREATE OR REPLACE FUNCTION get_instancia_pokemon_nivel(_id INTEGER)
   RETURNS INTEGER AS $$
@@ -6,6 +8,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 -- Função que retorna o id do item a partir do id da intância
 CREATE OR REPLACE FUNCTION get_id_item (id_instancia INTEGER)
   RETURNS INTEGER AS $$
@@ -13,6 +16,7 @@ BEGIN
   RETURN (SELECT id_item FROM instancia_item WHERE id=id_instancia);
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- Função que retorna o papel do item a partir do id dele
 CREATE OR REPLACE FUNCTION get_papel_item (_id_item INTEGER)
@@ -23,8 +27,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Função que retorna o preço do item a partir do id dele
-CREATE TYPE moeda AS (preco DECIMAL(7,2));
-
 CREATE OR REPLACE FUNCTION get_preco_item (_id_item INTEGER, tabela regclass)
   RETURNS SETOF moeda AS $func$
 BEGIN
@@ -32,27 +34,33 @@ BEGIN
 END;
 $func$ LANGUAGE plpgsql;
 
--- Procedure para vender um item
-CREATE TYPE nome AS (nome VARCHAR(50));
 
-CREATE OR REPLACE PROCEDURE vende_item(id_instancia INTEGER, _nome_treinador nome, id_npc INTEGER, _id_mochila INTEGER)
+-- Procedure para vender um item, deve ser usada dentro de uma Transaction
+CREATE OR REPLACE PROCEDURE vende_item(id_instancia INTEGER, _nome_treinador nome, id_npc INTEGER)
   AS $$
 
 	DECLARE
 		_id_item INTEGER;
 		_papel_item VARCHAR(10);
-		_preco_item moeda;
+		_preco_item moeda DEFAULT 0;
 
   BEGIN
 		_id_item = get_id_item(id_instancia);
 		_papel_item = get_papel_item(_id_item);
 		_preco_item = get_preco_item(_id_item, _papel_item);
+    
+    -- raise notice '_id_item: % %', _id_item, E'\n';
+    -- raise notice '_papel_item: % %', _papel_item, E'\n';
+    -- raise notice '_preco_item: % %', _preco_item, E'\n';
 
     INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
-	  (_nome_treinador, id_instancia, id_npc);
+    (_nome_treinador, id_instancia, id_npc);
 
     INSERT INTO mochila_guarda_instancia_de_item (id_mochila, id_instancia_item) VALUES
-	  (_id_mochila, id_instancia);
+    (_nome_treinador, id_instancia);
+
+    -- raise notice 'dinheiro atual: % %', (SELECT dinheiro FROM treinador WHERE nome = _nome_treinador), E'\n';
+    -- raise notice 'dinheiro pós compra: % %', (SELECT dinheiro FROM treinador WHERE nome = _nome_treinador) - _preco_item, E'\n';
 
     UPDATE treinador
       SET dinheiro = dinheiro - _preco_item
@@ -60,11 +68,9 @@ CREATE OR REPLACE PROCEDURE vende_item(id_instancia INTEGER, _nome_treinador nom
 
     DELETE FROM npc_guarda_instancia_de_item
       WHERE id_instancia_item = id_instancia;
-
-    COMMIT;
-
 	END;
 $$ LANGUAGE plpgsql;
+
 
 --- Atributo derivado Descrição Visível da Entidade Registra
 CREATE OR REPLACE FUNCTION get_registra_descricao_visivel(_id_pokemon INTEGER)
@@ -138,6 +144,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 --- Atributo posição do treinador
 CREATE OR REPLACE FUNCTION get_player_position(_id nome)
   RETURNS INTEGER AS $$
@@ -145,6 +152,7 @@ BEGIN
   RETURN (SELECT id_posicao FROM treinador WHERE nome = _id);
 END;
 $$ LANGUAGE plpgsql;
+
 
 --- Validar a passagem para nova regiao
 CREATE OR REPLACE FUNCTION valid_region_change(_id_posicao INTEGER, _id_treinador nome)
