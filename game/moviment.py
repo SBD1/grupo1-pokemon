@@ -30,6 +30,11 @@ def valid_region_change(pos, player_name):
         else:
             return 0
 
+def valid_region_change_db(pos, player_name):
+    sql = f'SELECT valid_region_change({pos}, {player_name});'
+    valid_entry = run_query_fetchone(sql)['valid_region_change']
+    return valid_entry
+
 def get_display_available_pos(positions_available):
     positions = []
     for key in positions_available.keys():
@@ -124,7 +129,7 @@ def choose_player_path(player_name, player_ini_pos):
         choose = input('Qual sua escolha? ')
         if choose in input_directions:
             direction_chosen = directions[get_char_equivalence(choose, 'db')]
-            can_acess = valid_region_change(direction_chosen, player_name)
+            can_acess = valid_region_change_db(direction_chosen, player_name)
             if can_acess == 1:
                 ok = 1
             else:

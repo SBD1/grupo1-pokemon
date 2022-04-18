@@ -13,5 +13,10 @@ SELECT r.entrada FROM regiao r WHERE r.id = (SELECT p.id_regiao FROM posicao p W
 -- Numero de pokemons capturados pelo treinador até o momento, utilizado para verificar se o treinador pode passar de região
 SELECT COUNT(*) as n_capturados FROM captura WHERE id_treinador = {player_name};
 
+-- Validação da entrada em região por Function do banco de dados
+-- A Function utiliza das duas queries acima para validar a entrada em uma nova regiao
+
+SELECT valid_region_change({posicao}, {player_name});
+
 -- Mudança efetiva da posição do treinador de acordo a sua escolha
 UPDATE treinador SET id_posicao = {pos} WHERE nome = {player_name};

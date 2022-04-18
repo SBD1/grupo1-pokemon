@@ -166,7 +166,7 @@ BEGIN
   IF _entrada = 0 THEN
     _output := 1;
   ELSE
-    _pokemons_count := (SELECT COUNT(*) FROM captura WHERE id_treinador = _id);
+    _pokemons_count := (SELECT COUNT(*) FROM captura WHERE id_treinador = _id_treinador);
     IF _pokemons_count >= _entrada THEN
       _output := 1;
     ELSE
