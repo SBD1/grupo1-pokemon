@@ -30,7 +30,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_preco_item (_id_item INTEGER, tabela regclass)
   RETURNS SETOF moeda AS $func$
 BEGIN
-  RETURN QUERY EXECUTE 'SELECT preco FROM ' || tabela || ' WHERE id=_id_item';
+  RETURN QUERY EXECUTE 'SELECT preco FROM ' || tabela || ' WHERE id=' || _id_item;
 END;
 $func$ LANGUAGE plpgsql;
 
