@@ -1,20 +1,8 @@
-# Pokémon
-
-## Descrição
-
-Repositório destinado a disciplina de Sistemas de bancos de dados (SBD1)
-
-# Alunos
-
-| Matrícula  | Aluno             |
-| ---------- | ----------------- |
-| 19/0010495 | Arthur Matos      |
-| 17/0145514 | Iuri Severo       |
-| 17/0013910 | João Pedro Guedes |
-| 17/0039803 | Lucas Medeiros    |
-| 19/0020601 | Victor Buendia    |
-
 # Utilização do Docker
+
+|    Data    | Versão |     Descrição     |                        Autor                        |
+| :--------: | :----: | :---------------: | :-------------------------------------------------: |
+| 18/04/2022 |  0.1   | Criação da página | [Victor Buendia](https://github.com/Victor-Buendia) |
 
 A recomendação, para correção do Módulo 5, é seguir os passos a seguir:
 
@@ -52,3 +40,11 @@ Para entrar no container do banco de dados (postgres):
 Depois, para entrar na database do jogo, utilize:
 
   	\c pokemon;
+
+## Em caso de erros
+
+Recomendamos os comandos de limpeza do docker:
+
+		sudo docker-compose down -v
+
+		docker system prune
