@@ -39,5 +39,27 @@ SELECT papel FROM especializacao_do_item WHERE id_item = {_id_item};
 SELECT QUERY EXECUTE 'SELECT preco FROM ' || {tabela} || ' WHERE id=' || {_id_item};
 
 -- =========================================================================
+-- Mecânica de captura de pokemon
+-- =========================================================================
+
+-- Confere se o pokemon que se quer capturar realmente existe
+SELECT check_pokemon_exists({pokemon_id});
+
+-- Confere se o item da pokebola realmente existe
+SELECT check_item_exists({item_id});
+
+-- Confere se a mochila do player contem a pokebola
+SELECT check_backpack_has_item({mochila_id}, {item_id});
+
+-- Cria a captura do pokemon pelo treinado
+INSERT INTO captura VALUES ({pokemon_id}, {player_name});
+
+-- Cria o evento de captura
+INSERT INTO evento_captura VALUES ({pokemon_id}, {pokebola_id});
+
+-- Remove pokebola da mochila
+DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} and id_mochila={mochila_id};
+
+-- =========================================================================
 -- titulo:
 -- =========================================================================
