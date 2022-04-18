@@ -214,3 +214,27 @@ CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGE
   
 	END;
 $$ LANGUAGE plpgsql;
+
+--- Conferir se um item existe
+CREATE OR REPLACE FUNCTION check_item_exists(_id_instancia_item INTEGER)
+  RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN (SELECT count(*) FROM instancia_item WHERE id = _id_instancia_item);
+END;
+$$ LANGUAGE plpgsql;
+
+--- Conferir se um pokemon existe
+CREATE OR REPLACE FUNCTION check_pokemon_exists(_id_instancia_pokemon INTEGER)
+  RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN (SELECT count(*) FROM instancia_pokemon WHERE id = _id_instancia_pokemon);
+END;
+$$ LANGUAGE plpgsql;
+
+--- Conferir se possui o item na mochila
+CREATE OR REPLACE FUNCTION check_backpack_has_item(_id_mochila nome, _id_instancia_item INTEGER)
+  RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN (SELECT count(*) FROM mochila_guarda_instancia_de_item WHERE id_instancia_item=_id_instancia_item and id_mochila=_id_mochila);
+END;
+$$ LANGUAGE plpgsql;

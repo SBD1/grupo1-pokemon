@@ -214,7 +214,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION check_item_exists(_id_instancia_item INTEGER)
   RETURNS BOOLEAN AS $$
 BEGIN
-  RETURN (SELECT id FROM instancia_item WHERE id = _id_instancia_item);
+  RETURN (SELECT count(*) FROM instancia_item WHERE id = _id_instancia_item);
 END;
 $$ LANGUAGE plpgsql;
 
@@ -222,19 +222,15 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION check_pokemon_exists(_id_instancia_pokemon INTEGER)
   RETURNS BOOLEAN AS $$
 BEGIN
-  RETURN (SELECT id FROM instancia_pokemon WHERE id = _id_instancia_pokemon);
+  RETURN (SELECT count(*) FROM instancia_pokemon WHERE id = _id_instancia_pokemon);
 END;
 $$ LANGUAGE plpgsql;
 
 
 --- Conferir se possui o item na mochila
-CREATE OR REPLACE FUNCTION check_backpack_has_item(_id_instancia_item INTEGER, _id_mochila INTEGER)
+CREATE OR REPLACE FUNCTION check_backpack_has_item(_id_mochila nome, _id_instancia_item INTEGER)
   RETURNS BOOLEAN AS $$
 BEGIN
-  IF check_item_exists(_id_instancia_item) THEN
-    RETURN (SELECT id_mochila FROM mochila_guarda_instancia_de_item WHERE id_instancia_item=_id_instancia_item and id_mochila=_id_mochila);
-  ELSE
-    RETURN NULL;
-  END IF;
+  RETURN (SELECT count(*) FROM mochila_guarda_instancia_de_item WHERE id_instancia_item=_id_instancia_item and id_mochila=_id_mochila);
 END;
 $$ LANGUAGE plpgsql;
