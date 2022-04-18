@@ -5,11 +5,10 @@ CREATE OR REPLACE FUNCTION verificar_evolucao_pokemon() RETURNS trigger AS $veri
         SELECT * INTO info_evolucao FROM pokemon_evolucao as p WHERE p.pokemon_id = new.id_pokemon;
         IF(new.experiencia >= info_evolucao.experiencia_evoluir AND info_evolucao.necessita_de_item <> true) THEN
             new.id_pokemon = info_evolucao.evolucao_id;
-            return new;
         END IF;
-        RETURN NULL;
+        return new;
     END;
-2
+
 $verificar_evolucao_pokemon$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trigger_verificar_evolucao_pokemon
