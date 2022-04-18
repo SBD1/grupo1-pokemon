@@ -129,3 +129,33 @@ BEGIN
   RETURN (SELECT COUNT(*) FROM captura WHERE id_treinador = _id);
 END;
 $$ LANGUAGE plpgsql;
+
+--- Atributo posição do treinador
+CREATE OR REPLACE FUNCTION get_player_position(_id nome)
+  RETURN INTEGER AS $$
+BEGIN
+  RETURN (SELECT id_posicao FROM treinador WHERE nome = _id);
+END;
+$$ LANGUAGE plpgsql;
+
+--- Validar a passagem para nova regiao
+CREATE OR REPLACE FUNCTION valid_region_change(_id_posicao INTEGER, _id_treinador nome)
+  RETURN INTEGER as $$
+DECLARE
+  _entrada INTEGER;
+  _output INTEGER;
+  _pokemons_count INTEGER;
+BEGIN
+  _entrada := (SELECT r.entrada FROM regiao r WHERE r.id = (SELECT p.id_regiao FROM posicao p WHERE p.id = _id_posicao));
+  IF _entrada = 0 THEN
+    _output := 1;
+  ELSE
+    _pokemons_count := (SELECT COUNT(*) FROM captura WHERE id_treinador = _id);
+    IF _pokemons_count >= _entrada THEN
+      _output := 1;
+    ELSE
+      _output := 0;
+    END IF;
+  END IF;
+  RETURN _output;
+END;
