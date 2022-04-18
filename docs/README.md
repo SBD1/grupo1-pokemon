@@ -51,3 +51,42 @@ Repositório para o desenvolvimento do projeto de Pokémon do Grupo 1, Gotta Cat
         </div>
     </div>
 </div>
+
+# Utilização do Docker
+
+A recomendação, para correção do Módulo 5, é seguir os passos a seguir:
+
+1. Preparação
+2. Banco de Dados
+
+## Preparação
+
+Antes de executar qualquer comando, é importante abrir o jogo em ambiente de desenvolvimento e entrar na pasta:
+
+  	/game
+
+Depois, é preciso dar build e subir o container:
+
+  	sudo docker-compose up --build
+
+## Container
+
+Para entrar no container do jogo e realizar alterações, execute:
+
+  	docker-compose exec game /bin/bash
+
+## Executável
+
+Para executar a main do jogo e vê-lo em execução:
+
+  	docker-compose exec game python3 main.py
+
+## Banco de Dados
+
+Para entrar no container do banco de dados (postgres):
+
+  	docker-compose exec db psql -U postgres
+
+Depois, para entrar na database do jogo, utilize:
+
+  	\c pokemon;
