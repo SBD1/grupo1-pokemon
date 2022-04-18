@@ -9,7 +9,7 @@ def get_player_position(player_name):
 
 
 def get_movement_directions(pos):
-    sql = f'SELECT p.norte, p.sul, p.leste, p.oeste, p.cima, p.baixo FROM posicao p WHERE p.id = {pos}'
+    sql = f'SELECT p.norte, p.sul, p.leste, p.oeste, p.cima, p.baixo FROM posicao p WHERE p.id = {pos};'
     result = run_query_fetchall(sql)
     positions_available = []
     for pos in result:
