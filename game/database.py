@@ -78,6 +78,42 @@ def get_user_info():
     return trainer_info[0]
 
 
+def get_npc_info(id_npc):
+    query_response = run_query_fetchall(
+        f"SELECT * FROM npc WHERE id={id_npc};")
+    npc_info = []
+    for info in query_response:
+        npc_info.append(dict(info))
+    return npc_info[0]
+
+
+def get_seller_items(_id_npc):
+    query_response = run_query_fetchall(
+        f"SELECT id_instancia_item FROM npc_guarda_instancia_de_item WHERE id_npc={_id_npc};")
+    instance_items = []
+    for item in query_response:
+        instance_items.append(dict(item))
+    return instance_items
+
+
+def get_item_id(instance_id):
+    query_response = run_query_fetchall(
+        f"SELECT id_item FROM instancia_item WHERE id={instance_id};")
+    items_id = []
+    for item in query_response:
+        items_id.append(dict(item))
+    return items_id[0]
+
+
+def get_papel_item(item_id):
+    query_response = run_query_fetchall(
+        f"SELECT papel FROM especializacao_do_item WHERE id_item={item_id};")
+    papeis = []
+    for papel in query_response:
+        papeis.append(dict(papel))
+    return papeis[0]
+
+
 def run_delete(query):
     conn, cur = get_database_and_cursor()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
