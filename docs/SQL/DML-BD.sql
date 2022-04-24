@@ -52,7 +52,7 @@ INSERT INTO npc (nome, fala, profissao, id_posicao) VALUES
 ('Aventureiro Jonas', 'Fazem alguns meses desde que sai da minha cidade natal para minha jornada, é um pouco solitário mas é uma experiência incrível', 'aventureiro', 43);
 
 -- Treinador
-INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 0.00, 'iniciante', 1, 1);
+INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 0.00, 'iniciante', 1, 2);
 
 -- Mochila
 INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES ('Ash Ketchum', 50, 500.00);
