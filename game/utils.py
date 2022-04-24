@@ -69,13 +69,13 @@ def check_item_exists(item_id):
     return bool(exists)
 
 
-def check_backpack_has_item(mochila_id, item_id):
+def check_backpack_has_item(backpack_id, item_id):
 
     if not check_item_exists(item_id):
         raise ItemDoesntExists(f"Item id:{item_id} doesn't exists")
 
     exists = run_query_fetchone(
-        f"SELECT check_backpack_has_item({mochila_id}, {item_id});")
+        f"SELECT check_backpack_has_item({backpack_id}, {item_id});")
     return bool(exists)
 
 
@@ -84,10 +84,10 @@ def check_pokemon_exists(pokemon_id):
     return bool(exists)
 
 
-def remove_item_from_backpack(mochila_id, item_id):
+def remove_item_from_backpack(backpack_id, item_id):
 
-    if not check_backpack_has_item(mochila_id, item_id):
+    if not check_backpack_has_item(backpack_id, item_id):
         return None
 
     run_delete(f"DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} "
-               f"and id_mochila={mochila_id};")
+               f"and id_mochila={backpack_id};")

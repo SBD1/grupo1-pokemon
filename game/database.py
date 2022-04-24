@@ -149,6 +149,16 @@ def get_papel_item(item_id):
     return []
 
 
+def get_item_instances_on_backpack(item_id, backpack_id):
+    query = f"SELECT item_mochila.id_instancia_item FROM mochila_guarda_instancia_de_item AS item_mochila\
+     INNER JOIN instancia_item AS itens ON item_mochila.id_instancia_item = itens.id\
+      WHERE itens.id_item = {item_id} AND item_mochila.id_mochila = '{backpack_id}';"
+
+    instance_ids = run_query_fetchall(query)
+
+    return instance_ids
+
+
 def insert_new_treinador(player_name):
     try:
         run_insert(
