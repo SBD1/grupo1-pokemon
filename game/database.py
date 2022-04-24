@@ -1,5 +1,5 @@
 import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT, ISOLATION_LEVEL_SERIALIZABLE
 from setup.setup_environment import get_database_and_cursor
 import psycopg2.extras
 import os
@@ -175,3 +175,16 @@ def run_delete(query):
     cur.execute(query)
     cur.close()
     conn.close()
+
+
+def run_sell_item(id_instancia, _nome_treinador, id_npc):
+    try:
+        query = f"CALL vende_item({id_instancia}, '{_nome_treinador}', {id_npc})"
+        conn, cur = get_database_and_cursor()
+        conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
+        cur.execute(query)
+        conn.commit()
+        cur.close()
+        conn.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        return None

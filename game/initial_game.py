@@ -112,8 +112,8 @@ def exit_game():
 
 
 def seller():
-    open_seller_menu(1)
-    open_seller_menu(3)
+    open_seller_menu(1, 'Ash Ketchum')
+    open_seller_menu(3, 'Ash Ketchum')
 
 
 def create_new_player():

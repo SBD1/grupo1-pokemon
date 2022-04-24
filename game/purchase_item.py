@@ -1,8 +1,9 @@
+import time
 from database import *
 from utils import *
 
 
-def open_seller_menu(id_npc):
+def open_seller_menu(id_npc, nome_treinador):
     npc_info = get_npc_info(id_npc)
     nome = npc_info["nome"]
     clean_bash()
@@ -12,6 +13,10 @@ def open_seller_menu(id_npc):
         print_subtitle("ITENS A VENDA")
         instance_items = get_seller_items(id_npc)
         # print_prettier_dict(instance_items)
+
+        if len(instance_items) is 0:
+            print_prompt(
+                "Este vendedor não possui itens para a venda no momento!")
 
         i = 0
         itens_a_venda = []
@@ -52,7 +57,7 @@ def open_seller_menu(id_npc):
                 print(
                     f'   <{i}> Comprar {type}')
         print(
-            f'      <0> Voltar ao menu')
+            f'      <0> Voltar')
 
         opcao = input()
 
@@ -61,11 +66,14 @@ def open_seller_menu(id_npc):
             print_prompt('Selecione um número.')
             opcao = input()
 
-        if int(opcao) not in opcoes_validas:
-            print_prompt('Opção inválida')
-            return
+        while int(opcao) not in opcoes_validas:
+            print_prompt('Opção inválida!')
+            print_prompt('Selecione uma opção válida.')
+            opcao = input()
 
         # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
+        if int(opcao) is 0:
+            return None
 
         clean_bash()
         print_title(f"COMPRAR ITEM DE VENDEDOR: {nome}")
@@ -113,7 +121,7 @@ def open_seller_menu(id_npc):
             print(
                 f'   <{i}> Comprar {especializacao}')
         print(
-            f'      <0> Voltar ao menu')
+            f'      <0> Voltar')
 
         opcao = input()
 
@@ -122,11 +130,15 @@ def open_seller_menu(id_npc):
             print_prompt('Selecione um número.')
             opcao = input()
 
-        if int(opcao) not in opcoes_validas:
-            print_prompt('Opção inválida')
-            return
+        while int(opcao) not in opcoes_validas:
+            print_prompt('Opção inválida!')
+            print_prompt('Selecione uma opção válida.')
+            opcao = input()
 
         # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
+        if int(opcao) is 0:
+            return open_seller_menu(id_npc, nome_treinador)
+
         # print(opcoes_validas[int(opcao)])
         if(int(opcao) > 0):
             print(
@@ -139,7 +151,15 @@ def open_seller_menu(id_npc):
         # print_prettier_dict(itens_a_venda)
         print_prettier_dict(item_comprado)
         # print(f"Comprou {opcao_especializacao_item[printados[int(opcao)]]}")
+        answer = run_sell_item(
+            item_comprado['instancia_id'], nome_treinador, id_npc)
 
+        if answer is None:
+            print_prompt(
+                f"Não foi possível realizar a compra.")
+            print(' Tente novamente! O menu será reaberto em 3 segundos.')
+            time.sleep(3)
+            return open_seller_menu(id_npc, nome_treinador)
         # print_prettier_dict(quantity)
         # print_prettier_dict(contado)
 

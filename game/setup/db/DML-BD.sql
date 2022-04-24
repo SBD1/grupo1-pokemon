@@ -356,7 +356,7 @@ INSERT INTO registra (id_pokemon, id_pokedex, qtd_vista, qtd_capturada) VALUES
 
 INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
 -- Comprou duas pokebolas e uma great ball do vendedor June
-('Ash Ketchum', 8, 3), ('Ash Ketchum', 9, 3), ('Ash Ketchum', 18, 3);
+-- ('Ash Ketchum', 8, 3), ('Ash Ketchum', 9, 3), ('Ash Ketchum', 18, 3);
 
 INSERT INTO captura (id_instancia_pokemon, id_treinador) VALUES (3, 'Ash Ketchum'), (2, 'Ash Ketchum'), (5, 'Ash Ketchum');
 
