@@ -1,3 +1,4 @@
+from unittest import result
 from database import *
 from initial_game import clean_bash
 # from utils import print_prettier_dict
@@ -6,6 +7,11 @@ def get_player_position(player_name):
     sql = f'SELECT t.id_posicao FROM treinador t WHERE t.nome={player_name};'
     result = run_query_fetchone(sql)
     return result['id_posicao']
+
+def get_player_position_db(player_name):
+    sql = f'SELECT get_player_position({player_name});'
+    result = run_query_fetchone(sql)['get_player_position']
+    return result
 
 
 def get_movement_directions(pos):
@@ -107,7 +113,8 @@ def get_char_equivalence(char, pattern):
 
 
 # Todo:  Fix dictionary reference from get_display_available_pos
-def choose_player_path(player_name, player_ini_pos):
+def choose_player_path(player_name):
+    player_ini_pos = get_player_position_db(player_name)
     directions = get_movement_directions(player_ini_pos)
     display = get_display_available_pos(directions)
 
@@ -125,9 +132,12 @@ def choose_player_path(player_name, player_ini_pos):
         for input_char in input_directions:
             text = get_char_equivalence(input_char, 'exibition')
             print(input_char +' -> ' + text, end='\n')
+        print('r -> Cancelar', end='\n')
 
         choose = input('Qual sua escolha? ')
-        if choose in input_directions:
+        if choose == 'r':
+            return
+        elif choose in input_directions:
             direction_chosen = directions[get_char_equivalence(choose, 'db')]
             can_acess = valid_region_change_db(direction_chosen, player_name)
             if can_acess == 1:
@@ -145,19 +155,13 @@ def choose_player_path(player_name, player_ini_pos):
             print('–––––––––––––––––––––––––––––––––––––', end='\n\n')
             print('Escolha novamente', end='\n')
     
-    return change_player_pos(direction_chosen, player_name)
+    change_player_pos(direction_chosen, player_name)
 
 
 ### MOVIMENTATION DEBUGGING
 
 player_name = '\'Ash Ketchum\''
 
-# position = get_player_position(player_name)
-
-# directions = get_movement_directions(position)
-
-# display = get_display_available_pos(directions)
-
-print(choose_player_path(player_name, get_player_position(player_name)))
+choose_player_path(player_name)
 
 
