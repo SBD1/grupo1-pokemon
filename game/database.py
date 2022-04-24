@@ -4,6 +4,7 @@ from setup.setup_environment import get_database_and_cursor
 import psycopg2.extras
 import os
 
+
 # Unnecessary function if using docker
 #
 # def create_database():
@@ -70,12 +71,39 @@ def run_update(query):
     conn.close()
 
 
-def get_user_info():
-    query_response = run_query_fetchall("SELECT * FROM treinador;")
+def run_delete(query):
+    conn, cur = get_database_and_cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur.execute(query)
+    cur.close()
+    conn.close()
+
+
+def run_insert(query):
+    conn, cur = get_database_and_cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    response = cur.execute(query)
+    cur.close()
+    conn.close()
+    return response
+
+
+def get_players_names():
+    query_response = run_query_fetchall("SELECT nome FROM treinador;")
+    players_names = []
+    for info in query_response:
+        players_names.append(dict(info))
+    return players_names
+
+
+def get_user_info(nome_player):
+    query_response = run_query_fetchall(f"SELECT * FROM treinador WHERE nome='{nome_player}';")
     trainer_info = []
     for info in query_response:
         trainer_info.append(dict(info))
-    return trainer_info[0]
+    if len(trainer_info) > 0:
+        return trainer_info[0]
+    return []
 
 
 def get_npc_info(id_npc):
@@ -84,7 +112,9 @@ def get_npc_info(id_npc):
     npc_info = []
     for info in query_response:
         npc_info.append(dict(info))
-    return npc_info[0]
+    if len(npc_info) > 0:
+        return npc_info[0]
+    return []
 
 
 def get_seller_items(_id_npc):
@@ -102,7 +132,9 @@ def get_item_id(instance_id):
     items_id = []
     for item in query_response:
         items_id.append(dict(item))
-    return items_id[0]
+    if len(items_id) > 0:
+        return items_id[0]
+    return []
 
 
 def get_papel_item(item_id):
@@ -111,21 +143,17 @@ def get_papel_item(item_id):
     papeis = []
     for papel in query_response:
         papeis.append(dict(papel))
-    return papeis[0]
+    if len(papeis) > 0:
+        return papeis[0]
+    return []
 
 
-def run_delete(query):
-    conn, cur = get_database_and_cursor()
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur.execute(query)
-    cur.close()
-    conn.close()
+def insert_new_treinador(player_name):
+    try:
+        run_insert(
+            f"INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('{player_name}', 0, 500.00, 'iniciante', 1, 2);"
+        )
+        return get_user_info(player_name)
+    except:
+        return []
 
-
-def run_insert(query):
-    conn, cur = get_database_and_cursor()
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    response = cur.execute(query)
-    cur.close()
-    conn.close()
-    return response
