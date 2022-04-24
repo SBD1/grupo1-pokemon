@@ -97,7 +97,8 @@ def get_players_names():
 
 
 def get_user_info(nome_player):
-    query_response = run_query_fetchall(f"SELECT * FROM treinador WHERE nome='{nome_player}';")
+    query_response = run_query_fetchall(
+        f"SELECT * FROM treinador WHERE nome='{nome_player}';")
     trainer_info = []
     for info in query_response:
         trainer_info.append(dict(info))
@@ -108,7 +109,7 @@ def get_user_info(nome_player):
 
 def get_npc_info(id_npc):
     query_response = run_query_fetchall(
-        f"SELECT * FROM npc WHERE id={id_npc};")
+        f"SELECT * FROM npc WHERE id = {id_npc};")
     npc_info = []
     for info in query_response:
         npc_info.append(dict(info))
@@ -119,7 +120,7 @@ def get_npc_info(id_npc):
 
 def get_seller_items(_id_npc):
     query_response = run_query_fetchall(
-        f"SELECT id_instancia_item FROM npc_guarda_instancia_de_item WHERE id_npc={_id_npc};")
+        f"SELECT id_instancia_item FROM npc_guarda_instancia_de_item WHERE id_npc = {_id_npc};")
     instance_items = []
     for item in query_response:
         instance_items.append(dict(item))
@@ -128,7 +129,7 @@ def get_seller_items(_id_npc):
 
 def get_item_id(instance_id):
     query_response = run_query_fetchall(
-        f"SELECT id_item FROM instancia_item WHERE id={instance_id};")
+        f"SELECT id_item FROM instancia_item WHERE id = {instance_id};")
     items_id = []
     for item in query_response:
         items_id.append(dict(item))
@@ -139,7 +140,7 @@ def get_item_id(instance_id):
 
 def get_papel_item(item_id):
     query_response = run_query_fetchall(
-        f"SELECT papel FROM especializacao_do_item WHERE id_item={item_id};")
+        f"SELECT papel FROM especializacao_do_item WHERE id_item = {item_id};")
     papeis = []
     for papel in query_response:
         papeis.append(dict(papel))
@@ -157,3 +158,20 @@ def insert_new_treinador(player_name):
     except:
         return []
 
+
+def get_item_details(item_id, table):
+    query_response = run_query_fetchall(
+        f"SELECT * FROM {table} WHERE id = {item_id};"
+    )
+    details = []
+    for info in query_response:
+        details.append(dict(info))
+        return details[0]
+
+
+def run_delete(query):
+    conn, cur = get_database_and_cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur.execute(query)
+    cur.close()
+    conn.close()

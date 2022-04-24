@@ -30,14 +30,14 @@ def print_title(message):
 def print_subtitle(message):
     tlen = 70
     mlen = len(message)
-    dlen = tlen - mlen - 2
+    dlen = tlen - mlen - 4
     if(dlen % 2 != 0):
         dlen += 1
     dlen /= 2
     print('+', end='')
     for i in range(int(dlen)):
         print('-', end='')
-    print(message, end='')
+    print(f' {message} ', end='')
     for i in range(int(dlen)):
         print('-', end='')
     print('+')

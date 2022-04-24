@@ -26,6 +26,7 @@ _,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
     initial_menu()
     # seller()
 
+
 def initial_menu():
     player_name = ''
     print_title('MENU INICIAL')
@@ -56,9 +57,11 @@ def initial_menu():
             print('Opção inválida, tente novamente.\n\n')
     start_game(player_name)
 
+
 def start_game(player_name):
     user_info = get_user_info(player_name)
     print_prettier_dict(user_info)
+
 
 def exit_game():
     print(r'''
@@ -107,14 +110,17 @@ def exit_game():
                                                                 `" " -' mh      
     ''')
 
+
 def seller():
     open_seller_menu(1)
     open_seller_menu(3)
 
+
 def create_new_player():
     print_subtitle('CRIAR NOVO JOGO')
     while True:
-        player_name = input('Insira o nome do treinador (ou insira 2 para voltar): ')
+        player_name = input(
+            'Insira o nome do treinador (ou insira 2 para voltar): ')
 
         if player_name == '2':
             return ''
@@ -122,11 +128,12 @@ def create_new_player():
         if get_user_info(player_name) != []:
             print('Nome já utilizado, tente outro nome')
             continue
-        
+
         new_treinador = insert_new_treinador(player_name)
         if new_treinador != []:
             return player_name
         print('Algo deu errado enquanto um novo treinador era criado. Tente novamente\n\n')
+
 
 def load_players():
     print_subtitle('CARREGAR JOGO SALVO')
@@ -138,8 +145,9 @@ def load_players():
             print(f'{count} - {name["nome"]}')
             count += 1
         print(f'{count} - Voltar')
-        tecla = input('Selecione o nome do treinador que você deseja carregar: ')
-        
+        tecla = input(
+            'Selecione o nome do treinador que você deseja carregar: ')
+
         try:
             tecla = int(tecla)
         except:
@@ -152,4 +160,3 @@ def load_players():
             return ''
         else:
             print('Opção inválida, tente novamente.\n\n')
-    
