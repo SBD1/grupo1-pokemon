@@ -255,7 +255,7 @@ CREATE OR REPLACE FUNCTION verificar_evolucao_pokemon() RETURNS trigger AS $veri
 
 $verificar_evolucao_pokemon$ LANGUAGE plpgsql;
 
-DROP TRIGGER trigger_verificar_evolucao_pokemon ON instancia_pokemon;
+DROP TRIGGER IF EXISTS trigger_verificar_evolucao_pokemon ON instancia_pokemon;
 CREATE TRIGGER trigger_verificar_evolucao_pokemon
 BEFORE UPDATE OF experiencia ON instancia_pokemon
 FOR EACH ROW
@@ -277,7 +277,7 @@ CREATE OR REPLACE FUNCTION verificar_limite_mochila() RETURNS trigger AS $verifi
     END;
 $verificar_limite_mochila$ LANGUAGE plpgsql;
 
-DROP TRIGGER trigger_verificar_limite_mochila ON mochila_guarda_instancia_de_item;
+DROP TRIGGER IF EXISTS  trigger_verificar_limite_mochila ON mochila_guarda_instancia_de_item;
 CREATE TRIGGER trigger_verificar_limite_mochila
 BEFORE INSERT ON mochila_guarda_instancia_de_item
 FOR EACH ROW
@@ -296,7 +296,7 @@ CREATE OR REPLACE FUNCTION verificar_id_professor_treinador() RETURNS trigger AS
     END;
 $verificar_id_professor_treinador$ LANGUAGE plpgsql;
 
-DROP TRIGGER trigger_verificar_id_professor_treinador ON treinador;
+DROP TRIGGER  IF EXISTS  trigger_verificar_id_professor_treinador ON treinador;
 CREATE TRIGGER trigger_verificar_id_professor_treinador
 BEFORE INSERT OR UPDATE ON treinador
 FOR EACH ROW
