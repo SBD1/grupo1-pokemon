@@ -1,5 +1,7 @@
+from time import sleep
 from database import get_user_info, get_players_names, insert_new_treinador
 from purchase_item import open_seller_menu
+from moviment import player_path, choose_path
 from utils import *
 
 
@@ -59,11 +61,28 @@ def initial_menu():
 
 
 def start_game(player_name):
-    user_info = get_user_info(player_name)
-    print_prettier_dict(user_info)
+    ok = True
+    while ok == True:
+        user_info = get_user_info(player_name)
+        print_prettier_dict(user_info)
+        print_title('Movimentação possível: ')
+        player_path(player_name)
+        choose = input()
+        res = choose_path(player_name, choose)
+        print(res)
+        if res == 0:
+            exit_game()
+            return
+        elif res == 1:
+            clean_bash()
+        elif res == -1:
+            print_subtitle('Escolha inválida')
+        elif res == 2:
+            print_title('Você ainda não tem pokemons suficientes para acessar essa região')
 
 
 def exit_game():
+    clean_bash()
     print(r'''
   _______ _                 _                           __                   _             _             _ 
  |__   __| |               | |                         / _|                 | |           (_)           | |
