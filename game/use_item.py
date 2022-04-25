@@ -24,6 +24,10 @@ def use_item(user_id):
     pokemon = select_pokemon(user_id)
     print(item)
     print(pokemon)
+    if item['role'] == 'evostone':
+        a = evolve_pokemon_with_item(pokemon['id_pokemon'], pokemon['id'], item['ids'][0], item['item_id'])    
+        print('a')
+    
 
 def select_item(user_id):
     usable_items_dict = get_bag_items_info(user_id, True)
@@ -35,18 +39,17 @@ def select_item(user_id):
     return usable_items_dict[item_list[option-1]]
 
 def select_pokemon(user_id):
-    print('Em qual pokémon deseja utilizar o item?')
     instancia_pokemons_list = get_pokemon_list(user_id)
     instancia_pokemons_info = []
-
+    print(instancia_pokemons_list)
     for instancia_pokemon in  instancia_pokemons_list:
-        instancia_pokemon_info = get_instancia_pokemon_info(instancia_pokemon['id'])
+        instancia_pokemon_info = get_instancia_pokemon_info(instancia_pokemon['id_instancia_pokemon'])
         instancia_pokemons_info.append(instancia_pokemon_info)
     
     for instancia_pokemon_info in instancia_pokemons_info:
         pokemon_info = get_pokemon_info(instancia_pokemon_info['id_pokemon'])
         instancia_pokemon_info['name'] = pokemon_info['especie']
-
+    print_instancia_pokemon_info(instancia_pokemons_info)
     option = int(input('Em qual dos pokémons acima deseja utilizar esse item?\n'))
     while option < 1 or option > len(instancia_pokemons_info):
         option = int(input('Opção inválida. Em qual dos pokémons acima deseja utilizar esse item?\n'))
@@ -70,7 +73,8 @@ def get_bag_items_info(user_id, only_usables=False):
                 items[item_details["nome"]] = {
                     "quantity": 1,
                     "ids": [item["id_instancia_item"]],
-                    "role": papel
+                    "role": papel,
+                    "item_id": item_id
                 }
     return items
 
@@ -87,12 +91,7 @@ def print_instancia_pokemon_info(instancia_pokemon_list):
     i = 1
     print('Lista de pokémons:')
     print(f"{'':3}{'Nome':20} {'Genero':8} {'XP':5}")
-    i = 1
     for instancia in instancia_pokemon_list:
         print(f"{i}. {instancia['name'].capitalize():20} {instancia['genero']:8} {instancia['experiencia']:<5}")
         i+=1
     print()
-
-
-def use_evostone():
-    pass

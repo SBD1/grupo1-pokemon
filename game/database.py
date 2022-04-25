@@ -229,6 +229,11 @@ def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
 
     return run_update(query_update)
 
+def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instancia_item_id):
+    query = f"""BEGIN;
+        CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});
+        COMMIT;"""
+    return run_update(query)
 
 def run_delete(query):
     conn, cur = get_database_and_cursor()
