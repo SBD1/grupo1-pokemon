@@ -1,9 +1,16 @@
-from database import run_insert, get_item_instances_on_backpack, get_papel_item, run_query_fetchone
+import random
+
+from database import run_insert, get_item_instances_on_backpack, get_item_id, run_query_fetchone, run_query_fetchall
 from exceptions.communs import PokemonDoesntExists, ItemDoesntExists, ItemNoInBackpack
 from utils import (check_backpack_has_item,
                    check_pokemon_exists,
                    print_title,
+                   print_prompt,
                    print_subtitle)
+
+
+def use_item(item_id):
+    pass
 
 
 class Catch:
@@ -34,11 +41,19 @@ class Catch:
         self.pokemon_info = self.get_pokemon_info(pokemon_id)
         self.pokemon_name = self.pokemon_info['especie']
         self.pokemon_catch_prob = self.pokemon_info['taxa_captura']
+        self.pokemon_xp = self.pokemon_info['experiencia']
         self.player_name = player_name
+
+        self.berry_stats = self.get_berry_stats()
+        self.candy_stats = self.get_candy_stats()
 
     @staticmethod
     def get_pokemon_info(pokemon_id):
-        query = f"SELECT especie, taxa_captura FROM instancia_pokemon\
+
+        if not check_pokemon_exists(pokemon_id):
+            raise PokemonDoesntExists
+
+        query = f"SELECT especie, taxa_captura, experiencia FROM instancia_pokemon\
          INNER JOIN pokemon ON instancia_pokemon.id_pokemon = pokemon.id WHERE instancia_pokemon.id = {pokemon_id};"
 
         response = run_query_fetchone(query)
@@ -54,23 +69,77 @@ class Catch:
         for _, value in pokebolas_in_backpack.items():
             total_pokebolas += len(value)
 
+        while total_pokebolas > 0:
+
+            print_subtitle("O que deseja fazer?")
+            print_prompt("Selecione algum número:")
+            map_option_item_use = self.display_menu_options()
+
+            option: int = int(input("Selecione uma opção...\n"))
+
+            if option == 0:
+                return None
+
+            while not map_option_item_use.get(option):
+                option = int(input("Selecione uma opção válida...\n"))
+
+            option_item_id = map_option_item_use[option][0]
+            option_item_name = map_option_item_use[option][1]
+
+            if option_item_name in self.berry_dict.keys():
+                self.pokemon_catch_prob += self.berry_stats[option_item_name] / 100.0
+                print_prompt(f"Você utilizou um berry do tipo {option_item_name}!")
+                print_prompt(f"Isso aumentou a chance de captura\
+                             do pokemon em {self.berry_stats[option_item_name]/100.0}%")
+                use_item(option_item_id)
+
+            if option_item_name in self.candy_dict.keys():
+                self.pokemon_xp += self.candy_stats[option_item_name]
+                print_prompt(f"Você utilizou um candy do tipo {option_item_name}!")
+                print_prompt(f"Isso aumentou a experiência do pokemon em {self.candy_stats[option_item_name]}")
+                use_item(option_item_id)
+
+            if option_item_name in self.pokebolas_dict.keys():
+                print_prompt(f"Você jogou uma pokebola do tipo {option_item_name}...")
+                if random.random() < self.pokemon_catch_prob:
+                    self.catch_pokemon(option_item_id)
+                    use_item(option_item_id)
+                    print_prompt(f"Parabéns!!! Você conseguiu capturar o pokemon {self.pokemon_name}")
+                    print_prompt(f"Você ganhou {self.pokemon_xp} pontos de experiência!!!")
+                    return self.pokemon_xp
+
+                print_prompt(f"Infelizmente você não conseguiu capturar o pokemon :(")
+                use_item(option_item_id)
+                total_pokebolas -= 1
+
         if total_pokebolas == 0:
             print_subtitle("Infelizmente você não tem nenhuma pokebola :(")
             print_subtitle("Procure um vendedor para comprar algumas pokebolas")
             return None
 
-        print_subtitle("O que deseja fazer?")
-        map_option_item_use = self.display_menu_options()
+    @staticmethod
+    def get_berry_stats():
+        query = f"SELECT nome, aumento_taxa_captura FROM berry;"
+        response = run_query_fetchall(query)
 
-        option: int = int(input("Selecione uma opção...\n"))
+        berry_stats = {}
 
-        if option == 0:
-            return None
+        for berry in response:
+            berry_stats[berry['nome']] = berry['aumento_taxa_captura']
 
-        while not map_option_item_use.get(option):
-            option = int(input("Selecione uma opção válida...\n"))
+        return berry_stats
 
-        print(map_option_item_use)
+    @staticmethod
+    def get_candy_stats():
+        query = f"SELECT nome, aumento_experiencia FROM candy;"
+        response = run_query_fetchall(query)
+
+        candy_stats = {}
+
+        for candy in response:
+            candy_stats[candy['nome']] = candy['aumento_experiencia']
+
+        return candy_stats
 
     def display_menu_options(self):
 
@@ -82,7 +151,7 @@ class Catch:
         for berry_name, berry_list in berries.items():
             if len(berry_list) > 0:
                 print(f"<{options_count}> Utilizar barry {berry_name}.")
-                map_option_item_use[options_count] = berry_list[0]
+                map_option_item_use[options_count] = (berry_list[0], berry_name)
                 options_count += 1
 
         candies = self.get_papel_itens_instances(self.candy_dict)
@@ -90,7 +159,7 @@ class Catch:
         for candy_name, candy_list in candies.items():
             if len(candy_list) > 0:
                 print(f"<{options_count}> Utilizar candy {candy_name}.")
-                map_option_item_use[options_count] = candy_list[0]
+                map_option_item_use[options_count] = (candy_list[0], candy_name)
                 options_count += 1
 
         pokebolas = self.get_papel_itens_instances(self.pokebolas_dict)
@@ -98,7 +167,7 @@ class Catch:
         for pokebola_name, pokebola_list in pokebolas.items():
             if len(pokebola_list) > 0:
                 print(f"<{options_count}> Utilizar pokebola {pokebola_name}.")
-                map_option_item_use[options_count] = pokebola_list[0]
+                map_option_item_use[options_count] = (pokebola_list[0], pokebola_name)
                 options_count += 1
 
         print(f"    <0> Cancelar captura.")
@@ -118,10 +187,13 @@ class Catch:
         self.create_catch(pokebola_id)
 
     def create_catch(self, pokebola_id):
-        run_insert(f"INSERT INTO captura VALUES ({self.pokemon_id}, {self.player_name});")
+        run_insert(f"INSERT INTO captura(id_instancia_pokemon, id_treinador)\
+         VALUES ({self.pokemon_id}, '{self.player_name}');")
         self.create_catch_event(pokebola_id)
 
-    def create_catch_event(self, pokebola_id):
+    def create_catch_event(self, pokebola_instance_id):
+
+        pokebola_id = get_item_id(pokebola_instance_id)['id_item']
         run_insert(f"INSERT INTO evento_captura VALUES ({self.pokemon_id}, {pokebola_id});")
 
     def get_pokebolas(self):
@@ -142,6 +214,6 @@ class Catch:
 
 
 if __name__ == "__main__":
-    catch = Catch(1, "Ash Ketchum")
+    catch = Catch(10, "Ash Ketchum")
 
     print(catch.display())

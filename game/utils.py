@@ -66,7 +66,7 @@ def print_prettier_dict(dict):
 
 def check_item_exists(item_id):
     exists = run_query_fetchone(f"SELECT check_item_exists({item_id});")
-    return bool(exists)
+    return bool(exists['check_item_exists'])
 
 
 def check_backpack_has_item(backpack_id, item_id):
@@ -74,14 +74,13 @@ def check_backpack_has_item(backpack_id, item_id):
     if not check_item_exists(item_id):
         raise ItemDoesntExists(f"Item id:{item_id} doesn't exists")
 
-    exists = run_query_fetchone(
-        f"SELECT check_backpack_has_item({backpack_id}, {item_id});")
-    return bool(exists)
+    exists = run_query_fetchone(f"SELECT check_backpack_has_item('{backpack_id}', {item_id});")
+    return bool(exists['check_backpack_has_item'])
 
 
 def check_pokemon_exists(pokemon_id):
     exists = run_query_fetchone(f"SELECT check_pokemon_exists({pokemon_id});")
-    return bool(exists)
+    return bool(exists['check_pokemon_exists'])
 
 
 def remove_item_from_backpack(backpack_id, item_id):
