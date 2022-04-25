@@ -7,4 +7,5 @@
 - [Documentação do MREL Normalizado](/MRELNormalizado/MRELNormalizado.md)
 - [Documentação do SQL](/SQL/SQL.md)
 - [Documentação da Álgebra Relacional](/AlgebraRelacional/AlgebraRelacional.md)
+- [Artefatos do Jogo](/Game/Game.md)
 - [Uso do Docker](/Docker/Docker.md)
