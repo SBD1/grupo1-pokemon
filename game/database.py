@@ -184,6 +184,23 @@ def get_item_details(item_id, table):
         details.append(dict(info))
         return details[0]
 
+def get_user_pokemons(user_id):
+    query_response = run_query_fetchall(f"SELECT * from captura where id_treinador = '{user_id}';")
+    pokemons = []
+    for info in query_response:
+        pokemons.append(dict(info))
+    return pokemons
+
+def get_instancia_pokemon_info(instancia_pokemon_id):
+    query_response = run_query_fetchall(f"SELECT * from instancia_pokemon where id = '{instancia_pokemon_id}';")
+    for info in query_response:
+        return dict(info)
+
+def get_pokemon_info(pokemon_id):
+    query_response = run_query_fetchall(f"SELECT * from pokemon where id = '{pokemon_id}';")
+    for info in query_response:
+        return dict(info)
+
 
 def run_delete(query):
     conn, cur = get_database_and_cursor()
