@@ -23,8 +23,6 @@ def use_item(user_id):
     item = select_item(user_id)
     if item != None:
         pokemon = select_pokemon(user_id)
-        print(item)
-        print(pokemon)
         if item['role'] == 'evostone':
             evolve_pokemon_with_item(pokemon['id'],pokemon['id_pokemon'],  item['item_id'], item['ids'][0])
     else:
@@ -44,7 +42,6 @@ def select_item(user_id):
 def select_pokemon(user_id):
     instancia_pokemons_list = get_pokemon_list(user_id)
     instancia_pokemons_info = []
-    print(instancia_pokemons_list)
     for instancia_pokemon in  instancia_pokemons_list:
         instancia_pokemon_info = get_instancia_pokemon_info(instancia_pokemon['id_instancia_pokemon'])
         instancia_pokemons_info.append(instancia_pokemon_info)

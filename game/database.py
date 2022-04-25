@@ -230,13 +230,20 @@ def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
     return run_update(query_update)
 
 def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instancia_item_id):
-    query = f"CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});"
-    conn, cur = get_database_and_cursor()
-    conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
-    cur.execute(query)
-    conn.commit()
-    cur.close()
-    conn.close()
+    try:
+        query = f"CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});"
+        conn, cur = get_database_and_cursor()
+        conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
+        cur.execute(query)
+        conn.commit()
+        cur.close()
+        conn.close()
+        print('Pokémon evoluído com sucesso')
+    except (Exception, psycopg2.DatabaseError) as error:
+        print('Esse pokémon não pode ser evoluído com este item')
+
+def delete_item_from_bag(item_id, mochila_id):
+    run_delete(f"DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} and id_mochila='{mochila_id}';")
 
 def run_delete(query):
     conn, cur = get_database_and_cursor()

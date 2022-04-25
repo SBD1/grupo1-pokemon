@@ -205,10 +205,11 @@ CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGE
       UPDATE instancia_pokemon
       SET id_pokemon = _pokemon_evolucao_id
       WHERE id = id_instancia_pokemon;
-
-
       DELETE FROM mochila_guarda_instancia_de_item as m
       WHERE m.id_instancia_item = _id_instancia_item;
+    ELSE
+      RAISE EXCEPTION 'Pokemon não evolui usando esse item --> %', id_pokemon
+      USING HINT = 'Opa, você não pode utilizar esse item nesse pokémon';
     END IF;
   
 	END;
