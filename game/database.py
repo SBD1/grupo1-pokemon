@@ -71,14 +71,6 @@ def run_update(query):
     conn.close()
 
 
-def run_delete(query):
-    conn, cur = get_database_and_cursor()
-    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-    cur.execute(query)
-    cur.close()
-    conn.close()
-
-
 def run_insert(query):
     conn, cur = get_database_and_cursor()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
@@ -200,6 +192,42 @@ def get_pokemon_info(pokemon_id):
     query_response = run_query_fetchall(f"SELECT * from pokemon where id = '{pokemon_id}';")
     for info in query_response:
         return dict(info)
+
+
+def pokemon_on_pokedex(pokemon_id, pokedex_id):
+    query = f"SELECT count(*) FROM registra WHERE id_pokemon = {pokemon_id} and id_pokedex = '{pokedex_id}';"
+
+    response = run_query_fetchone(query)
+
+    return bool(response['count'])
+
+
+def add_pokemon_to_pokedex(pokemon_id, pokedex_id):
+    query = f"INSERT INTO registra(id_pokemon, id_pokedex) VALUES ({pokemon_id}, '{pokedex_id}');"
+
+    return run_insert(query)
+
+
+def increment_pokemon_seen_on_pokedex(pokemon_id, pokedex_id):
+    query = f"SELECT qtd_vista FROM registra WHERE id_pokemon = {pokemon_id} and id_pokedex = '{pokedex_id}';"
+
+    count = run_query_fetchone(query)['qtd_vista'] + 1
+
+    query_update = f"UPDATE registra SET qtd_vista = {count}\
+     WHERE id_pokemon = {pokemon_id} and id_pokedex = '{pokedex_id}';"
+
+    return run_update(query_update)
+
+
+def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
+    query = f"SELECT qtd_capturada FROM registra WHERE id_pokemon = {pokemon_id} and id_pokedex = '{pokedex_id}';"
+
+    count = run_query_fetchone(query)['qtd_capturada'] + 1
+
+    query_update = f"UPDATE registra SET qtd_capturada = {count}\
+     WHERE id_pokemon = {pokemon_id} and id_pokedex = '{pokedex_id}';"
+
+    return run_update(query_update)
 
 
 def run_delete(query):

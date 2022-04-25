@@ -1,7 +1,16 @@
 import random
 
-from database import run_insert, get_item_instances_on_backpack, get_item_id, run_query_fetchone, run_query_fetchall
 from exceptions.communs import PokemonDoesntExists, ItemDoesntExists, ItemNoInBackpack
+from database import (run_insert,
+                      get_item_instances_on_backpack,
+                      get_item_id,
+                      run_query_fetchone,
+                      pokemon_on_pokedex,
+                      add_pokemon_to_pokedex,
+                      increment_pokemon_seen_on_pokedex,
+                      increment_pokemon_catch_on_pokedex,
+                      run_query_fetchall)
+
 from utils import (check_backpack_has_item,
                    check_pokemon_exists,
                    print_title,
@@ -35,9 +44,15 @@ class Catch:
         self.pokemon_name = self.pokemon_info['especie']
         self.pokemon_catch_prob = self.pokemon_info['taxa_captura']
         self.pokemon_xp = self.pokemon_info['experiencia']
+        self.pokemon_specie_id = self.pokemon_info['id_pokemon']
         self.player_name = player_name
 
         self.berry_stats = self.get_berry_stats()
+
+        if not pokemon_on_pokedex(self.pokemon_specie_id, player_name):
+            add_pokemon_to_pokedex(self.pokemon_specie_id, player_name)
+
+        increment_pokemon_seen_on_pokedex(self.pokemon_specie_id, player_name)
 
     @staticmethod
     def get_pokemon_info(pokemon_id):
@@ -45,7 +60,7 @@ class Catch:
         if not check_pokemon_exists(pokemon_id):
             raise PokemonDoesntExists
 
-        query = f"SELECT especie, taxa_captura, experiencia FROM instancia_pokemon\
+        query = f"SELECT especie, taxa_captura, experiencia, id_pokemon FROM instancia_pokemon\
          INNER JOIN pokemon ON instancia_pokemon.id_pokemon = pokemon.id WHERE instancia_pokemon.id = {pokemon_id};"
 
         response = run_query_fetchone(query)
@@ -151,6 +166,7 @@ class Catch:
             raise ItemNoInBackpack(f"Item id: {pokebola_id} not in backpack {mochila_id}")
 
         self.create_catch(pokebola_id)
+        increment_pokemon_catch_on_pokedex(self.pokemon_specie_id, self.player_name)
 
     def create_catch(self, pokebola_id):
         run_insert(f"INSERT INTO captura(id_instancia_pokemon, id_treinador)\
@@ -180,6 +196,6 @@ class Catch:
 
 
 if __name__ == "__main__":
-    catch = Catch(10, "Ash Ketchum")
+    catch = Catch(1, "Ash Ketchum")
 
     print(catch.display())
