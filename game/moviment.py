@@ -1,7 +1,7 @@
 from unittest import result
 from database import *
 from initial_game import clean_bash
-# from utils import print_prettier_dict
+from utils import *
 
 def get_player_position(player_name):
     sql = f'SELECT t.id_posicao FROM treinador t WHERE t.nome={player_name};'
@@ -124,8 +124,10 @@ def choose_player_path(player_name):
 
     input_directions = get_char_position(available_directions)
     
-    print('\nEscolha seu caminho treinador:', end='\n\n')
-    print('Você pode seguir para as seguintes direções: ', end='\n')
+    clean_bash()
+
+    print_title('Escolha seu caminho treinador')
+    print_subtitle('Você pode seguir para as seguintes direções: ')
 
     ok = 0
     while ok == 0:
@@ -134,9 +136,10 @@ def choose_player_path(player_name):
             print(input_char +' -> ' + text, end='\n')
         print('r -> Cancelar', end='\n')
 
-        choose = input('Qual sua escolha? ')
+        print_subtitle('Qual sua escolha?')
+        choose = input('Direção: ')
         if choose == 'r':
-            return
+            return 0
         elif choose in input_directions:
             direction_chosen = directions[get_char_equivalence(choose, 'db')]
             can_acess = valid_region_change_db(direction_chosen, player_name)
@@ -144,18 +147,14 @@ def choose_player_path(player_name):
                 ok = 1
             else:
                 clean_bash()
-                print('––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––', end='\n')
-                print('| Você ainda não tem pokemons suficientes para acessar essa região |', end='\n')
-                print('––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––', end='\n\n')
-                print('Escolha novamente', end='\n')
+                print_title('Você ainda não tem pokemons suficientes para acessar essa região')
+                print_subtitle('Escolha novamente')
         else:
             clean_bash()
-            print('–––––––––––––––––––––––––––––––––––––', end='\n')
-            print('| Essa direção não existe treinador |', end='\n')
-            print('–––––––––––––––––––––––––––––––––––––', end='\n\n')
-            print('Escolha novamente', end='\n')
+            print_title('Essa direção não existe treinador')
+            print_subtitle('Escolha novamente')
     
-    change_player_pos(direction_chosen, player_name)
+    return change_player_pos(direction_chosen, player_name)
 
 
 ### MOVIMENTATION DEBUGGING
