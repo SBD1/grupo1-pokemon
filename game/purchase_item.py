@@ -14,7 +14,7 @@ def open_seller_menu(id_npc, nome_treinador):
         instance_items = get_seller_items(id_npc)
         # print_prettier_dict(instance_items)
 
-        if len(instance_items) is 0:
+        if len(instance_items) == 0:
             print_prompt(
                 "Este vendedor não possui itens para a venda no momento!")
 
@@ -72,7 +72,7 @@ def open_seller_menu(id_npc, nome_treinador):
             opcao = input()
 
         # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
-        if int(opcao) is 0:
+        if int(opcao) == 0:
             return None
 
         clean_bash()
@@ -136,7 +136,7 @@ def open_seller_menu(id_npc, nome_treinador):
             opcao = input()
 
         # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
-        if int(opcao) is 0:
+        if int(opcao) == 0:
             return open_seller_menu(id_npc, nome_treinador)
 
         # print(opcoes_validas[int(opcao)])
