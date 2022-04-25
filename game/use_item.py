@@ -21,22 +21,25 @@ def bag_menu(user_id):
 
 def use_item(user_id):
     item = select_item(user_id)
-    pokemon = select_pokemon(user_id)
-    print(item)
-    print(pokemon)
-    if item['role'] == 'evostone':
-        a = evolve_pokemon_with_item(pokemon['id_pokemon'], pokemon['id'], item['ids'][0], item['item_id'])    
-        print('a')
-    
+    if item != None:
+        pokemon = select_pokemon(user_id)
+        print(item)
+        print(pokemon)
+        if item['role'] == 'evostone':
+            evolve_pokemon_with_item(pokemon['id'],pokemon['id_pokemon'],  item['item_id'], item['ids'][0])
+    else:
+        print('Ops... você não tem nenhum item utilizavél disponível')
 
 def select_item(user_id):
     usable_items_dict = get_bag_items_info(user_id, True)
-    print_items_name_and_quantity(usable_items_dict)
-    option = int(input('Qual dos items acima deseja utilizar?\n'))
-    while option < 1 or option > len(usable_items_dict):
-        option = int(input('Opção inválida. Qual dos items acima deseja utilizar?\n'))
-    item_list = list(usable_items_dict)
-    return usable_items_dict[item_list[option-1]]
+    if usable_items_dict:
+        print_items_name_and_quantity(usable_items_dict)
+        option = int(input('Qual dos items acima deseja utilizar?\n'))
+        while option < 1 or option > len(usable_items_dict):
+            option = int(input('Opção inválida. Qual dos items acima deseja utilizar?\n'))
+        item_list = list(usable_items_dict)
+        return usable_items_dict[item_list[option-1]]
+    return None
 
 def select_pokemon(user_id):
     instancia_pokemons_list = get_pokemon_list(user_id)

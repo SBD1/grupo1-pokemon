@@ -191,7 +191,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGER, id_pokemon INTEGER, id_item INTEGER, id_instancia_item INTEGER)
+CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGER, id_pokemon INTEGER, id_item INTEGER, _id_instancia_item INTEGER)
   AS $$
 
 	DECLARE
@@ -201,15 +201,14 @@ CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGE
   BEGIN
     _evolucoes_count = get_possiveis_evolucoes(id_pokemon, id_item);
     _pokemon_evolucao_id = get_evolucao_id(id_pokemon, id_item);
-
     IF _evolucoes_count != 0 THEN
       UPDATE instancia_pokemon
       SET id_pokemon = _pokemon_evolucao_id
-      WHERE nome = _nome_treinador;
+      WHERE id = id_instancia_pokemon;
 
 
-      DELETE FROM mochila_guarda_instancia_de_item
-      WHERE id_instancia_item = id_instancia;
+      DELETE FROM mochila_guarda_instancia_de_item as m
+      WHERE m.id_instancia_item = _id_instancia_item;
     END IF;
   
 	END;

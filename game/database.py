@@ -230,10 +230,13 @@ def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
     return run_update(query_update)
 
 def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instancia_item_id):
-    query = f"""BEGIN;
-        CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});
-        COMMIT;"""
-    return run_update(query)
+    query = f"CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});"
+    conn, cur = get_database_and_cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
+    cur.execute(query)
+    conn.commit()
+    cur.close()
+    conn.close()
 
 def run_delete(query):
     conn, cur = get_database_and_cursor()
