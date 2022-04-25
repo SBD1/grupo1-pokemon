@@ -22,13 +22,6 @@ class Catch:
         "Master Ball": 23
     }
 
-    candy_dict = {
-        "Picante": 1,
-        "Seco": 2,
-        "Doce": 3,
-        "Amargo": 4
-    }
-
     berry_dict = {
         "Morango": 5,
         "Amora": 6,
@@ -45,7 +38,6 @@ class Catch:
         self.player_name = player_name
 
         self.berry_stats = self.get_berry_stats()
-        self.candy_stats = self.get_candy_stats()
 
     @staticmethod
     def get_pokemon_info(pokemon_id):
@@ -90,13 +82,7 @@ class Catch:
                 self.pokemon_catch_prob += self.berry_stats[option_item_name] / 100.0
                 print_prompt(f"Você utilizou um berry do tipo {option_item_name}!")
                 print_prompt(f"Isso aumentou a chance de captura\
-                             do pokemon em {self.berry_stats[option_item_name]/100.0}%")
-                use_item(option_item_id)
-
-            if option_item_name in self.candy_dict.keys():
-                self.pokemon_xp += self.candy_stats[option_item_name]
-                print_prompt(f"Você utilizou um candy do tipo {option_item_name}!")
-                print_prompt(f"Isso aumentou a experiência do pokemon em {self.candy_stats[option_item_name]}")
+                             do pokemon em {self.berry_stats[option_item_name]}%")
                 use_item(option_item_id)
 
             if option_item_name in self.pokebolas_dict.keys():
@@ -129,18 +115,6 @@ class Catch:
 
         return berry_stats
 
-    @staticmethod
-    def get_candy_stats():
-        query = f"SELECT nome, aumento_experiencia FROM candy;"
-        response = run_query_fetchall(query)
-
-        candy_stats = {}
-
-        for candy in response:
-            candy_stats[candy['nome']] = candy['aumento_experiencia']
-
-        return candy_stats
-
     def display_menu_options(self):
 
         options_count = 1
@@ -152,14 +126,6 @@ class Catch:
             if len(berry_list) > 0:
                 print(f"<{options_count}> Utilizar barry {berry_name}.")
                 map_option_item_use[options_count] = (berry_list[0], berry_name)
-                options_count += 1
-
-        candies = self.get_papel_itens_instances(self.candy_dict)
-
-        for candy_name, candy_list in candies.items():
-            if len(candy_list) > 0:
-                print(f"<{options_count}> Utilizar candy {candy_name}.")
-                map_option_item_use[options_count] = (candy_list[0], candy_name)
                 options_count += 1
 
         pokebolas = self.get_papel_itens_instances(self.pokebolas_dict)
