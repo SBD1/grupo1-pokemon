@@ -168,6 +168,12 @@ def insert_new_treinador(player_name):
     except:
         return []
 
+def get_bag_items(player_name):
+    query_response = run_query_fetchall(f"SELECT * from mochila_guarda_instancia_de_item where id_mochila='{player_name}'")
+    items = []
+    for item in query_response:
+        items.append(dict(item))
+    return items
 
 def get_item_details(item_id, table):
     query_response = run_query_fetchall(
