@@ -25,6 +25,8 @@ def use_item(user_id):
         pokemon = select_pokemon(user_id)
         if item['role'] == 'evostone':
             evolve_pokemon_with_item(pokemon['id'],pokemon['id_pokemon'],  item['item_id'], item['ids'][0])
+        else:
+            use_candy(pokemon['id'], item['ids'][0])
     else:
         print('Ops... você não tem nenhum item utilizavél disponível')
 
