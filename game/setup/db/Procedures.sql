@@ -215,6 +215,39 @@ CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGE
 	END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION get_candy_id(id_instancia INTEGER)
+  RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT id_item FROM instancia_item WHERE id = id_instancia);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_candy_xp(candy_id INTEGER)
+  RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT aumento_experiencia FROM candy WHERE id = candy_id);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE usar_candy_pokemon(id_instancia_pokemon INTEGER, _id_instancia_item INTEGER)
+  AS $$
+	DECLARE
+  aumento_de_xp INTEGER;
+  id_item INTEGER;
+  BEGIN
+
+    id_item = get_candy_id(_id_instancia_item);
+    aumento_de_xp = get_candy_xp(id_item);
+    UPDATE instancia_pokemon
+    SET experiencia = experiencia + aumento_de_xp
+    WHERE id = id_instancia_pokemon;
+
+    DELETE FROM mochila_guarda_instancia_de_item as m
+    WHERE m.id_instancia_item = _id_instancia_item;
+
+	END;
+$$ LANGUAGE plpgsql;
+
 --- Conferir se um item existe
 CREATE OR REPLACE FUNCTION check_item_exists(_id_instancia_item INTEGER)
   RETURNS BOOLEAN AS $$
@@ -301,6 +334,7 @@ CREATE TRIGGER trigger_verificar_id_professor_treinador
 BEFORE INSERT OR UPDATE ON treinador
 FOR EACH ROW
 EXECUTE FUNCTION verificar_id_professor_treinador();
+
 
 
 CREATE OR REPLACE FUNCTION verificar_id_npc_vendedor() RETURNS trigger AS $verificar_id_npc_vendedor$

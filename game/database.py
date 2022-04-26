@@ -232,18 +232,16 @@ def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
 def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instancia_item_id):
     try:
         query = f"CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});"
-        conn, cur = get_database_and_cursor()
-        conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
-        cur.execute(query)
-        conn.commit()
-        cur.close()
-        conn.close()
+        run_transaction(query)
         print('Pokémon evoluído com sucesso')
     except (Exception, psycopg2.DatabaseError) as error:
         print('Esse pokémon não pode ser evoluído com este item')
 
 def delete_item_from_bag(item_id, mochila_id):
     run_delete(f"DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} and id_mochila='{mochila_id}';")
+
+def use_candy(instancia_pokemon_id, item_id):
+    run_transaction( f"CALL usar_candy_pokemon({instancia_pokemon_id}, {item_id})")
 
 def run_delete(query):
     conn, cur = get_database_and_cursor()
@@ -252,15 +250,17 @@ def run_delete(query):
     cur.close()
     conn.close()
 
-
 def run_sell_item(id_instancia, _nome_treinador, id_npc):
+    query = f"CALL vende_item({id_instancia}, '{_nome_treinador}', {id_npc})"
     try:
-        query = f"CALL vende_item({id_instancia}, '{_nome_treinador}', {id_npc})"
+        run_transaction(query)
+    except (Exception, psycopg2.DatabaseError) as error:
+        return None
+
+def run_transaction(query):
         conn, cur = get_database_and_cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
         cur.execute(query)
         conn.commit()
         cur.close()
         conn.close()
-    except (Exception, psycopg2.DatabaseError) as error:
-        return None
