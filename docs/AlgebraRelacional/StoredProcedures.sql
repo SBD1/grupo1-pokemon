@@ -1,3 +1,5 @@
+\c pokemon
+
 --- Atributo derivado Nível da Entidade Instância Pokemon
 CREATE OR REPLACE FUNCTION get_instancia_pokemon_nivel(_id INTEGER)
   RETURNS INTEGER AS $$
@@ -6,6 +8,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 -- Função que retorna o id do item a partir do id da intância
 CREATE OR REPLACE FUNCTION get_id_item (id_instancia INTEGER)
   RETURNS INTEGER AS $$
@@ -13,6 +16,7 @@ BEGIN
   RETURN (SELECT id_item FROM instancia_item WHERE id=id_instancia);
 END;
 $$ LANGUAGE plpgsql;
+
 
 -- Função que retorna o papel do item a partir do id dele
 CREATE OR REPLACE FUNCTION get_papel_item (_id_item INTEGER)
@@ -26,7 +30,7 @@ $$ LANGUAGE plpgsql;
 CREATE OR REPLACE FUNCTION get_preco_item (_id_item INTEGER, tabela regclass)
   RETURNS SETOF moeda AS $func$
 BEGIN
-  RETURN QUERY EXECUTE 'SELECT preco FROM ' || tabela || ' WHERE id= ' || _id_item;
+  RETURN QUERY EXECUTE 'SELECT preco FROM ' || tabela || ' WHERE id=' || _id_item;
 END;
 $func$ LANGUAGE plpgsql;
 
@@ -140,6 +144,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
 --- Atributo posição do treinador
 CREATE OR REPLACE FUNCTION get_player_position(_id nome)
   RETURNS INTEGER AS $$
@@ -147,6 +152,7 @@ BEGIN
   RETURN (SELECT id_posicao FROM treinador WHERE nome = _id);
 END;
 $$ LANGUAGE plpgsql;
+
 
 --- Validar a passagem para nova regiao
 CREATE OR REPLACE FUNCTION valid_region_change(_id_posicao INTEGER, _id_treinador nome)
@@ -171,7 +177,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 CREATE OR REPLACE FUNCTION get_possiveis_evolucoes(_id_pokemon INTEGER, _id_item INTEGER)
   RETURNS INTEGER AS $$
 BEGIN
@@ -186,7 +191,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGER, id_pokemon INTEGER, id_item INTEGER, id_instancia_item INTEGER)
+CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGER, id_pokemon INTEGER, id_item INTEGER, _id_instancia_item INTEGER)
   AS $$
 
 	DECLARE
@@ -196,17 +201,50 @@ CREATE OR REPLACE PROCEDURE evoluir_pokemon_com_item(id_instancia_pokemon INTEGE
   BEGIN
     _evolucoes_count = get_possiveis_evolucoes(id_pokemon, id_item);
     _pokemon_evolucao_id = get_evolucao_id(id_pokemon, id_item);
-
     IF _evolucoes_count != 0 THEN
       UPDATE instancia_pokemon
       SET id_pokemon = _pokemon_evolucao_id
-      WHERE nome = _nome_treinador;
-
-
-      DELETE FROM mochila_guarda_instancia_de_item
-      WHERE id_instancia_item = id_instancia;
+      WHERE id = id_instancia_pokemon;
+      DELETE FROM mochila_guarda_instancia_de_item as m
+      WHERE m.id_instancia_item = _id_instancia_item;
+    ELSE
+      RAISE EXCEPTION 'Pokemon não evolui usando esse item --> %', id_pokemon
+      USING HINT = 'Opa, você não pode utilizar esse item nesse pokémon';
     END IF;
   
+	END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_candy_id(id_instancia INTEGER)
+  RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT id_item FROM instancia_item WHERE id = id_instancia);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_candy_xp(candy_id INTEGER)
+  RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT aumento_experiencia FROM candy WHERE id = candy_id);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE PROCEDURE usar_candy_pokemon(id_instancia_pokemon INTEGER, _id_instancia_item INTEGER)
+  AS $$
+	DECLARE
+  aumento_de_xp INTEGER;
+  id_item INTEGER;
+  BEGIN
+
+    id_item = get_candy_id(_id_instancia_item);
+    aumento_de_xp = get_candy_xp(id_item);
+    UPDATE instancia_pokemon
+    SET experiencia = experiencia + aumento_de_xp
+    WHERE id = id_instancia_pokemon;
+
+    DELETE FROM mochila_guarda_instancia_de_item as m
+    WHERE m.id_instancia_item = _id_instancia_item;
+
 	END;
 $$ LANGUAGE plpgsql;
 
@@ -226,7 +264,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
 --- Conferir se possui o item na mochila
 CREATE OR REPLACE FUNCTION check_backpack_has_item(_id_mochila nome, _id_instancia_item INTEGER)
   RETURNS BOOLEAN AS $$
@@ -234,3 +271,94 @@ BEGIN
   RETURN (SELECT count(*) FROM mochila_guarda_instancia_de_item WHERE id_instancia_item=_id_instancia_item and id_mochila=_id_mochila);
 END;
 $$ LANGUAGE plpgsql;
+
+
+--- TRIGGERS ---
+
+CREATE OR REPLACE FUNCTION verificar_evolucao_pokemon() RETURNS trigger AS $verificar_evolucao_pokemon$
+    DECLARE
+        info_evolucao pokemon_evolucao%ROWTYPE;
+    BEGIN
+        SELECT * INTO info_evolucao FROM pokemon_evolucao as p WHERE p.pokemon_id = new.id_pokemon;
+        IF(new.experiencia >= info_evolucao.experiencia_evoluir AND info_evolucao.necessita_de_item <> true) THEN
+            new.id_pokemon = info_evolucao.evolucao_id;
+        END IF;
+        return new;
+    END;
+
+$verificar_evolucao_pokemon$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trigger_verificar_evolucao_pokemon ON instancia_pokemon;
+CREATE TRIGGER trigger_verificar_evolucao_pokemon
+BEFORE UPDATE OF experiencia ON instancia_pokemon
+FOR EACH ROW
+EXECUTE FUNCTION verificar_evolucao_pokemon();
+
+
+CREATE OR REPLACE FUNCTION verificar_limite_mochila() RETURNS trigger AS $verificar_limite_mochila$
+    DECLARE
+        capacidade_mochila INTEGER;
+        qnt_items_na_mochila INTEGER;
+    BEGIN
+        SELECT capacidade INTO capacidade_mochila FROM mochila WHERE id = NEW.id_mochila;
+        SELECT COUNT(*) INTO qnt_items_na_mochila FROM mochila_guarda_instancia_de_item WHERE id_mochila = NEW.id_mochila;
+
+        IF qnt_items_na_mochila = capacidade_mochila THEN
+            RAISE EXCEPTION 'Limite máximo da mochila alcançado. Não é possível adicionar mais items.';
+        END IF;
+        RETURN NEW;
+    END;
+$verificar_limite_mochila$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS  trigger_verificar_limite_mochila ON mochila_guarda_instancia_de_item;
+CREATE TRIGGER trigger_verificar_limite_mochila
+BEFORE INSERT ON mochila_guarda_instancia_de_item
+FOR EACH ROW
+EXECUTE FUNCTION verificar_limite_mochila();
+
+
+CREATE OR REPLACE FUNCTION verificar_id_professor_treinador() RETURNS trigger AS $verificar_id_professor_treinador$
+    DECLARE
+        profissao_npc nome DEFAULT '';
+    BEGIN
+        SELECT profissao INTO profissao_npc FROM npc WHERE id = NEW.id_professor;
+        IF LOWER(profissao_npc) <> 'professor' THEN
+            RAISE EXCEPTION 'Somente NPCs com a profissão de professor podem ser adicionados no campo "id_professor".';
+        END IF;
+        RETURN NEW;
+    END;
+$verificar_id_professor_treinador$ LANGUAGE plpgsql;
+
+DROP TRIGGER  IF EXISTS  trigger_verificar_id_professor_treinador ON treinador;
+CREATE TRIGGER trigger_verificar_id_professor_treinador
+BEFORE INSERT OR UPDATE ON treinador
+FOR EACH ROW
+EXECUTE FUNCTION verificar_id_professor_treinador();
+
+
+
+CREATE OR REPLACE FUNCTION verificar_id_npc_vendedor() RETURNS trigger AS $verificar_id_npc_vendedor$
+    DECLARE
+        profissao_npc nome DEFAULT '';
+    BEGIN
+        SELECT profissao INTO profissao_npc FROM npc WHERE id = NEW.id_npc;
+        IF LOWER(profissao_npc) <> 'vendedor' THEN
+            RAISE EXCEPTION 'Somente NPCs com a profissão de vendedor podem ser adicionados nas tabelas de vende e de npc_guarda_instancia_de_item.';
+        END IF;
+        RETURN NEW;
+    END;
+$verificar_id_npc_vendedor$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trigger_verificar_id_npc_vendedor ON vende;
+
+CREATE TRIGGER trigger_verificar_id_npc_vendedor
+BEFORE INSERT OR UPDATE ON vende
+FOR EACH ROW
+EXECUTE FUNCTION verificar_id_npc_vendedor();
+
+DROP TRIGGER IF EXISTS trigger_verificar_id_npc_vendedor ON npc_guarda_instancia_de_item;
+
+CREATE TRIGGER trigger_verificar_id_npc_vendedor
+BEFORE INSERT OR UPDATE ON npc_guarda_instancia_de_item
+FOR EACH ROW
+EXECUTE FUNCTION verificar_id_npc_vendedor();
