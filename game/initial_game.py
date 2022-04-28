@@ -22,8 +22,8 @@ _,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
     """)
     print('=======================================================================')
     print('Bem vindo ao jogo Gotta Catch \'Em All, seguem algumas instruções para que você consiga jogar')
-    print('- Movimentaçao: W(Norte) S(Sul) A(Oeste) D(Leste) Q(Cima) E(Baixo')
-    print('- Ações: Ações possíveis serão mostradas no console, ao lado de um comando para executá-lo.')
+    print('- Ações: Ações possíveis serão mostradas no console, ao lado de um número.'
+          '         Para executá-las insira o número desejado e pressione ENTER.')
     print('\nO Menu abaixo vai ter dar uma noção de como as coisas vão ser:')
     initial_menu()
     # seller()
@@ -32,7 +32,6 @@ _,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
 def initial_menu():
     player_name = ''
     while True:
-        print('\n\n')
         print_title('MENU INICIAL')
         print('1 - Criar novo jogo')
         print('2 - Carregar jogo salvo')
@@ -42,16 +41,18 @@ def initial_menu():
         if tecla == '1':
             player_name = create_new_player()
             if player_name == '':
+                print('\n\n')
                 continue
         elif tecla == '2':
             player_name = load_players()
             if player_name == '':
+                print('\n\n')
                 continue
         elif tecla == '0':
             exit_game()
             return
         else:
-            print('Opção inválida, tente novamente.')
+            print('Opção inválida, tente novamente.\n\n')
             continue
         
         clean_bash()
@@ -140,8 +141,7 @@ def load_players():
             print(f'{count} - {name["nome"]}')
             count += 1
         print(f'0 - Voltar')
-        tecla = input(
-            'Selecione o nome do treinador que você deseja carregar: ')
+        tecla = input('Selecione o nome do treinador que você deseja carregar: ')
 
         try:
             tecla = int(tecla)
