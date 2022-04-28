@@ -1,6 +1,7 @@
 from utils import *
-from database import get_user_info
+from database import get_user_info, get_pokemon_on_position, remove_pokemon_from_position
 from moviment import path, valid_region_change_db, change_player_pos
+from catch import Catch
 import time
 
 MAP_DIRECTIONS_KEYBOARD = {
@@ -29,7 +30,7 @@ def start_game(player_name):
         print_title('Menu')
         count = 1
 
-        pokemons, count = display_pokemons(count)
+        pokemon, count = display_pokemons(user_info['id_posicao'], count)
         NPCs, count = display_npcs(count)
         items, count = display_items(count)
 
@@ -58,10 +59,11 @@ def start_game(player_name):
                 continue
 
             if tecla > 0 and tecla < count:
-                curr_size = len(pokemons)
+                curr_size = 1 if pokemon else 0
                 if tecla <= curr_size:
-                    # pokemon action
-                    print('Pokemon action na pos: ', tecla)
+                    catch = Catch(pokemon, user_info['nome'])
+                    if catch.display():
+                        remove_pokemon_from_position(user_info['id_posicao'], pokemon)
                     continue
                 
                 curr_size += len(NPCs)
@@ -86,14 +88,13 @@ def start_game(player_name):
             else:
                 print('Opção inválida, tente novamente.\n\n')
 
-def display_pokemons(count):
-    pokemons = [1] # checar pokemons na posição
-    if pokemons != []:
-        pokemon_name = 'Alfredo' # pokemons[0]['specie']
-        print_subtitle(f'UM(A) {pokemon_name.upper()} SELVAGEM APARECEU!!!')
-        print(f'{count} - Tentar capturar o(a) {pokemon_name}')
+def display_pokemons(pos, count):
+    pokemon = get_pokemon_on_position(pos)
+    if pokemon:
+        print_subtitle(f'UM POKEMON SELVAGEM APARECEU!!!')
+        print(f'{count} - Tentar capturar?!')
         count += 1
-    return pokemons, count
+    return pokemon, count
 
 def display_npcs(count):
     NPCs = [1] # checar nps na posição

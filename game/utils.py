@@ -89,4 +89,4 @@ def remove_item_from_backpack(backpack_id, item_id):
         return None
 
     run_delete(f"DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} "
-               f"and id_mochila={backpack_id};")
+               f"and id_mochila='{backpack_id}';")

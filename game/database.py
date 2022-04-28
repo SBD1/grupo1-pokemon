@@ -130,6 +130,24 @@ def get_item_id(instance_id):
     return []
 
 
+def get_pokemon_on_position(position):
+
+    query = f"SELECT id_instancia_pokemon FROM instancia_pokemon_posicao WHERE id_posicao = {position}"
+    response = run_query_fetchone(query)
+
+    if not response:
+        return None
+
+    return response['id_instancia_pokemon']
+
+
+def remove_pokemon_from_position(position, pokemon_id):
+    query = f"DELETE FROM instancia_pokemon_posicao \
+    WHERE id_posicao = {position} and id_instancia_pokemon = {pokemon_id}"
+
+    run_delete(query)
+
+
 def get_papel_item(item_id):
     query_response = run_query_fetchall(
         f"SELECT papel FROM especializacao_do_item WHERE id_item = {item_id};")
