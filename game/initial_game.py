@@ -1,7 +1,7 @@
 from time import sleep
 from database import get_user_info, get_players_names, insert_new_treinador
 from purchase_item import open_seller_menu
-from moviment import player_path, choose_path
+from in_game import start_game
 from utils import *
 
 
@@ -31,55 +31,31 @@ _,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
 
 def initial_menu():
     player_name = ''
-    print_title('MENU INICIAL')
     while True:
+        print('\n\n')
+        print_title('MENU INICIAL')
         print('1 - Criar novo jogo')
         print('2 - Carregar jogo salvo')
-        print('3 - Sair')
+        print('0 - Sair')
         tecla = input('Insira sua escolha: ')
         print()
         if tecla == '1':
             player_name = create_new_player()
-            if player_name != '':
-                break
-            else:
-                clean_bash()
-                print_title('MENU INICIAL')
+            if player_name == '':
+                continue
         elif tecla == '2':
             player_name = load_players()
-            if player_name != '':
-                break
-            else:
-                clean_bash()
-                print_title('MENU INICIAL')
-        elif tecla == '3':
+            if player_name == '':
+                continue
+        elif tecla == '0':
             exit_game()
             return
         else:
-            print('Opção inválida, tente novamente.\n\n')
-    start_game(player_name)
-
-
-def start_game(player_name):
-    ok = True
-    while ok == True:
-        user_info = get_user_info(player_name)
-        print_prettier_dict(user_info)
-        print_title('Movimentação possível: ')
-        player_path(player_name)
-        choose = input()
-        res = choose_path(player_name, choose)
-        print(res)
-        if res == 0:
-            exit_game()
-            return
-        elif res == 1:
-            clean_bash()
-        elif res == -1:
-            print_subtitle('Escolha inválida')
-        elif res == 2:
-            print_title('Você ainda não tem pokemons suficientes para acessar essa região')
-
+            print('Opção inválida, tente novamente.')
+            continue
+        
+        clean_bash()
+        start_game(player_name)
 
 def exit_game():
     clean_bash()
@@ -139,9 +115,9 @@ def create_new_player():
     print_subtitle('CRIAR NOVO JOGO')
     while True:
         player_name = input(
-            'Insira o nome do treinador (ou insira 2 para voltar): ')
+            'Insira o nome do treinador (ou insira 0 para voltar): ')
 
-        if player_name == '2':
+        if player_name == '0':
             return ''
 
         if get_user_info(player_name) != []:
@@ -163,7 +139,7 @@ def load_players():
         for name in players_names:
             print(f'{count} - {name["nome"]}')
             count += 1
-        print(f'{count} - Voltar')
+        print(f'0 - Voltar')
         tecla = input(
             'Selecione o nome do treinador que você deseja carregar: ')
 
@@ -175,7 +151,7 @@ def load_players():
 
         if tecla > 0 and tecla <= len(players_names):
             return players_names[tecla-1]['nome']
-        elif tecla == count:
+        elif tecla == 0:
             return ''
         else:
             print('Opção inválida, tente novamente.\n\n')

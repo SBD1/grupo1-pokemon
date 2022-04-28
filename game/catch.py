@@ -48,6 +48,7 @@ class Catch:
         self.player_name = player_name
 
         self.berry_stats = self.get_berry_stats()
+        self.pokeball_stats = self.get_pokeball_stats(self.pokebolas_dict)
 
         if not pokemon_on_pokedex(self.pokemon_specie_id, player_name):
             add_pokemon_to_pokedex(self.pokemon_specie_id, player_name)
@@ -102,7 +103,7 @@ class Catch:
 
             if option_item_name in self.pokebolas_dict.keys():
                 print_prompt(f"Você jogou uma pokebola do tipo {option_item_name}...")
-                if random.random() < self.pokemon_catch_prob:
+                if random.random() < self.pokemon_catch_prob * self.pokeball_stats[option_item_name]:
                     self.catch_pokemon(option_item_id)
                     use_item(option_item_id)
                     print_prompt(f"Parabéns!!! Você conseguiu capturar o pokemon {self.pokemon_name}")
@@ -130,6 +131,17 @@ class Catch:
 
         return berry_stats
 
+    @staticmethod
+    def get_pokeball_stats(pokebolas_dict):
+        pokeball_stats = {}
+
+        for pokeball_name, pokeball_id in pokebolas_dict.items():
+            query = f"SELECT get_pokeball_catch_rate({pokeball_id});"
+            response = run_query_fetchall(query)
+            pokeball_stats[pokeball_name] = dict(response[0])['get_pokeball_catch_rate']
+        
+        return pokeball_stats
+
     def display_menu_options(self):
 
         options_count = 1
@@ -139,7 +151,7 @@ class Catch:
 
         for berry_name, berry_list in berries.items():
             if len(berry_list) > 0:
-                print(f"<{options_count}> Utilizar barry {berry_name}.")
+                print(f"{options_count} - Utilizar berry {berry_name}.")
                 map_option_item_use[options_count] = (berry_list[0], berry_name)
                 options_count += 1
 
@@ -147,11 +159,11 @@ class Catch:
 
         for pokebola_name, pokebola_list in pokebolas.items():
             if len(pokebola_list) > 0:
-                print(f"<{options_count}> Utilizar pokebola {pokebola_name}.")
+                print(f"{options_count} - Utilizar pokebola {pokebola_name}.")
                 map_option_item_use[options_count] = (pokebola_list[0], pokebola_name)
                 options_count += 1
 
-        print(f"    <0> Cancelar captura.")
+        print(f"0 - Cancelar captura.")
 
         return map_option_item_use
 

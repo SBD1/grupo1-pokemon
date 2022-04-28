@@ -272,6 +272,21 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--- Taxa de captura da pokebola
+CREATE OR REPLACE FUNCTION get_pokeball_catch_rate(_id INTEGER)
+  RETURNS DECIMAL(2,1) AS $$
+DECLARE
+  _nome nome DEFAULT '';
+BEGIN
+  SELECT nome INTO _nome FROM pokebola WHERE id=_id;
+  RETURN 
+    (CASE WHEN _nome = 'Great Ball'  THEN 1.5
+      WHEN _nome = 'Ultra Ball' THEN 2.0
+      WHEN _nome = 'Master Ball' THEN 100.0
+      ELSE 1.0
+    END);  
+END;
+$$ LANGUAGE plpgsql;
 
 --- TRIGGERS ---
 
