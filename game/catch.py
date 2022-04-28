@@ -15,11 +15,8 @@ from utils import (check_backpack_has_item,
                    check_pokemon_exists,
                    print_title,
                    print_prompt,
+                   remove_item_from_backpack,
                    print_subtitle)
-
-
-def use_item(item_id):
-    pass
 
 
 class Catch:
@@ -99,19 +96,19 @@ class Catch:
                 print_prompt(f"Você utilizou um berry do tipo {option_item_name}!")
                 print_prompt(f"Isso aumentou a chance de captura\
                              do pokemon em {self.berry_stats[option_item_name]}%")
-                use_item(option_item_id)
+                remove_item_from_backpack(self.player_name, option_item_id)
 
             if option_item_name in self.pokebolas_dict.keys():
                 print_prompt(f"Você jogou uma pokebola do tipo {option_item_name}...")
                 if random.random() < self.pokemon_catch_prob * self.pokeball_stats[option_item_name]:
                     self.catch_pokemon(option_item_id)
-                    use_item(option_item_id)
+                    remove_item_from_backpack(self.player_name, option_item_id)
                     print_prompt(f"Parabéns!!! Você conseguiu capturar o pokemon {self.pokemon_name}")
                     print_prompt(f"Você ganhou {self.pokemon_xp} pontos de experiência!!!")
                     return self.pokemon_xp
 
                 print_prompt(f"Infelizmente você não conseguiu capturar o pokemon :(")
-                use_item(option_item_id)
+                remove_item_from_backpack(self.player_name, option_item_id)
                 total_pokebolas -= 1
 
         if total_pokebolas == 0:
