@@ -110,6 +110,17 @@ def get_npc_info(id_npc):
     return []
 
 
+def get_npc_info_by_pos(pos):
+    query_response = run_query_fetchall(
+        f"SELECT * FROM npc WHERE id_posicao = {pos};")
+    npc_info = []
+    for info in query_response:
+        npc_info.append(dict(info))
+    if len(npc_info) > 0:
+        return npc_info[0]
+    return []
+
+
 def get_seller_items(_id_npc):
     query_response = run_query_fetchall(
         f"SELECT id_instancia_item FROM npc_guarda_instancia_de_item WHERE id_npc = {_id_npc};")
@@ -178,12 +189,15 @@ def insert_new_treinador(player_name):
     except:
         return []
 
+
 def get_bag_items(player_name):
-    query_response = run_query_fetchall(f"SELECT * from mochila_guarda_instancia_de_item where id_mochila='{player_name}'")
+    query_response = run_query_fetchall(
+        f"SELECT * from mochila_guarda_instancia_de_item where id_mochila='{player_name}'")
     items = []
     for item in query_response:
         items.append(dict(item))
     return items
+
 
 def get_item_details(item_id, table):
     query_response = run_query_fetchall(
@@ -194,20 +208,26 @@ def get_item_details(item_id, table):
         details.append(dict(info))
         return details[0]
 
+
 def get_user_pokemons(user_id):
-    query_response = run_query_fetchall(f"SELECT * from captura where id_treinador = '{user_id}';")
+    query_response = run_query_fetchall(
+        f"SELECT * from captura where id_treinador = '{user_id}';")
     pokemons = []
     for info in query_response:
         pokemons.append(dict(info))
     return pokemons
 
+
 def get_instancia_pokemon_info(instancia_pokemon_id):
-    query_response = run_query_fetchall(f"SELECT * from instancia_pokemon where id = '{instancia_pokemon_id}';")
+    query_response = run_query_fetchall(
+        f"SELECT * from instancia_pokemon where id = '{instancia_pokemon_id}';")
     for info in query_response:
         return dict(info)
 
+
 def get_pokemon_info(pokemon_id):
-    query_response = run_query_fetchall(f"SELECT * from pokemon where id = '{pokemon_id}';")
+    query_response = run_query_fetchall(
+        f"SELECT * from pokemon where id = '{pokemon_id}';")
     for info in query_response:
         return dict(info)
 
@@ -247,6 +267,7 @@ def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
 
     return run_update(query_update)
 
+
 def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instancia_item_id):
     try:
         query = f"CALL evoluir_pokemon_com_item({instancia_pokemon_id}, {pokemon_id}, {item_id}, {instancia_item_id});"
@@ -255,11 +276,16 @@ def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instanci
     except (Exception, psycopg2.DatabaseError) as error:
         print('Esse pokémon não pode ser evoluído com este item')
 
+
 def delete_item_from_bag(item_id, mochila_id):
-    run_delete(f"DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} and id_mochila='{mochila_id}';")
+    run_delete(
+        f"DELETE FROM mochila_guarda_instancia_de_item WHERE id_instancia_item={item_id} and id_mochila='{mochila_id}';")
+
 
 def use_candy(instancia_pokemon_id, item_id):
-    run_transaction( f"CALL usar_candy_pokemon({instancia_pokemon_id}, {item_id})")
+    run_transaction(
+        f"CALL usar_candy_pokemon({instancia_pokemon_id}, {item_id})")
+
 
 def run_delete(query):
     conn, cur = get_database_and_cursor()
@@ -268,6 +294,7 @@ def run_delete(query):
     cur.close()
     conn.close()
 
+
 def run_sell_item(id_instancia, _nome_treinador, id_npc):
     query = f"CALL vende_item({id_instancia}, '{_nome_treinador}', {id_npc})"
     try:
@@ -275,10 +302,11 @@ def run_sell_item(id_instancia, _nome_treinador, id_npc):
     except (Exception, psycopg2.DatabaseError) as error:
         return None
 
+
 def run_transaction(query):
-        conn, cur = get_database_and_cursor()
-        conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
-        cur.execute(query)
-        conn.commit()
-        cur.close()
-        conn.close()
+    conn, cur = get_database_and_cursor()
+    conn.set_isolation_level(ISOLATION_LEVEL_SERIALIZABLE)
+    cur.execute(query)
+    conn.commit()
+    cur.close()
+    conn.close()

@@ -21,8 +21,8 @@ _,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
                                 `'                            '-._|
     """)
     print('=======================================================================')
-    print('Bem vindo ao jogo Gotta Catch \'Em All, seguem algumas instruções para que você consiga jogar')
-    print('- Ações: Ações possíveis serão mostradas no console, ao lado de um número.'
+    print('Bem vindo ao jogo Gotta Catch \'Em All, seguem algumas instruções para \nque você consiga jogar')
+    print('- Ações: Ações possíveis serão mostradas no console, ao lado de um número.\n'
           '         Para executá-las insira o número desejado e pressione ENTER.')
     print('\nO Menu abaixo vai ter dar uma noção de como as coisas vão ser:')
     initial_menu()
@@ -54,9 +54,10 @@ def initial_menu():
         else:
             print('Opção inválida, tente novamente.\n\n')
             continue
-        
+
         clean_bash()
         start_game(player_name)
+
 
 def exit_game():
     clean_bash()
@@ -141,7 +142,8 @@ def load_players():
             print(f'{count} - {name["nome"]}')
             count += 1
         print(f'0 - Voltar')
-        tecla = input('Selecione o nome do treinador que você deseja carregar: ')
+        tecla = input(
+            'Selecione o nome do treinador que você deseja carregar: ')
 
         try:
             tecla = int(tecla)
@@ -155,5 +157,3 @@ def load_players():
             return ''
         else:
             print('Opção inválida, tente novamente.\n\n')
-
-
