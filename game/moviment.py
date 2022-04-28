@@ -20,7 +20,7 @@ def valid_region_change_db(pos, user_name):
     return valid_entry
 
 def get_display_available_pos(positions_available):
-    return [{key : value} for key, value in positions_available.items() if value != None]
+    return {key : value for key, value in positions_available.items() if value != None}
 
 def change_player_pos(pos, user_name):
     sql = f"UPDATE treinador SET id_posicao = {pos} WHERE nome ='{user_name}';"
