@@ -155,3 +155,5 @@ def load_players():
             return ''
         else:
             print('Opção inválida, tente novamente.\n\n')
+
+
