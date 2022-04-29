@@ -1,9 +1,10 @@
 from purchase_item import open_seller_menu
 from npc import check_npc_in_position
 from utils import *
-from database import get_user_info, get_pokemon_on_position, remove_pokemon_from_position
-from moviment import path, valid_region_change_db, change_player_pos
+from database import get_item_full_details, get_item_id, get_papel_item, get_user_info, get_pokemon_on_position, remove_pokemon_from_position
+from moviment import get_avaliable_items_in_position, get_display_available_pos, path, valid_region_change_db, change_player_pos
 from catch import Catch
+from use_item import bag_menu
 import time
 
 MAP_DIRECTIONS_KEYBOARD = {
@@ -36,7 +37,7 @@ def start_game(player_name):
 
         pokemon, count = display_pokemons(user_info['id_posicao'], count)
         NPCs, count = display_npcs(user_info["id_posicao"], count)
-        items, count = display_items(count)
+        items, count = display_items(user_info["id_posicao"], count)
 
         print_subtitle('Inventário')
         print(f'{count} - Olhar mochila')
@@ -46,7 +47,7 @@ def start_game(player_name):
         print('0 - Sair')
 
         tecla = input('Insira sua escolha: ')
-
+        
         if tecla.lower() in MAP_KEYBOARD_DIRECTIONS.keys() and positions != {}:
             choose = positions[MAP_KEYBOARD_DIRECTIONS[tecla.lower()]]
             can_acess = valid_region_change_db(choose, user_info['nome'])
@@ -90,7 +91,7 @@ def start_game(player_name):
                     continue
             elif tecla == count:
                 # abrir inventário
-                print('Abrir inventário')
+                bag_menu(player_name)
                 continue
             elif tecla == 0:
                 return ''
@@ -119,11 +120,16 @@ def display_npcs(pos, count):
     return NPCs, count
 
 
-def display_items(count):
-    items = [1]  # checar items no chão
+def display_items(pos_id, count):
+    items = get_avaliable_items_in_position(pos_id)
     if items != []:
+        id_instancia_item = items[0]['id_instancia_item']
+        item_id = get_item_id(id_instancia_item)["id_item"]
+        papel = get_papel_item(item_id)["papel"]
+        item_info = get_item_full_details(
+                    id_instancia_item, papel)
         print_subtitle('Um item encontrados no chão!')
-        item_name = 'Jujuba'  # items[0]['nome']
+        item_name = item_info['nome']  # items[0]['nome']
         print(f'{count} - Pegar {item_name} do chão')
         count += 1
     return items, count

@@ -27,6 +27,17 @@ def change_player_pos(pos, user_name):
     run_update(sql)
     return get_player_position_db(user_name)
 
+def get_avaliable_items_in_position(pos_id):
+    sql = f"select id_instancia_item from instancia_item_posicao WHERE id_posicao={pos_id};"
+    response = run_query_fetchall(sql)
+    items = []
+    for item in response:
+        items.append(dict(item))
+    return items
+
+def pick_item(user_id, item_id):
+    pass
+
 def path(user_pos):
     init_pos = user_pos
     directions = get_movement_directions(init_pos)
