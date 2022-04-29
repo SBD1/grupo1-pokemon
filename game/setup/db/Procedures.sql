@@ -248,6 +248,19 @@ CREATE OR REPLACE PROCEDURE usar_candy_pokemon(id_instancia_pokemon INTEGER, _id
 	END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE PROCEDURE pegar_item_do_chao(_id_instancia_item INTEGER, _nome_treinador nome)
+  AS $$
+  BEGIN
+    DELETE FROM instancia_item_posicao
+    where id_instancia_item = _id_instancia_item;
+
+    INSERT INTO mochila_guarda_instancia_de_item (id_mochila, id_instancia_item)
+    VALUES  (_nome_treinador, _id_instancia_item);
+
+  END;
+$$ LANGUAGE plpgsql;
+
+
 --- Conferir se um item existe
 CREATE OR REPLACE FUNCTION check_item_exists(_id_instancia_item INTEGER)
   RETURNS BOOLEAN AS $$
@@ -272,6 +285,47 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+--- Taxa de captura da pokebola
+CREATE OR REPLACE FUNCTION get_pokeball_catch_rate(_id INTEGER)
+  RETURNS DECIMAL(2,1) AS $$
+DECLARE
+  _nome nome DEFAULT '';
+BEGIN
+  SELECT nome INTO _nome FROM pokebola WHERE id=_id;
+  RETURN 
+    (CASE WHEN _nome = 'Great Ball'  THEN 1.5
+      WHEN _nome = 'Ultra Ball' THEN 2.0
+      WHEN _nome = 'Master Ball' THEN 100.0
+      ELSE 1.0
+    END);  
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION get_quantidade_instancia_item()
+  RETURNS INTEGER AS $$
+BEGIN
+  RETURN (SELECT count(*) FROM instancia_item);
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE PROCEDURE criar_novo_treinador(_nome_treinador nome)
+AS $$
+DECLARE
+  qtd_instancias_items INTEGER;
+BEGIN
+  INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES (_nome_treinador, 0, 500.00, 'iniciante', 1, 2);
+  INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES (_nome_treinador, 50, 500.00);
+  INSERT INTO pokedex (id) VALUES (_nome_treinador);
+  qtd_instancias_items = get_quantidade_instancia_item();
+  
+  FOR i in 1..4 LOOP
+    INSERT into instancia_item (id_item) VALUES (20);
+  END LOOP;
+  INSERT INTO mochila_guarda_instancia_de_item (id_mochila, id_instancia_item) VALUES (_nome_treinador, qtd_instancias_items + 1), (_nome_treinador, qtd_instancias_items + 2), (_nome_treinador, qtd_instancias_items + 3); 
+END;
+$$ LANGUAGE plpgsql;
 
 --- TRIGGERS ---
 

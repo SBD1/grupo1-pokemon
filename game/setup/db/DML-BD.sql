@@ -54,13 +54,13 @@ INSERT INTO npc (nome, fala, profissao, id_posicao) VALUES
 ('Aventureiro Jonas', 'Fazem alguns meses desde que sai da minha cidade natal para minha jornada, é um pouco solitário mas é uma experiência incrível', 'aventureiro', 43);
 
 -- Treinador
-INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 500.00, 'iniciante', 1, 1);
+-- INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('Ash Ketchum', 0, 500.00, 'iniciante', 1, 2);
 
 -- Mochila
-INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES ('Ash Ketchum', 50, 500.00);
+-- INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES ('Ash Ketchum', 50, 500.00);
 
 -- Pokedex
-INSERT INTO pokedex (id) VALUES ('Ash Ketchum');
+-- INSERT INTO pokedex (id) VALUES ('Ash Ketchum');
 
 -- Pokemon
 INSERT INTO pokemon (especie, tamanho, peso, descricao, elemento1,  taxa_captura, elemento2) VALUES  ('bulbasaur', 7, 69, 'There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger.', 3, 0.75, 6), 
@@ -215,10 +215,6 @@ INSERT INTO pokemon (especie, tamanho, peso, descricao, elemento1,  taxa_captura
 ('mewtwo', 20, 1220, 'Its DNA is almost the same as Mew’s. However, its size and disposition are vastly different.', 10, 0.05, null), 
 ('mew', 4, 40, 'When viewed through a microscope, this Pokémon’s short, fine, delicate hair can be seen.', 10, 0.05, null);
 
--- Evoluções
-INSERT INTO pokemon_evolucao (pokemon_id, evolucao_id, experiencia_evoluir) VALUES  (1, 2, 100), (2, 3, 100), (4, 5, 100), (5, 6, 100), (7, 8, 100), (8, 9, 100), (10, 11, 100), (11, 12, 100), (13, 14, 100), (14, 15, 100), (16, 17, 100), (17, 18, 100), (19, 20, 100), (21, 22, 100), (23, 24, 100), (25, 26, 100), (27, 28, 100), (29, 30, 100), (30, 31, 100), (32, 33, 100), (33, 34, 100), (35, 36, 100), (37, 38, 100), (39, 40, 100), (41, 42, 100), (43, 44, 100), (44, 45, 100), (46, 47, 100), (48, 49, 100), (50, 51, 100), (52, 53, 100), (54, 55, 100), (57, 58, 100), (58, 59, 100), (60, 61, 100), (61, 62, 100), (63, 64, 100), (64, 65, 100), (66, 67, 100), (67, 68, 100), (69, 70, 100), (70, 71, 100), (72, 73, 100), (74, 75, 100), (75, 76, 100), (77, 78, 100), (79, 80, 100), (81, 82, 100), (84, 85, 100), (86, 87, 100), (88, 89, 100), (90, 91, 100), (92, 93, 100), (93, 94, 100), (95, 96, 100), (98, 99, 100), (100, 101, 100), (102, 103, 100), (104, 105, 100), (109, 110, 100), (111, 112, 100), (116, 117, 100), (118, 119, 100), (120, 121, 100), (129, 130, 100), (133, 134, 100), (133, 135, 100), (133, 136, 100), (138, 139, 100), (140, 141, 100), (147, 148, 100), (148, 149, 100);
-
-
 -- Instancias
 INSERT INTO instancia_pokemon (id_pokemon, experiencia, genero) VALUES  
   (1, 50, 'M')
@@ -308,14 +304,21 @@ INSERT INTO instancia_item (id_item) VALUES
 , (3) -- Candy Doce
 , (23); -- Master Ball
 
+-- Evoluções
+INSERT INTO pokemon_evolucao (pokemon_id, evolucao_id, experiencia_evoluir) VALUES  (1, 2, 100), (2, 3, 200), (4, 5, 100), (5, 6, 200), (7, 8, 100), (8, 9, 200), (10, 11, 100), (11, 12, 200), (13, 14, 100), (14, 15, 200), (16, 17, 100), (17, 18, 200), (19, 20, 150), (21, 22, 150), (23, 24, 150), (25, 26, 150), (27, 28, 150), (29, 30, 100), (30, 31, 200), (32, 33, 100), (33, 34, 200), (35, 36, 150), (37, 38, 150), (39, 40, 150), (41, 42, 150), (43, 44, 100), (44, 45, 200), (46, 47, 150), (48, 49, 150), (50, 51, 150), (52, 53, 150), (54, 55, 150), (57, 58, 100), (58, 59, 200), (60, 61, 100), (61, 62, 200), (63, 64, 100), (64, 65, 200), (66, 67, 100), (67, 68, 200), (69, 70, 100), (70, 71, 200), (72, 73, 150), (74, 75, 100), (75, 76, 200), (77, 78, 150), (79, 80, 150), (81, 82, 150), (84, 85, 150), (86, 87, 150), (88, 89, 150), (90, 91, 150), (92, 93, 100), (93, 94, 200), (95, 96, 150), (98, 99, 150), (100, 101, 150), (102, 103, 150), (104, 105, 150), (109, 110, 150), (111, 112, 150), (116, 117, 150), (118, 119, 150), (120, 121, 150), (129, 130, 150), (133, 134, 150), (133, 135, 150), (133, 136, 150), (138, 139, 150), (140, 141, 150), (147, 148, 100), (148, 149, 200);
+
+UPDATE pokemon_evolucao SET necessita_de_item = true where pokemon_id = 25 or  pokemon_id = 37 or  pokemon_id = 25 or  pokemon_id = 29 or  pokemon_id = 44 or  pokemon_id = 58 or  pokemon_id = 61 or  pokemon_id = 70 or  pokemon_id = 133;
+
+INSERT INTO pokemon_evolucao_item (pokemon_id, evolucao_id, item_id) VALUES (25, 26, 19), (37, 38, 13), (35, 36, 16), (39, 40, 16), (44, 45, 15), (58, 59, 13), (61, 62, 11), (70, 71, 15), (133, 134, 11), (133, 135, 19), (133, 136, 13);
+
 
 -- Guardar items NPC e Mochila
 -- Mochila
-INSERT INTO mochila_guarda_instancia_de_item VALUES ('Ash Ketchum', 5), ('Ash Ketchum', 6), ('Ash Ketchum', 7);
+-- INSERT INTO mochila_guarda_instancia_de_item VALUES ('Ash Ketchum', 5), ('Ash Ketchum', 6), ('Ash Ketchum', 7);
 
 -- NPCs
 INSERT INTO npc_guarda_instancia_de_item VALUES (3, 8), (3, 9), (3, 10), (3, 11), (3, 12), (3, 13), (3, 14), (3, 15), (3, 16), (3, 17), (3, 18), (3, 19), (3, 20), (3, 21), (3, 22), (3, 23), (3, 24), 
-(6, 25), (6, 26), (6, 27), (6, 28), (6, 29), (6, 30), (6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36), (6, 37), (6, 38), (6, 39), (6, 40), (6, 41), (6, 42), (6, 43);
+(6, 25), (6, 26), (6, 27), (6, 28), (6, 29), (6, 30), (6, 31), (6, 32), (6, 33), (6, 34), (6, 35), (6, 36), (6, 37), (6, 38), (6, 39), (6, 40), (6, 41), (6, 42), (6, 43), (6, 47), (6, 48);
 
 -- INSERT group 6: INSTANCIA ITEM POSICAO e INSTANCIA POKEMON POSICAO
 
@@ -342,22 +345,22 @@ INSERT INTO instancia_pokemon_posicao (id_posicao, id_instancia_pokemon) VALUES
 
 -- INSERT group 7: REGISTRA, VENDE, CAPTURA, EVENT0_CAPTURA
 
-INSERT INTO registra (id_pokemon, id_pokedex, qtd_vista, qtd_capturada) VALUES
-(1, 'Ash Ketchum', 1, 0),
-(2, 'Ash Ketchum', 1, 1),
-(3, 'Ash Ketchum', 1, 1),
-(4, 'Ash Ketchum', 1, 0),
-(5, 'Ash Ketchum', 1, 1),
-(6, 'Ash Ketchum', 1, 0),
-(7, 'Ash Ketchum', 1, 0),
-(8, 'Ash Ketchum', 1, 0),
-(9, 'Ash Ketchum', 1, 0),
-(10, 'Ash Ketchum', 1, 0);
+-- INSERT INTO registra (id_pokemon, id_pokedex, qtd_vista, qtd_capturada) VALUES
+-- (1, 'Ash Ketchum', 1, 0),
+-- (2, 'Ash Ketchum', 1, 1),
+-- (3, 'Ash Ketchum', 1, 1),
+-- (4, 'Ash Ketchum', 1, 0),
+-- (5, 'Ash Ketchum', 1, 1),
+-- (6, 'Ash Ketchum', 1, 0),
+-- (7, 'Ash Ketchum', 1, 0),
+-- (8, 'Ash Ketchum', 1, 0),
+-- (9, 'Ash Ketchum', 1, 0),
+-- (10, 'Ash Ketchum', 1, 0);
 
-INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
+-- INSERT INTO vende (treinador, id_instancia_item, id_npc) VALUES
 -- Comprou duas pokebolas e uma great ball do vendedor June
-('Ash Ketchum', 8, 3), ('Ash Ketchum', 9, 3), ('Ash Ketchum', 18, 3);
+-- ('Ash Ketchum', 8, 3), ('Ash Ketchum', 9, 3), ('Ash Ketchum', 18, 3);
 
-INSERT INTO captura (id_instancia_pokemon, id_treinador) VALUES (3, 'Ash Ketchum'), (2, 'Ash Ketchum'), (5, 'Ash Ketchum');
+-- INSERT INTO captura (id_instancia_pokemon, id_treinador) VALUES (3, 'Ash Ketchum'), (2, 'Ash Ketchum'), (5, 'Ash Ketchum');
 
-INSERT INTO evento_captura (id_instancia_pokemon, id_pokebola) VALUES (3, 20), (2, 20), (5, 20);
+-- INSERT INTO evento_captura (id_instancia_pokemon, id_pokebola) VALUES (3, 20), (2, 20), (5, 20);
