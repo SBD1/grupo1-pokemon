@@ -67,6 +67,7 @@ def run_update(query):
     conn, cur = get_database_and_cursor()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur.execute(query)
+    conn.commit()
     cur.close()
     conn.close()
 
@@ -75,6 +76,7 @@ def run_insert(query):
     conn, cur = get_database_and_cursor()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     response = cur.execute(query)
+    conn.commit()
     cur.close()
     conn.close()
     return response
@@ -190,6 +192,25 @@ def insert_new_treinador(player_name):
         return []
 
 
+def insert_new_bag(player_name):
+    try:
+        run_insert(
+            f"INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES ('{player_name}', 50, 500.00);"
+        )
+        return get_bag_details(player_name)
+    except:
+        return []
+
+
+def get_bag_details(player_name):
+    query_response = run_query_fetchall(
+        f"SELECT * from mochila where id='{player_name}'")
+    items = []
+    for item in query_response:
+        items.append(dict(item))
+    return items
+
+
 def get_bag_items(player_name):
     query_response = run_query_fetchall(
         f"SELECT * from mochila_guarda_instancia_de_item where id_mochila='{player_name}'")
@@ -200,9 +221,29 @@ def get_bag_items(player_name):
 
 
 def get_item_details(item_id, table):
-    query_response = run_query_fetchall(
-        f"SELECT * FROM {table} WHERE id = {item_id};"
-    )
+    if table == 'evostone':
+        query_response = run_query_fetchall(
+            f"SELECT A.*, B.nome AS elemento FROM {table} A JOIN elemento B ON A.id = B.id  WHERE A.id = {item_id};"
+        )
+    else:
+        query_response = run_query_fetchall(
+            f"SELECT * FROM {table} WHERE id = {item_id};"
+        )
+    details = []
+    for info in query_response:
+        details.append(dict(info))
+        return details[0]
+
+
+def get_item_full_details(item_id, table):
+    if table == 'evostone':
+        query_response = run_query_fetchall(
+            f"SELECT A.*, C.* FROM instancia_item A JOIN especializacao_do_item B ON B.id_item = A.id_item JOIN {table} C ON B.id_item = C.id JOIN elemento D ON C.id = D.id WHERE A.id = {item_id};"
+        )
+    else:
+        query_response = run_query_fetchall(
+            f"SELECT A.*, C.* FROM instancia_item A JOIN especializacao_do_item B ON B.id_item = A.id_item JOIN {table} C ON B.id_item = C.id WHERE A.id = {item_id};"
+        )
     details = []
     for info in query_response:
         details.append(dict(info))
@@ -299,7 +340,9 @@ def run_sell_item(id_instancia, _nome_treinador, id_npc):
     query = f"CALL vende_item({id_instancia}, '{_nome_treinador}', {id_npc})"
     try:
         run_transaction(query)
+        return 1
     except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
         return None
 
 

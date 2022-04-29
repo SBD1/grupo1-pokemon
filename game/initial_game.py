@@ -1,5 +1,5 @@
 from time import sleep
-from database import get_user_info, get_players_names, insert_new_treinador
+from database import get_user_info, get_players_names, insert_new_bag, insert_new_treinador
 from purchase_item import open_seller_menu
 from in_game import start_game
 from utils import *
@@ -127,9 +127,19 @@ def create_new_player():
             continue
 
         new_treinador = insert_new_treinador(player_name)
-        if new_treinador != []:
-            return player_name
-        print('Algo deu errado enquanto um novo treinador era criado. Tente novamente\n\n')
+        if new_treinador == []:
+            print(
+                'Algo deu errado enquanto um novo treinador era criado. Tente novamente\n\n')
+            return ''
+
+        new_bag = insert_new_bag(player_name)
+        print(new_bag)
+        if new_bag == []:
+            print(
+                'Algo deu errado enquanto um novo treinador era criado. Tente novamente\n\n')
+            return ''
+
+        return player_name
 
 
 def load_players():

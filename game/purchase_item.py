@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 import time
 from database import *
 from utils import *
@@ -55,116 +56,124 @@ def open_seller_menu(id_npc, nome_treinador):
                 opcoes_validas.append(i)
                 opcao_item.append({'opcao': i, 'papel_item': type})
                 print(
-                    f'   <{i}> Comprar {type}')
+                    f'   {i} - Comprar {type}')
         print(
-            f'      <0> Voltar')
+            f'      0 - Voltar ao Menu')
 
-        opcao = input()
-
-        while(not opcao.isnumeric()):
-            print_subtitle('Opção inválida!')
-            print_prompt('Selecione um número.')
-            opcao = input()
-
-        while int(opcao) not in opcoes_validas:
-            print_prompt('Opção inválida!')
-            print_prompt('Selecione uma opção válida.')
-            opcao = input()
+        opcao = check_input(opcoes_validas)
+        if opcao == 0:
+            return
 
         # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
-        if int(opcao) == 0:
-            return None
-
-        clean_bash()
-        print_title(f"COMPRAR ITEM DE VENDEDOR: {nome}")
-        for op in opcao_item:
-            if(op['opcao'] == int(opcao)):
-                detalhar = op['papel_item']
-                print_subtitle(detalhar)
-                print()
-
-        printados = []
-        correcoes_gramaticais = {
-            'preco': 'Preço R$',
-            'id_elemento': 'Elemento',
-            'aumento_experiencia': 'Aumento de Experiência',
-            'aumento_taxa_captura': 'Aumento de Taxa de Captura'}
-        for item in itens_a_venda:
-            if(item['papel'] == detalhar):
-                if item['item_id'] not in printados:
-                    printados.append(item['item_id'])
-                    detalhes = get_item_details(item['item_id'], detalhar)
-                    print_prompt(detalhes['nome'])
-                    for att in detalhes:
-                        if not ((att == 'nome') | (att == 'id')):
-                            print(
-                                f"{correcoes_gramaticais[att]}: {detalhes[att]}")
+        if opcao != 0:
+            # clean_bash()
+            detalhar = ''
+            print_title(f"COMPRAR ITEM DE VENDEDOR: {nome}")
+            for op in opcao_item:
+                if(op['opcao'] == int(opcao)):
+                    detalhar = op['papel_item']
+                    print_subtitle(detalhar)
                     print()
-            # print(item)
 
-        print_subtitle(f"Qual {detalhar} deseja comprar?")
-        print_prompt("Selecione algum número:")
+            printados = []
+            correcoes_gramaticais = {
+                'preco': 'Preço R$',
+                'elemento': 'Elemento',
+                'aumento_experiencia': 'Aumento de Experiência',
+                'aumento_taxa_captura': 'Aumento de Taxa de Captura'}
+            for item in itens_a_venda:
+                if(item['papel'] == detalhar):
+                    if item['item_id'] not in printados:
+                        printados.append(item['item_id'])
+                        detalhes = get_item_details(item['item_id'], detalhar)
+                        print_prompt(detalhes['nome'])
+                        for att in detalhes:
+                            if not ((att == 'nome') | (att == 'id') | (att == 'id_elemento')):
+                                if ((att == 'aumento_experiencia') | (att == 'aumento_taxa_captura')):
+                                    print(
+                                        f"{correcoes_gramaticais[att]}: {detalhes[att]}%")
+                                else:
+                                    print(
+                                        f"{correcoes_gramaticais[att]}: {detalhes[att]}")
+                        print()
+                # print(item)
 
-        i = 0
-        opcoes_validas.clear()
-        opcoes_validas = [0]
-        opcao_especializacao_item = []
-        # print(printados)
+            print_subtitle(f"Qual {detalhar} deseja comprar?")
+            print_prompt("Selecione algum número:")
 
-        for _item_id in printados:
-            i += 1
-            opcoes_validas.append(i)
-            especializacao = get_item_details(
-                _item_id, detalhar)['nome']
-            opcao_especializacao_item.append(
-                {_item_id: especializacao})
+            i = 0
+            opcoes_validas.clear()
+            opcoes_validas = [0]
+            opcao_especializacao_item = []
+            # print(printados)
+
+            for _item_id in printados:
+                i += 1
+                opcoes_validas.append(i)
+                especializacao = get_item_details(
+                    _item_id, detalhar)['nome']
+                opcao_especializacao_item.append(
+                    {_item_id: especializacao})
+                print(
+                    f'   {i} - Comprar {especializacao}')
             print(
-                f'   <{i}> Comprar {especializacao}')
-        print(
-            f'      <0> Voltar')
+                f'      0 - Voltar ao Menu')
 
-        opcao = input()
+            opcao = check_input(opcoes_validas)
+            if opcao == 0:
+                return
 
-        while(not opcao.isnumeric()):
+            # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
+            if int(opcao) != 0:
+                # print(opcoes_validas[int(opcao)])
+                if(int(opcao) > 0):
+                    # print(
+                    #     f'Comprou item_id: {printados[opcoes_validas[int(opcao)-1]]}')
+                    # print(opcao)
+                    # print(opcoes_validas)
+                    # print(printados)
+                    for item in itens_a_venda:
+                        if(item['item_id'] == printados[opcoes_validas[int(opcao)]-1]):
+                            item_comprado = item
+                            break
+                    # print_prettier_dict(itens_a_venda)
+                    # print_prettier_dict(item_comprado)
+                    # print(f"Comprou {opcao_especializacao_item[printados[int(opcao)]]}")
+                    answer = run_sell_item(
+                        item_comprado["instancia_id"], nome_treinador, id_npc)
+                    item_comprado_full = get_item_full_details(
+                        item_comprado["instancia_id"], item_comprado["papel"])
+                    print(
+                        f'Parabéns! Você comprou {item_comprado_full["nome"]} e gastou R${item_comprado_full["preco"]}.')
+                    time.sleep(3)
+
+                if answer is None:
+                    print_prompt(
+                        f"Não foi possível realizar a compra.")
+                    print(' Tente novamente! O menu será reaberto em 3 segundos.')
+                    time.sleep(3)
+                    return ''
+                # print_prettier_dict(quantity)
+                # print_prettier_dict(contado)
+
+            else:
+                print(f"O NPC \"{nome}\" não é vendedor!")
+
+            # print_prettier_dict(npc_info)
+            # print(npc_info["id_posicao"])
+
+
+def check_input(opcoes_validas):
+    while True:
+        try:
+            opcao = input()
+            opcao = int(opcao)
+            if(opcao not in opcoes_validas):
+                print_subtitle('Opção inválida!')
+                print_prompt('Selecione um número.')
+                continue
+            return opcao
+        except ValueError:
             print_subtitle('Opção inválida!')
             print_prompt('Selecione um número.')
-            opcao = input()
-
-        while int(opcao) not in opcoes_validas:
-            print_prompt('Opção inválida!')
-            print_prompt('Selecione uma opção válida.')
-            opcao = input()
-
-        # COLOCAR PARA VOLTAR AO MENU ==============> opcao = 0
-        if int(opcao) == 0:
-            return open_seller_menu(id_npc, nome_treinador)
-
-        # print(opcoes_validas[int(opcao)])
-        if(int(opcao) > 0):
-            print(
-                f'Comprou item_id: {printados[opcoes_validas[int(opcao)-1]]}')
-
-        for item in itens_a_venda:
-            if(item['item_id'] == printados[opcoes_validas[int(opcao)-1]]):
-                item_comprado = item
-                break
-        # print_prettier_dict(itens_a_venda)
-        print_prettier_dict(item_comprado)
-        # print(f"Comprou {opcao_especializacao_item[printados[int(opcao)]]}")
-        answer = run_sell_item(
-            item_comprado['instancia_id'], nome_treinador, id_npc)
-
-        if answer is None:
-            print_prompt(
-                f"Não foi possível realizar a compra.")
-            print(' Tente novamente! O menu será reaberto em 3 segundos.')
-            time.sleep(3)
-            return open_seller_menu(id_npc, nome_treinador)
-        # print_prettier_dict(quantity)
-        # print_prettier_dict(contado)
-
-    else:
-        print(f"O NPC \"{nome}\" não é vendedor!")
-
-    # print_prettier_dict(npc_info)
-    # print(npc_info["id_posicao"])
+            continue

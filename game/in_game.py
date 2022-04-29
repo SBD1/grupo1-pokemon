@@ -1,3 +1,4 @@
+from purchase_item import open_seller_menu
 from npc import check_npc_in_position
 from utils import *
 from database import get_user_info, get_pokemon_on_position, remove_pokemon_from_position
@@ -25,9 +26,10 @@ MAP_KEYBOARD_DIRECTIONS = {
 
 def start_game(player_name):
     user_info = get_user_info(player_name)
-    print_prettier_dict(user_info)
 
     while True:
+        clean_bash()
+        # print_prettier_dict(user_info)
         print('\n\n')
         print_title('Menu')
         count = 1
@@ -76,6 +78,8 @@ def start_game(player_name):
                     normalized_input = tecla - curr_size + len(NPCs)
                     # NPC action
                     print('NPC action na pos: ', normalized_input)
+                    if NPCs['profissao'] == 'vendedor':
+                        open_seller_menu(NPCs['id'], user_info['nome'])
                     continue
 
                 curr_size += len(items)
