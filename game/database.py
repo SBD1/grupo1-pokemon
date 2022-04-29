@@ -113,14 +113,11 @@ def get_npc_info(id_npc):
 
 
 def get_npc_info_by_pos(pos):
-    query_response = run_query_fetchall(
+    query_response = run_query_fetchone(
         f"SELECT * FROM npc WHERE id_posicao = {pos};")
-    npc_info = []
-    for info in query_response:
-        npc_info.append(dict(info))
-    if len(npc_info) > 0:
-        return npc_info[0]
-    return []
+    if query_response:
+        return dict(query_response)
+    return None
 
 
 def get_seller_items(_id_npc):
@@ -307,6 +304,31 @@ def increment_pokemon_catch_on_pokedex(pokemon_id, pokedex_id):
      WHERE id_pokemon = {pokemon_id} and id_pokedex = '{pokedex_id}';"
 
     return run_update(query_update)
+
+
+def get_pokedex_nro_pokemons_vistos(user_name):
+    query = f"SELECT get_pokedex_nro_pokemons_vistos('{user_name}');"
+    return run_query_fetchone(query)['get_pokedex_nro_pokemons_vistos']
+
+
+def get_pokedex_nro_pokemons_capturados(user_name):
+    query = f"SELECT get_pokedex_nro_pokemons_capturados('{user_name}');"
+    return run_query_fetchone(query)['get_pokedex_nro_pokemons_capturados']
+
+
+def get_seen_pokemons_name(user_name):
+    query = f"SELECT A.id_pokemon, B.especie FROM registra A JOIN pokemon B ON A.id_pokemon = B.id  WHERE A.id_pokedex = '{user_name}';"
+    response = run_query_fetchall(query)
+    pokemons = []
+    for pokemon in response:
+        pokemons.append(dict(pokemon))
+    print(pokemons)
+    return pokemons
+
+
+def get_registra_descricao_visivel(pokemon_id):
+    query = f"SELECT get_registra_descricao_visivel({pokemon_id});"
+    return run_query_fetchone(query)['get_registra_descricao_visivel']
 
 
 def evolve_pokemon_with_item(instancia_pokemon_id, pokemon_id, item_id, instancia_item_id):

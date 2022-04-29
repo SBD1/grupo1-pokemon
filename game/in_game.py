@@ -4,6 +4,7 @@ from utils import *
 from database import get_item_full_details, get_item_id, get_papel_item, get_user_info, get_pokemon_on_position, remove_pokemon_from_position
 from moviment import get_avaliable_items_in_position, get_display_available_pos, path, valid_region_change_db, change_player_pos
 from catch import Catch
+from pokedex import Pokedex
 from use_item import bag_menu
 import time
 
@@ -36,11 +37,9 @@ def start_game(player_name):
         count = 1
 
         pokemon, count = display_pokemons(user_info['id_posicao'], count)
-        NPCs, count = display_npcs(user_info["id_posicao"], count)
+        NPC, count = display_npc(user_info["id_posicao"], count)
         items, count = display_items(user_info["id_posicao"], count)
-
-        print_subtitle('Inventário')
-        print(f'{count} - Olhar mochila')
+        default_options, count = display_default_options(count)
 
         positions = display_positions(user_info['id_posicao'])
 
@@ -74,13 +73,13 @@ def start_game(player_name):
                             user_info['id_posicao'], pokemon)
                     continue
 
-                curr_size += len(NPCs)
+                curr_size += 1 if NPC else 0
                 if tecla <= curr_size:
-                    normalized_input = tecla - curr_size + len(NPCs)
+                    normalized_input = tecla - curr_size + len(NPC)
                     # NPC action
                     print('NPC action na pos: ', normalized_input)
-                    if NPCs['profissao'] == 'vendedor':
-                        open_seller_menu(NPCs['id'], user_info['nome'])
+                    if NPC['profissao'] == 'vendedor':
+                        open_seller_menu(NPC['id'], user_info['nome'])
                     continue
 
                 curr_size += len(items)
@@ -89,10 +88,12 @@ def start_game(player_name):
                     print('Item action na pos: ', normalized_input)
                     # item action
                     continue
-            elif tecla == count:
-                # abrir inventário
-                bag_menu(player_name)
-                continue
+                
+                curr_size += len(default_options)
+                if tecla <= curr_size:
+                    normalized_input = tecla - curr_size + len(items)
+                    default_options[normalized_input-1](user_info)
+                    continue
             elif tecla == 0:
                 return ''
             else:
@@ -108,16 +109,14 @@ def display_pokemons(pos, count):
     return pokemon, count
 
 
-def display_npcs(pos, count):
+def display_npc(pos, count):
     # NPC na posição
-    NPCs = {}  # checar npc na posição
-    NPCs = check_npc_in_position(pos)
-    if NPCs != []:
-        npc_name = NPCs['nome']  # NPCs[0]['nome']
+    NPC = check_npc_in_position(pos)
+    if NPC:
         print_subtitle('Um viajante cruzou seu caminho...')
-        print(f'{count} - Interagir com {npc_name}')
+        print(f'{count} - Interagir com {NPC["nome"]}')
         count += 1
-    return NPCs, count
+    return NPC, count
 
 
 def display_items(pos_id, count):
@@ -144,3 +143,21 @@ def display_positions(user_position):
         for p in positions.keys():
             print(f'{MAP_DIRECTIONS_KEYBOARD[p.lower()]} - {p.capitalize()}')
     return positions
+
+def display_default_options(count):
+    default_options = [open_bag, open_pokedex]
+    print_subtitle('Outras ações')
+    print(f'{count} - Olhar mochila')
+    count += 1
+    print(f'{count} - Olhar pokedex')
+    count += 1
+    return default_options, count
+
+
+def open_pokedex(user_info):
+    pokedex = Pokedex(user_info['nome'])
+    pokedex.display()
+
+
+def open_bag(user_info):
+    bag_menu(user_info['nome'])
