@@ -248,6 +248,19 @@ CREATE OR REPLACE PROCEDURE usar_candy_pokemon(id_instancia_pokemon INTEGER, _id
 	END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE PROCEDURE pegar_item_do_chao(_id_instancia_item INTEGER, _nome_treinador nome)
+  AS $$
+  BEGIN
+    DELETE FROM instancia_item_posicao
+    where id_instancia_item = _id_instancia_item;
+
+    INSERT INTO mochila_guarda_instancia_de_item (id_mochila, id_instancia_item)
+    VALUES  (_nome_treinador, _id_instancia_item);
+
+  END;
+$$ LANGUAGE plpgsql;
+
+
 --- Conferir se um item existe
 CREATE OR REPLACE FUNCTION check_item_exists(_id_instancia_item INTEGER)
   RETURNS BOOLEAN AS $$
@@ -287,6 +300,7 @@ BEGIN
     END);  
 END;
 $$ LANGUAGE plpgsql;
+
 
 --- TRIGGERS ---
 

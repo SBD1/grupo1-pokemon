@@ -2,7 +2,7 @@ from purchase_item import open_seller_menu
 from npc import check_npc_in_position
 from utils import *
 from database import get_item_full_details, get_item_id, get_papel_item, get_user_info, get_pokemon_on_position, remove_pokemon_from_position
-from moviment import get_avaliable_items_in_position, get_display_available_pos, path, valid_region_change_db, change_player_pos
+from moviment import get_avaliable_items_in_position, get_display_available_pos, path, pick_item, valid_region_change_db, change_player_pos
 from catch import Catch
 from pokedex import Pokedex
 from use_item import bag_menu
@@ -86,8 +86,8 @@ def start_game(player_name):
                 if tecla <= curr_size:
                     normalized_input = tecla - curr_size + len(items)
                     print('Item action na pos: ', normalized_input)
-                    # item action
-                    continue
+                    print(items[0])
+                    # pick_item(player_name, items[0]['id_instancia_item'])
                 
                 curr_size += len(default_options)
                 if tecla <= curr_size:

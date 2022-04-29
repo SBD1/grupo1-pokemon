@@ -36,7 +36,12 @@ def get_avaliable_items_in_position(pos_id):
     return items
 
 def pick_item(user_id, item_id):
-    pass
+    try:
+        sql = f"CALL pegar_item_do_chao('{item_id}', '{user_id}');"
+        run_transaction(sql)
+        print('Item adicionado ao inventário')
+    except (Exception, psycopg2.DatabaseError) as error:
+        print('Mochila lotada')
 
 def path(user_pos):
     init_pos = user_pos
