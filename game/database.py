@@ -181,10 +181,9 @@ def get_item_instances_on_backpack(item_id, backpack_id):
 
 def insert_new_treinador(player_name):
     try:
-        run_insert(
-            f"INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES ('{player_name}', 0, 500.00, 'iniciante', 1, 2);"
+        run_transaction(
+            f"call criar_novo_treinador('{player_name}');"
         )
-        return get_user_info(player_name)
     except:
         return []
 

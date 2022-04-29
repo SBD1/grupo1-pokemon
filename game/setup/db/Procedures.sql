@@ -301,6 +301,14 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+CREATE OR REPLACE PROCEDURE criar_novo_treinador(_nome_treinador nome)
+AS $$
+BEGIN
+  INSERT INTO treinador (nome, nivel, dinheiro, insignia, id_posicao, id_professor) VALUES (_nome_treinador, 0, 500.00, 'iniciante', 1, 2);
+  INSERT INTO mochila (id, capacidade, dinheiro_maximo) VALUES (_nome_treinador, 50, 500.00);
+  INSERT INTO pokedex (id) VALUES (_nome_treinador);
+END;
+$$ LANGUAGE plpgsql;
 
 --- TRIGGERS ---
 

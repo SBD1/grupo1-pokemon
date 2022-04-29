@@ -131,14 +131,7 @@ def create_new_player():
             print(
                 'Algo deu errado enquanto um novo treinador era criado. Tente novamente\n\n')
             return ''
-
-        new_bag = insert_new_bag(player_name)
-        print(new_bag)
-        if new_bag == []:
-            print(
-                'Algo deu errado enquanto um novo treinador era criado. Tente novamente\n\n')
-            return ''
-
+        
         return player_name
 
 

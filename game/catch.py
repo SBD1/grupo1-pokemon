@@ -1,4 +1,5 @@
 import random
+import time
 from pokemons_ascii_art import print_pokemon
 from exceptions.communs import PokemonDoesntExists, ItemDoesntExists, ItemNoInBackpack
 from database import (run_insert,
@@ -68,6 +69,8 @@ class Catch:
 
         print_title(f"Um pokemon selvagem apareceu!!!: {self.pokemon_name}")
         print_pokemon(self.pokemon_name.lower())
+        time.sleep(3)
+
 
         pokebolas_in_backpack = self.get_pokebolas()
         total_pokebolas = 0
