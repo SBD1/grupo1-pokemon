@@ -40,6 +40,7 @@ def start_game(player_name):
         NPC, count = display_npc(user_info["id_posicao"], count)
         items, count = display_items(user_info["id_posicao"], count)
         default_options, count = display_default_options(count)
+        # print('Pokemon:', pokemon, '\nNPC:', NPC, '\nitems:', items, '\ndefault_options:', default_options)
 
         positions = display_positions(user_info['id_posicao'])
 
@@ -65,8 +66,11 @@ def start_game(player_name):
                 continue
 
             if tecla > 0 and tecla < count:
+                # print('Tecla:', tecla)
                 curr_size = 1 if pokemon else 0
+                # print('Curr size:', curr_size)
                 if tecla <= curr_size:
+                    # print('Pokemon action na pos:', tecla)
                     catch = Catch(pokemon, user_info['nome'])
                     if catch.display():
                         remove_pokemon_from_position(
@@ -74,24 +78,28 @@ def start_game(player_name):
                     continue
 
                 curr_size += 1 if NPC else 0
+                # print('Curr size:', curr_size)
                 if tecla <= curr_size:
-                    normalized_input = tecla - curr_size + len(NPC)
+                    normalized_input = tecla - curr_size + 1
                     # NPC action
-                    print('NPC action na pos: ', normalized_input)
+                    # print('NPC action na pos: ', normalized_input)
                     if NPC['profissao'] == 'vendedor':
                         open_seller_menu(NPC['id'], user_info['nome'])
                     continue
 
                 curr_size += len(items)
+                # print('Curr size:', curr_size)
                 if tecla <= curr_size:
                     normalized_input = tecla - curr_size + len(items)
-                    print('Item action na pos: ', normalized_input)
+                    # print('Item action na pos: ', normalized_input)
                     print(items[0])
                     # pick_item(player_name, items[0]['id_instancia_item'])
+                    continue
                 
                 curr_size += len(default_options)
                 if tecla <= curr_size:
-                    normalized_input = tecla - curr_size + len(items)
+                    normalized_input = tecla - curr_size + len(default_options)
+                    # print('Default action na pos: ', normalized_input)
                     default_options[normalized_input-1](user_info)
                     continue
             elif tecla == 0:
