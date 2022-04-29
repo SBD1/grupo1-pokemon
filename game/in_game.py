@@ -47,8 +47,7 @@ def start_game(player_name):
         print('0 - Sair')
 
         tecla = input('Insira sua escolha: ')
-        
-        if tecla.lower() in MAP_KEYBOARD_DIRECTIONS.keys() and positions != {}:
+        if tecla.lower() in MAP_KEYBOARD_DIRECTIONS.keys() and positions != {} and MAP_KEYBOARD_DIRECTIONS[tecla.lower()] in positions.keys():
             choose = positions[MAP_KEYBOARD_DIRECTIONS[tecla.lower()]]
             can_acess = valid_region_change_db(choose, user_info['nome'])
             if can_acess == 1:
