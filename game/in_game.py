@@ -1,5 +1,5 @@
 from purchase_item import open_seller_menu
-from npc import check_npc_in_position
+from npc import check_npc_in_position, talk_with_npc
 from utils import *
 from database import get_item_full_details, get_item_id, get_papel_item, get_user_info, get_pokemon_on_position, remove_pokemon_from_position
 from moviment import get_avaliable_items_in_position, get_display_available_pos, path, pick_item, valid_region_change_db, change_player_pos
@@ -30,7 +30,7 @@ def start_game(player_name):
     user_info = get_user_info(player_name)
 
     while True:
-        clean_bash()
+        # clean_bash()
         # print_prettier_dict(user_info)
         print('\n\n')
         print_title('Menu')
@@ -85,6 +85,8 @@ def start_game(player_name):
                     # print('NPC action na pos: ', normalized_input)
                     if NPC['profissao'] == 'vendedor':
                         open_seller_menu(NPC['id'], user_info['nome'])
+                    else:
+                        talk_with_npc(NPC)
                     continue
 
                 curr_size += len(items)

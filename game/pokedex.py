@@ -48,5 +48,5 @@ class Pokedex:
     def display_pokemon_info(self, pokemon_id_name):
         print_subtitle(pokemon_id_name['especie'].upper())
         print(get_registra_descricao_visivel(pokemon_id_name['id_pokemon']))
-        print('Aperte qualquer tecla para continuar...')
+        print('(Aperte qualquer tecla para continuar...)')
         input()

@@ -3,13 +3,16 @@ from utils import *
 from user_pokemon_list import get_pokemon_list
 
 def bag_menu(user_id):
-    option = 0
-    while option != 3:
-        option = int(input('O que deseja fazer?\n1. Visualizar items\n2. Utilizar um item\n3. Fechar mochila.\n'))
-        while option < 1 or  option > 3:
-            option = input('Opção invalida. O que deseja fazer?\n1. Usar um item.\n2. Fechar mochila.\n')
+    option = -1
+    while option != 0:
+        option = int(input('O que deseja fazer?\n1 - Visualizar items\n2 - Utilizar um item\n0 - Fechar mochila.\n'))
+        while option < 0 or  option > 2:
+            try:
+                option = int(input('Opção invalida. O que deseja fazer?\n1 - Visualizar items\n2 - Utilizar um item\n0 - Fechar mochila.\n'))
+            except:
+                continue
 
-        if option == 3:
+        if option == 0:
             return
 
         items_dict = get_bag_items_info(user_id)
@@ -85,7 +88,7 @@ def print_items_name_and_quantity(item_dict):
     print('Items disponíveis na mochila e quantidades:')
     i = 1
     for item in item_dict.keys():
-        print(f"{i}. ({item_dict[item]['role']}) {item:20} x{item_dict[item]['quantity']}")
+        print(f"{i} - ({item_dict[item]['role']}) {item:20} x{item_dict[item]['quantity']}")
         i+=1
     print()
 
@@ -94,6 +97,6 @@ def print_instancia_pokemon_info(instancia_pokemon_list):
     print('Lista de pokémons:')
     print(f"{'':3}{'Nome':20} {'Genero':8} {'XP':5}")
     for instancia in instancia_pokemon_list:
-        print(f"{i}. {instancia['name'].capitalize():20} {instancia['genero']:8} {instancia['experiencia']:<5}")
+        print(f"{i} - {instancia['name'].capitalize():20} {instancia['genero']:8} {instancia['experiencia']:<5}")
         i+=1
     print()
