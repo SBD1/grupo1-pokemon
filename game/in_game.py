@@ -93,9 +93,7 @@ def start_game(player_name):
                 # print('Curr size:', curr_size)
                 if tecla <= curr_size:
                     normalized_input = tecla - curr_size + len(items)
-                    # print('Item action na pos: ', normalized_input)
-                    print(items[0])
-                    # pick_item(player_name, items[0]['id_instancia_item'])
+                    pick_item(player_name, items[0]['id_instancia_item'])
                     continue
                 
                 curr_size += len(default_options)
