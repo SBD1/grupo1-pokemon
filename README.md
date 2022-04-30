@@ -13,6 +13,8 @@ Repositório destinado a disciplina de Sistemas de bancos de dados (SBD1)
 | 17/0013910 | João Pedro Guedes |
 | 17/0039803 | Lucas Medeiros    |
 | 19/0020601 | Victor Buendia    |
+# Link para apresentação final
+https://www.youtube.com/watch?v=C9UhEnSbU2c
 
 # Utilização do Docker
 
