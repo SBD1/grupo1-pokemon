@@ -1,5 +1,5 @@
 from database import *
-from utils import print_prettier_dict
+from utils import print_subtitle
 
 class Board:
     map_graph = {}
@@ -36,6 +36,7 @@ class Board:
         return distance, parent
 
     def print_map(self, initial_pos):
+        print_subtitle('Mapa')
         distance, parent = self.bfs_distance(initial_pos)
         levels = {}
         for i in range(0, max(distance) + 1):
@@ -81,7 +82,7 @@ class Board:
         for text in output_texts:
             # print(' ' * (biggest_string_size - (len(text) // 2)), sep='', end='')  
             print(text, sep='', end='')
-        print('\n(Aperte enter tecla para continuar...)')
+        print('\n(Aperte enter para continuar...)')
         input()
 
     def filter_none_positions(self, positions):
