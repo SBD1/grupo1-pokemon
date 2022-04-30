@@ -9,5 +9,5 @@ def talk_with_npc(NPC):
     print('\n')
     print_subtitle(f'{NPC["nome"]} tem algo para te dizer!')
     print(NPC['nome'], ':', NPC['fala'])
-    print('(Aperte qualquer tecla para continuar...)')
+    print('(Aperte enter tecla para continuar...)')
     input()

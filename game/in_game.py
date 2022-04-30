@@ -5,6 +5,7 @@ from database import get_item_full_details, get_item_id, get_papel_item, get_use
 from moviment import get_avaliable_items_in_position, get_display_available_pos, path, pick_item, valid_region_change_db, change_player_pos
 from catch import Catch
 from pokedex import Pokedex
+from board import Board
 from use_item import bag_menu
 import time
 
@@ -27,10 +28,11 @@ MAP_KEYBOARD_DIRECTIONS = {
 
 
 def start_game(player_name):
+    board = Board()
     user_info = get_user_info(player_name)
-
+    user_info['board'] = board
     while True:
-        # clean_bash()
+        clean_bash()
         # print_prettier_dict(user_info)
         print('\n\n')
         print_title('Menu')
@@ -152,11 +154,13 @@ def display_positions(user_position):
     return positions
 
 def display_default_options(count):
-    default_options = [open_bag, open_pokedex]
+    default_options = [open_bag, open_pokedex, open_map]
     print_subtitle('Outras ações')
     print(f'{count} - Olhar mochila')
     count += 1
     print(f'{count} - Olhar pokedex')
+    count += 1
+    print(f'{count} - Olhar mapa')
     count += 1
     return default_options, count
 
@@ -168,3 +172,6 @@ def open_pokedex(user_info):
 
 def open_bag(user_info):
     bag_menu(user_info['nome'])
+
+def open_map(user_info):
+    user_info['board'].print_map(user_info['id_posicao'])

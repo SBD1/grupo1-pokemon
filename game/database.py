@@ -100,6 +100,13 @@ def get_user_info(nome_player):
         return trainer_info[0]
     return []
 
+def get_all_positions():
+    query = f"SELECT * FROM posicao;"
+    response = run_query_fetchall(query)
+    positions = []
+    for pos in response:
+        positions.append(dict(pos))
+    return positions
 
 def get_npc_info(id_npc):
     query_response = run_query_fetchall(
